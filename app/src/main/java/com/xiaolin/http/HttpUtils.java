@@ -7,7 +7,7 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.FieldNamingStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.linzhi.isis.utils.CheckNetwork;
+import com.xiaolin.utils.CheckNetwork;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
