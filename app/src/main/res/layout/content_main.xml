@@ -8,18 +8,228 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.xiaolin.ui.MainActivity"
     tools:showIn="@layout/act_main">
-
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appBarLayout"
+    <!-- 图片效果设置-->
+    <RelativeLayout
+        android:id="@+id/layout_pic"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/topbar_height">
+        android:layout_height="270dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@mipmap/main_bg">
+
+        <LinearLayout
+            android:id="@+id/layout_time"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal">
+            <!-- 时分显示-->
+            <TextClock
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:fontFamily="sans-serif-light"
+                android:format12Hour="HH:mm"
+                android:gravity="bottom"
+                android:textColor="@color/white"
+                android:textSize="50sp"
+                android:timeZone="GMT+0800"/>
+            <!-- 秒的显示-->
+            <TextClock
+                android:id="@+id/tv_second"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignBottom="@+id/tv_time"
+                android:layout_alignTop="@+id/tv_time"
+                android:layout_toRightOf="@+id/tv_time"
+                android:fontFamily="sans-serif-light"
+                android:format12Hour=":ss"
+                android:gravity="bottom"
+                android:paddingBottom="10dp"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:timeZone="GMT+0800"/>
+        </LinearLayout>
+
+
+        <TextClock
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/layout_time"
+            android:layout_alignStart="@+id/layout_time"
+            android:layout_below="@+id/layout_time"
+            android:fontFamily="sans-serif-light"
+            android:format12Hour="yyyy/MM/dd EEEE"
+            android:format24Hour="yyyy/MM/dd EEEE"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            android:timeZone="GMT+0800"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/common_bgcolor_alpha">
+
+            <TextView
+                android:id="@+id/tv1"
+                android:layout_width="70dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="10dp"
+                android:gravity="center"
+                android:text="昨日考勤"
+                android:textColor="@color/white"
+                android:textSize="12sp"/>
+            <!-- 考勤结果-->
+            <TextView
+                android:id="@+id/tv_attendYestoday"
+                android:layout_width="70dp"
+                android:layout_height="25dp"
+                android:layout_alignEnd="@+id/tv1"
+                android:layout_alignStart="@+id/tv1"
+                android:layout_below="@+id/tv1"
+                android:gravity="center"
+                android:text="正常"
+                android:textColor="@color/white"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/tv2"
+                android:layout_width="70dp"
+                android:layout_height="25dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
+                android:gravity="center"
+                android:text="今日签到"
+                android:textColor="@color/white"
+                android:textSize="12sp"/>
+            <!-- 今日考勤-->
+            <TextView
+                android:id="@+id/tv_attendToday"
+                android:layout_width="70dp"
+                android:layout_height="25dp"
+                android:layout_alignEnd="@+id/tv2"
+                android:layout_below="@+id/tv2"
+                android:gravity="center"
+                android:text="18:23:16"
+                android:textColor="@color/white"
+                android:textSize="15sp"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/layout_pic"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:background="@color/gray"/>
+    <!--考勤-->
+    <LinearLayout
+        android:id="@+id/layout_attend"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/layout_pic"
+        android:background="@drawable/selector_choose"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:background="@mipmap/attend"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="考勤记录"
+            android:textColor="@color/black"
+            android:textSize="15sp"/>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/layout_attend"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:background="@color/lightgray"/>
+    <!-- 访客-->
+    <LinearLayout
+        android:id="@+id/layout_visitor"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/view1"
+        android:background="@drawable/selector_choose"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:background="@mipmap/visitor"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="访客记录"
+            android:textColor="@color/black"
+            android:textSize="15sp"/>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/layout_visitor"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:background="@color/lightgray"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/view2"
+        android:background="@color/ivory"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/attendmap"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:text="外勤打卡"/>
+
+    </RelativeLayout>
+
+    <!-- 要把toolbar设置透明，需要放在relativeLayout布局的最下边
+    设置 android:background="?attr/colorPrimary"-->
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/topbar_height"
+        android:layout_alignParentTop="true">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/common_topbar_bgcolor"
-            android:gravity="center">
+            android:background="@android:color/transparent"
+            android:fitsSystemWindows="true"
+            android:gravity="center"
+            android:theme="@style/AppTheme.AppBarOverlay"
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -30,6 +240,4 @@
                 android:textSize="18sp"/>
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
-
-
 </RelativeLayout>

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimaryDark">#FF00609d</color>
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorAccent">#FF000000</color>
     <!-- app应用的背景颜色-->
-    <color name="common_topbar_bgcolor">#048ff0</color>
+    <color name="common_topbar_bgcolor">#19a1f7</color>
+    <color name="common_bgcolor_alpha">#33FFFFFF</color>
     <!-- 通用颜色-->
     <color name="white">#FFFFFF</color><!--白色 -->
-    <color name="ivory">#FFFFF0</color><!--象牙色 -->
+    <color name="ivory">#0ff7f6f6</color><!--象牙色 -->
     <color name="lightyellow">#FFFFE0</color><!--亮黄色 -->
     <color name="yellow">#FFFF00</color><!--黄色 -->
     <color name="snow">#FFFAFA</color><!--雪白色 -->
