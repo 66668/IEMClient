@@ -44,7 +44,7 @@
                 android:layout_alignTop="@+id/tv_time"
                 android:layout_toRightOf="@+id/tv_time"
                 android:fontFamily="sans-serif-light"
-                android:format12Hour=":ss"
+                android:format24Hour=":ss"
                 android:gravity="bottom"
                 android:paddingBottom="10dp"
                 android:textColor="@color/white"

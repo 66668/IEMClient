@@ -1,5 +1,6 @@
 package com.xiaolin.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -66,11 +67,16 @@ public class LoginActivity extends BaseActivity implements ILoginView {
      */
     @OnClick(R.id.btn_login)
     void login(View view) {
-        getInfo();
-        isEmpty();  //非空判断
+        //        getInfo();
+        //        isEmpty();  //非空判断
+        //
+        //        //交给p层处理，接口回调处理
+        //        loginPresenter.pLogin(storeName, userName, password, IP);
 
-        //交给p层处理，接口回调处理
-        loginPresenter.pLogin(storeName, userName, password, IP);
+
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+        this.finish();
     }
 
     private void getInfo() {

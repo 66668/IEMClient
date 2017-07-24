@@ -1,6 +1,7 @@
 package com.xiaolin.presenter;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.xiaolin.app.Constants;
 import com.xiaolin.bean.LoginBean;
@@ -8,6 +9,8 @@ import com.xiaolin.model.LoginModelImpl;
 import com.xiaolin.model.imodel.ILoginModel;
 import com.xiaolin.model.listener.OnLoginListener;
 import com.xiaolin.presenter.ipresenter.ILoginPresenter;
+import com.xiaolin.ui.LoginActivity;
+import com.xiaolin.ui.MainActivity;
 import com.xiaolin.ui.iview.ILoginView;
 import com.xiaolin.utils.SPUtils;
 
@@ -57,7 +60,9 @@ public class LoginPresenterImpl implements ILoginPresenter, OnLoginListener {
         SPUtils.putString(Constants.YESTODY_DATE,bean.getYesterdayState());
 
         //界面跳转
-
+        Intent intent = new Intent(context, MainActivity.class);
+        context.startActivity(intent);
+        ((LoginActivity)context).finish();
     }
 
     //OnLoginListener接口，处理登陆失败
