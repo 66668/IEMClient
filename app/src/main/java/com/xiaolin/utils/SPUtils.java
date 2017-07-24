@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class SPUtils {
 
-    private static final String CONFIG = "isis";
+    private static final String CONFIG = "xiaolin";//文件名称
 
     /**
      * 获取SharedPreferences实例对象
@@ -25,7 +25,18 @@ public class SPUtils {
         return MyApplication.getInstance().getSharedPreferences(fileName, Context.MODE_PRIVATE);
     }
 
+    //登录信息 storeName
+    public String getStoreName() {
+        SharedPreferences sharedPreference = getSharedPreference(CONFIG);
+        return sharedPreference.getString(Constants.STORENAME, "");
+    }
 
+    public void setStoreName(String userName) {
+        SharedPreferences.Editor editor = getSharedPreference(CONFIG).edit();
+        editor.putString(Constants.STORENAME, userName).apply();
+    }
+
+    //登录信息 userName
     public String getUserName() {
         SharedPreferences sharedPreference = getSharedPreference(CONFIG);
         return sharedPreference.getString(Constants.USRENAME, "");
@@ -36,6 +47,7 @@ public class SPUtils {
         editor.putString(Constants.USRENAME, userName).apply();
     }
 
+    //登录信息 password
     public String getPassword() {
         SharedPreferences sharedPreference = getSharedPreference(CONFIG);
         return sharedPreference.getString(Constants.PASSWORD, "");
@@ -45,6 +57,7 @@ public class SPUtils {
         SharedPreferences.Editor editor = getSharedPreference(CONFIG).edit();
         editor.putString(Constants.PASSWORD, password).apply();
     }
+
 
     //登录缓存清除
     public void clearLogin() {

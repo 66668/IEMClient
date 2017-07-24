@@ -47,7 +47,9 @@ public class HttpUtils {
     private boolean debug;//判断 app版本，由application设置
 
     private final static String TAG = "HttpUtils";
-    private final static String API_BASE_URL = "http://59.110.26.83:8096/openapi/";
+    private final static String API_BASE_URL = "http://192.168.1.245:1132/openapi/";//局域网测试
+    //    private final static String API_BASE_URL = "http://101.201.72.112:7016/openapi/";//阿里云测试
+    //    private final static String API_BASE_URL = "https://iemapi.yuevision.com/openapi/";//阿里云正式
 
     /**
      * 分页数据，每页的数量

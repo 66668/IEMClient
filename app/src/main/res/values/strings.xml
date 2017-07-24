@@ -8,6 +8,12 @@
     <string name="person_changePSD">修改密码</string>
     <string name="person_quit">退出</string>
 
+    <!-- 登录设置-->
+    <string name="login_storeName_input">公司名称不能为空</string>
+    <string name="login_userName_input">用户名不能为空</string>
+    <string name="login_password_input">密码不能为空</string>
+
+
     <!-- 主界面设置-->
     <string name="open">打开</string>
     <string name="close">关闭</string>

@@ -428,7 +428,7 @@ public class Utils {
 
     //wifi方式获取mac
     public static String getMacByWifi() {
-        String macSerial = null;
+        String macSerial = "";
         String str = "";
         try {
             Process pp = Runtime.getRuntime().exec("cat /sys/class/net/wlan0/address ");

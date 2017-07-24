@@ -1,12 +1,5 @@
 package com.xiaolin.utils;
 
-import android.databinding.BindingAdapter;
-import android.util.TypedValue;
-import android.widget.ImageView;
-
-import com.bumptech.glide.Glide;
-import com.xiaolin.R;
-
 /**
  * databinding 高级用法 @BindingAdapter,自定义xml属性
  * .
@@ -36,20 +29,20 @@ public class ImgLoadUtil {
      * .override((int) CommonUtils.getDimens(R.dimen.conference_detail_height)//conference_detail_width
      * , (int) CommonUtils.getDimens(R.dimen.conference_detail_height))
      */
-    @BindingAdapter("android:showConferenceImg")
-    public static void showConferenceImg(ImageView imageView, String url) {
-
-        int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300f, imageView.getContext().getResources().getDisplayMetrics());
-        int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 180f, imageView.getContext().getResources().getDisplayMetrics());
-
-        Glide.with(imageView.getContext())
-                .load(url)//url
-                .override(width, height)
-                .crossFade(500)//动画效果
-                .placeholder(R.mipmap.ic_launcher)
-                .error(R.mipmap.ic_launcher)
-                .into(imageView);
-    }
+//    @BindingAdapter("android:showConferenceImg")
+//    public static void showConferenceImg(ImageView imageView, String url) {
+//
+//        int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300f, imageView.getContext().getResources().getDisplayMetrics());
+//        int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 180f, imageView.getContext().getResources().getDisplayMetrics());
+//
+//        Glide.with(imageView.getContext())
+//                .load(url)//url
+//                .override(width, height)
+//                .crossFade(500)//动画效果
+//                .placeholder(R.mipmap.ic_launcher)
+//                .error(R.mipmap.ic_launcher)
+//                .into(imageView);
+//    }
 
     /**
      * 书籍、妹子图、电影列表图
