@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">IEMClient</string>
+    <string name="app_name">小麟员工版</string>
     <string name="app_title">北京越视科技有限公司</string>
     <string name="action_settings">Settings</string>
 
@@ -10,8 +10,12 @@
 
     <!-- 登录设置-->
     <string name="login_storeName_input">公司名称不能为空</string>
+    <string name="login_storeName_hint">请输入公司账号</string>
     <string name="login_userName_input">用户名不能为空</string>
+    <string name="login_userName_hint">请输入用户名</string>
     <string name="login_password_input">密码不能为空</string>
+    <string name="login_password_hint">请输入密码</string>
+    <string name="btnLogin">登录</string>
 
 
     <!-- 主界面设置-->

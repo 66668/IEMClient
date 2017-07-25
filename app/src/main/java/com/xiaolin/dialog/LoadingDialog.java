@@ -30,7 +30,7 @@ public class LoadingDialog extends Dialog {
     }
 
     public LoadingDialog(@NonNull Context context) {
-        super(context);
+        super(context, R.style.LoadingDialog);//设置无背景的loading
         this.context = context;
         init();// 动画效果显示登录状态
     }

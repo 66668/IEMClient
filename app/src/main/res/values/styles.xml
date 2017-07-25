@@ -20,4 +20,25 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
+    <!-- 登录 editText统一字体 12sp,白色-->
+    <style name="loginText">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:shadowColor">@color/white</item>
+        <item name="android:shadowRadius">1.5</item>
+        <item name="android:textSize">@dimen/login_textSize</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textCursorDrawable">@drawable/login_et_cursor</item>
+    </style>
+
+    <!-- 自定义弹窗dialog的progress样式-->
+    <style name="LoadingDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:gravity">bottom</item>
+    </style>
+
 </resources>

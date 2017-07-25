@@ -6,6 +6,9 @@
     <!-- app应用的背景颜色-->
     <color name="common_topbar_bgcolor">#19a1f7</color>
     <color name="common_bgcolor_alpha">#33FFFFFF</color>
+    <!--登录颜色设置-->
+    <color name="login_btn_color">#128ee6</color>
+
     <!-- 通用颜色-->
     <color name="white">#FFFFFF</color><!--白色 -->
     <color name="ivory">#0ff7f6f6</color><!--象牙色 -->

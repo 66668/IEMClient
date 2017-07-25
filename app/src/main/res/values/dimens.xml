@@ -2,6 +2,16 @@
 <resources>
     <dimen name="topbar_height">50dp</dimen>
     <dimen name="nav_header_height">160dp</dimen>
+
+    <!-- 登录界面尺寸设置-->
+    <dimen name="login_margin">50dp</dimen>
+    <dimen name="login_drawablePadding">15dp</dimen>
+    <dimen name="login_textSize">12sp</dimen>
+    <dimen name="login_btn_marginTop">25dp</dimen>
+    <dimen name="login_btn_TextSize">16sp</dimen>
+    <dimen name="login_btn_radius">17dp</dimen>
+    <dimen name="login_btn_height">35dp</dimen>
+
     <dimen name="common_textSize_default18">18sp</dimen>
 
 

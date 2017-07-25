@@ -63,7 +63,7 @@ public class LoginModelImpl implements ILoginModel {
                     @Override
                     public void onError(Throwable e) {
                         Log.d(TAG, "onError: " + e.toString());
-                        listener.onLoginFailed("代码处理异常", (Exception) e);
+                        listener.onLoginFailed("获取数据异常", (Exception) e);
                     }
 
                     @Override
@@ -83,7 +83,6 @@ public class LoginModelImpl implements ILoginModel {
                         }
                     }
                 });
-
 
     }
 }

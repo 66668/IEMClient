@@ -4,51 +4,124 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/login_bg"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@mipmap/logo"
+            android:contentDescription="@string/app_name"/>
+    </RelativeLayout>
+    <!--  公司账号-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/login_margin"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <EditText
             android:id="@+id/et_store"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:background="@color/gray"/>
+            style="@style/loginText"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginEnd="@dimen/login_margin"
+            android:layout_marginStart="@dimen/login_margin"
+            android:background="@drawable/login_et_style"
+            android:drawablePadding="@dimen/login_drawablePadding"
+            android:drawableStart="@mipmap/login_store"
+            android:gravity="center_vertical"
+            android:hint="@string/login_storeName_hint"/>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignEnd="@+id/et_store"
+            android:layout_alignStart="@+id/et_store"
+            android:layout_below="@+id/et_store"
+            android:layout_marginTop="3dp"
+            android:background="@color/white"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
+    <!-- 用户名-->
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/login_margin"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <EditText
             android:id="@+id/et_user"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:background="@color/gray"/>
+            style="@style/loginText"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginEnd="@dimen/login_margin"
+            android:layout_marginStart="@dimen/login_margin"
+            android:background="@drawable/login_et_style"
+            android:drawablePadding="@dimen/login_drawablePadding"
+            android:drawableStart="@mipmap/login_user"
+            android:gravity="center_vertical"
+            android:hint="@string/login_userName_hint"/>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignEnd="@+id/et_user"
+            android:layout_alignStart="@+id/et_user"
+            android:layout_below="@+id/et_user"
+            android:layout_marginTop="3dp"
+            android:background="@color/white"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
+    <!-- 密码-->
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/login_margin"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <EditText
             android:id="@+id/et_ps"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:background="@color/gray"/>
-    </LinearLayout>
+            style="@style/loginText"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginEnd="@dimen/login_margin"
+            android:layout_marginStart="@dimen/login_margin"
+            android:background="@drawable/login_et_style"
+            android:drawablePadding="@dimen/login_drawablePadding"
+            android:drawableStart="@mipmap/login_ps"
+            android:gravity="center_vertical"
+            android:hint="@string/login_password_hint"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignEnd="@+id/et_ps"
+            android:layout_alignStart="@+id/et_ps"
+            android:layout_below="@+id/et_ps"
+            android:layout_marginTop="3dp"
+            android:background="@color/white"/>
+
+    </RelativeLayout>
+
 
     <Button
         android:id="@+id/btn_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/login_btn_height"
+        android:layout_marginEnd="@dimen/login_margin"
+        android:layout_marginStart="@dimen/login_margin"
+        android:layout_marginTop="@dimen/login_btn_marginTop"
+        android:background="@drawable/login_btn_selector"
+        android:text="@string/btnLogin"
+        android:textColor="@color/login_btn_color"
+        android:textSize="@dimen/login_btn_TextSize"/>
 
 </LinearLayout>
