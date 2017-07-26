@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/IEMClient.iml" filepath="$PROJECT_DIR$/IEMClient.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/permissionLibs/permissionLibs.iml" filepath="$PROJECT_DIR$/permissionLibs/permissionLibs.iml" />
     </modules>
   </component>
 </project>

@@ -60,6 +60,11 @@
             android:label="@string/app_name"
             android:theme="@style/TranslucentAppTheme.NoActionBar">
 
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
         </activity>
 
         <!-- ****************************************地图定位界面**********************************************-->
@@ -67,10 +72,7 @@
             android:name=".ui.MapLocationActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme_normal.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+
         </activity>
     </application>
 

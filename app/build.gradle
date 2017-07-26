@@ -64,6 +64,7 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:26.+'
     testCompile 'junit:junit:4.12'
+    //glide图片加载框架
     compile 'com.github.bumptech.glide:glide:3.7.0'
     //开源动画框架
     compile 'com.nineoldandroids:library:2.4.0'
@@ -84,11 +85,11 @@ dependencies {
         exclude module: 'com.squareup.okhttp3:okhttp:3.7.0'
         exclude module: 'com.squareup.okio:okio:1.12.0'
     }
+    //okhttp需要使用
     compile 'com.squareup.okhttp3:okhttp:3.7.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.7.0'
     //打印网络请求的log日志
     compile 'com.squareup.okio:okio:1.12.0'
-    //okhttp需要使用
     //recyclerview
     compile 'com.android.support:recyclerview-v7:26.+'
     //使用butterknife注解(正常三步：（1）project/build.gradle（2）module该处添加依赖（3）下载插件android-butterknife-zelezny，然后才能正常使用)
@@ -99,4 +100,6 @@ dependencies {
     compile files('libs/jcore-android_v1.1.0.jar')
     //极光推送
     compile files('libs/jpush-android_v3.0.1.jar')
+    //添加模块库依赖
+    compile project(':permissionLibs')
 }

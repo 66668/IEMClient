@@ -1,25 +1,46 @@
 package com.xiaolin.ui;
 
+import android.Manifest;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
 
 import com.xiaolin.R;
+import com.xiaolin.library.PermissionListener;
+import com.xiaolin.library.PermissionsUtil;
+import com.xiaolin.presenter.ipresenter.IMainPresenter;
+import com.xiaolin.presenter.ipresenter.MainPresenterImpl;
+import com.xiaolin.ui.base.BaseActivity;
+import com.xiaolin.ui.iview.IMainView;
+import com.xiaolin.utils.DebugUtil;
 
-public class MainActivity extends AppCompatActivity {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+public class MainActivity extends BaseActivity implements IMainView {
     private static final String TAG = "MainActivity";
-    private NavigationView navigationView;
-    private Toolbar toolbar;
-    private DrawerLayout mDrawerLayout;
-    final private int REQUESt_CODE_ASK_PERMISSIONS = 123;//
+
+    @BindView(R.id.drawerLayout)
+    DrawerLayout mDrawerLayout;
+
+    @BindView(R.id.navigaitnoView)
+    NavigationView navigationView;
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    private IMainPresenter iMainPresenter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,21 +53,14 @@ public class MainActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         setContentView(R.layout.act_main);
+        ButterKnife.bind(this);
         initView();
-        //android 6.0以后设置权限提醒
-        if (Build.VERSION.SDK_INT >= 23) {
-            permission();//权限检查-授权使用
-        }
     }
 
     private void initView() {
-
-        navigationView = (NavigationView) findViewById(R.id.navigaitnoView);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //设置按钮开关(低于5.0版本不可用)
+        //设置抽屉布局开关(低于5.0版本不可用)
         if (Build.VERSION.SDK_INT >= 21) {
             ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.open, R.string.close);
             toggle.syncState();
@@ -58,6 +72,11 @@ public class MainActivity extends AppCompatActivity {
         lp1.topMargin = statusBarHeight;
         toolbar.setLayoutParams(lp1);
 
+        //初始化p层
+        iMainPresenter = new MainPresenterImpl(MainActivity.this, this);
+
+        //navigation点击事件
+        setDrawerContent(navigationView);
     }
 
     /**
@@ -95,11 +114,92 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * 权限检查
-     */
-    private void permission() {
+    //NavigationView 监听事件
+    private void setDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                //交给p层处理
+                iMainPresenter.switchNavigation(item.getItemId());
+                item.setChecked(true);
+                mDrawerLayout.closeDrawers();
+                return true;
+            }
+        });
+    }
 
+    /**
+     * 多控件监听
+     */
+    @OnClick({R.id.layout_attend, R.id.layout_visitor, R.id.loaction})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.layout_attend://考勤记录
+                break;
+            case R.id.layout_visitor://访客记录记录
+                break;
+            case R.id.loaction://地图定位
+                iMainPresenter.mapLocation();
+                break;
+        }
+    }
+
+    /**
+     * IMainView 个人信息跳转
+     */
+    @Override
+    public void turnToInfo() {
 
     }
+
+    /**
+     * IMainView 修改密码跳转
+     */
+    @Override
+    public void turnToChangePs() {
+
+    }
+
+    /**
+     * IMainView 退出
+     */
+    @Override
+    public void quitApp() {
+
+    }
+
+    @Override
+    public void turnToMapLocation() {
+        //地图定位+6.0权限设置
+        if (PermissionsUtil.hasPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)) {//ACCESS_FINE_LOCATION ACCESS_COARSE_LOCATION这两个是一组，用一个判断就够了
+            startActivity(MapLocationActivity.class);
+        } else {
+            //第一次使用该权限调用
+            PermissionsUtil.requestPermission(this
+                    , new PermissionListener() {
+                        @Override
+                        public void permissionGranted(@NonNull String[] permissions) {
+                            //弹窗提示 允许使用就跳转界面
+                            startActivity(MapLocationActivity.class);
+                        }
+
+                        @Override
+                        public void permissionDenied(@NonNull String[] permissions) {
+                            DebugUtil.toastLong(MainActivity.this, "该功能不可用");
+                        }
+                    }
+                    , Manifest.permission.ACCESS_FINE_LOCATION);
+        }
+    }
+
+    @Override
+    public void turnToAttendRecord() {
+
+    }
+
+    @Override
+    public void turnToVisitor() {
+
+    }
+
 }
