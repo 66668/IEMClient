@@ -17,6 +17,12 @@
     <string name="login_password_hint">请输入密码</string>
     <string name="btnLogin">登录</string>
 
+    <!-- 地图界面-->
+    <string name="commit">签到</string>
+    <string name="mapAttendance">外出签到</string>
+    <string name="forAttend">签到</string>
+
+
 
     <!-- 主界面设置-->
     <string name="open">打开</string>

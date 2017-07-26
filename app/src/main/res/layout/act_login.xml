@@ -108,7 +108,6 @@
             android:layout_below="@+id/et_ps"
             android:layout_marginTop="3dp"
             android:background="@color/white"/>
-
     </RelativeLayout>
 
 

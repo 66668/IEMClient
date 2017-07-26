@@ -4,6 +4,7 @@
     <!-- wifi权限-->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"/>
 
     <!-- 网络权限 -->
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -11,6 +12,18 @@
 
     <!-- dialog权限-->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <!--用于访问GPS定位-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <!--用于提高GPS定位速度-->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
+
+    <!-- 相机权限-->
+    <uses-permission android:name="android.permission.CAMERA"/>
+
+    <!--读写权限 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".app.MyApplication"
@@ -19,25 +32,45 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <!-- 登录-->
+        android:theme="@style/AppTheme_normal">
+
+        <!-- ****************************************高德地图配置 开始**********************************************-->
+
+        <!-- 高德设置key -->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="1e67cff4c7dbe79ee12bd11b95d5ff3a"/>
+
+        <!-- 高德定位需要的服务 -->
+        <service android:name="com.amap.api.location.APSService"/>
+        <!-- ****************************************高德地图配置 结束**********************************************-->
+
+
+        <!-- ****************************************登录**********************************************-->
         <activity
             android:name=".ui.LoginActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+            android:theme="@style/TranslucentAppTheme.NoActionBar">
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
 
-        <!-- 主界面 -->
+        <!-- ****************************************主界面**********************************************-->
         <activity
             android:name=".ui.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/TranslucentAppTheme.NoActionBar">
 
+        </activity>
+
+        <!-- ****************************************地图定位界面**********************************************-->
+        <activity
+            android:name=".ui.MapLocationActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme_normal.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
     </application>
 

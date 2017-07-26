@@ -19,23 +19,28 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private Toolbar toolbar;
     private DrawerLayout mDrawerLayout;
+    final private int REQUESt_CODE_ASK_PERMISSIONS = 123;//
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         //设置透明标题栏
-//        transparentStatusBar();
+        //        transparentStatusBar();
         //允许窗口扩展到屏幕之外
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         setContentView(R.layout.act_main);
         initView();
-
+        //android 6.0以后设置权限提醒
+        if (Build.VERSION.SDK_INT >= 23) {
+            permission();//权限检查-授权使用
+        }
     }
 
     private void initView() {
+
         navigationView = (NavigationView) findViewById(R.id.navigaitnoView);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -54,24 +59,24 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setLayoutParams(lp1);
 
     }
+
     /**
      * 检测系统版本并使状态栏全透明
      */
-//    protected void transparentStatusBar() {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//        }
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            Window window = getWindow();
-//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS |
-//                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-//            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
-//                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//            window.setStatusBarColor(Color.TRANSPARENT);
-//        }
-//    }
-
+    //    protected void transparentStatusBar() {
+    //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+    //            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+    //        }
+    //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+    //            Window window = getWindow();
+    //            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS |
+    //                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+    //            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
+    //                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+    //            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+    //            window.setStatusBarColor(Color.TRANSPARENT);
+    //        }
+    //    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -88,5 +93,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * 权限检查
+     */
+    private void permission() {
+
+
     }
 }

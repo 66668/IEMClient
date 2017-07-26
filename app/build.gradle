@@ -1,6 +1,34 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+
+        /**
+         * 高德地图配置
+         */
+        debug {
+            //keystore中key的别名
+            keyAlias 'debug.keystore'
+            //keystore中key的密码
+            keyPassword '778744'
+            //keystore的文件路径，可以是绝对路径也可以是相对路径
+            storeFile file('D:/Android_keystore/debug.keystore.jks')
+            //keystore的密码
+            storePassword '778744'
+        }
+
+        //发布版的keystore
+        release {
+            storeFile file("D:/Android_keystore/debug.keystore.jks")
+            //keystore的密码
+            storePassword "778744"
+            //keystore中key的别名
+            keyAlias "debug.keystore"
+            //keystore中key的密码
+            keyPassword "778744"
+        }
+    }
+
     compileSdkVersion 26
     buildToolsVersion "26.0.0"
     defaultConfig {
@@ -10,12 +38,20 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ndk {
+            //设置支持的SO库架构
+            abiFilters 'armeabi', 'x86', 'armeabi - v7a', 'x86_64', 'arm64 - v8a'
+        }
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    sourceSets.main {
+        jniLibs.srcDirs = ['libs']  // <-- so文件和libs库需要添加这个配置，我由于没加，初始化失败
     }
 }
 
@@ -55,8 +91,12 @@ dependencies {
     //okhttp需要使用
     //recyclerview
     compile 'com.android.support:recyclerview-v7:26.+'
-
     //使用butterknife注解(正常三步：（1）project/build.gradle（2）module该处添加依赖（3）下载插件android-butterknife-zelezny，然后才能正常使用)
     compile 'com.jakewharton:butterknife:8.7.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
+    //高德地图定位
+    compile files('libs/AMap2DMap_2.9.2_AMapSearch_3.6.1_AMapLocation_3.1.0_20161122.jar')
+    compile files('libs/jcore-android_v1.1.0.jar')
+    //极光推送
+    compile files('libs/jpush-android_v3.0.1.jar')
 }

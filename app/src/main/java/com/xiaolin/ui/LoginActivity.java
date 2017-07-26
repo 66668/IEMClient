@@ -1,6 +1,5 @@
 package com.xiaolin.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -67,16 +66,15 @@ public class LoginActivity extends BaseActivity implements ILoginView {
      */
     @OnClick(R.id.btn_login)
     void login(View view) {
-        //        getInfo();
-        //        isEmpty();  //非空判断
-        //
-        //        //交给p层处理，接口回调处理
-        //        loginPresenter.pLogin(storeName, userName, password, IP);
+        getInfo();
+        if (!isEmpty()) { //非空判断
+            //交给p层处理，接口回调处理
+            loginPresenter.pLogin(storeName, userName, password, IP);
+        }
 
-
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(intent);
-        this.finish();
+        //        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        //        startActivity(intent);
+        //        this.finish();
     }
 
     private void getInfo() {
@@ -88,20 +86,21 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 
 
     //判断输入是否是空
-    private void isEmpty() {
+    private boolean isEmpty() {
 
         if (TextUtils.isEmpty(storeName)) {
             DebugUtil.ToastShort(LoginActivity.this, getResources().getString(R.string.login_storeName_input));
-            return;
+            return true;
         }
         if (TextUtils.isEmpty(userName)) {
             DebugUtil.ToastShort(LoginActivity.this, getResources().getString(R.string.login_userName_input));
-            return;
+            return true;
         }
         if (TextUtils.isEmpty(password)) {
             DebugUtil.ToastShort(LoginActivity.this, getResources().getString(R.string.login_password_input));
-            return;
+            return true;
         }
+        return false;
 
     }
 
