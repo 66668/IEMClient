@@ -3,6 +3,9 @@ package com.xiaolin.http;
 
 import com.xiaolin.bean.CommonBean;
 import com.xiaolin.bean.LoginBean;
+import com.xiaolin.bean.VisitorBean;
+
+import java.util.List;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -46,6 +49,33 @@ public interface MyHttpService {
             , @Field("Remark") String Remark
             , @Field("DeviceInfo") String DeviceInfo
             , @Field("IP") String IP);
+
+    /**
+     * 获取访客记录
+     * pageSize：展示最多记录数量
+     * timespan：获取今天（1）或者全部（其他）。
+     * storeID：公司ID
+     * iMaxTime：最大时间
+     * iMinTime：最小时间
+     * employeeID：受访者EmployeeID
+     * isReceived：是否已接待（1：已接待 0：未接待 空：全部）
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("Main/GetVisitorRecordsByPage")
+    //post
+    Observable<CommonBean<List<VisitorBean>>> loadVisitor(
+            @Field("storeID") String storeID
+            , @Field("employeeID") String employeeID
+            , @Field("isReceived") String isReceived
+
+            , @Field("iMaxTime") String maxTime
+            , @Field("iMinTime") String minTime
+
+            , @Field("timespan") String timespan
+            , @Field("pageSize") String DeviceSN);
+
 
     //    /**
     //     * 03-01-01 添加新人员

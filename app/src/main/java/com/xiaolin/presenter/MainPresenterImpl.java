@@ -1,8 +1,9 @@
-package com.xiaolin.presenter.ipresenter;
+package com.xiaolin.presenter;
 
 import android.content.Context;
 
 import com.xiaolin.R;
+import com.xiaolin.presenter.ipresenter.IMainPresenter;
 import com.xiaolin.ui.iview.IMainView;
 
 /**

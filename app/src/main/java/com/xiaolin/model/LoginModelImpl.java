@@ -1,7 +1,5 @@
 package com.xiaolin.model;
 
-import android.util.Log;
-
 import com.xiaolin.app.Constants;
 import com.xiaolin.bean.CommonBean;
 import com.xiaolin.bean.LoginBean;
@@ -53,7 +51,7 @@ public class LoginModelImpl implements ILoginModel {
 
                     @Override
                     public void onCompleted() {
-                        Log.d(TAG, "LoginModelImpl--onCompleted");
+                        DebugUtil.d(TAG, "LoginModelImpl--onCompleted");
                         //保存登录信息,退出需要清空
                         SPUtils.putString(Constants.STORENAME, storeName);
                         SPUtils.putString(Constants.USRENAME, userName);
@@ -62,7 +60,7 @@ public class LoginModelImpl implements ILoginModel {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d(TAG, "onError: " + e.toString());
+                        DebugUtil.d(TAG, "onError: " + e.toString());
                         listener.onLoginFailed("获取数据异常", (Exception) e);
                     }
 

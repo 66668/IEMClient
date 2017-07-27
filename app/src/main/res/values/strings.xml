@@ -22,6 +22,10 @@
     <string name="mapAttendance">外出签到</string>
     <string name="forAttend">签到</string>
 
+    <!-- 访客界面-->
+    <string name="visitor_time">到访时间：</string>
+
+
 
 
     <!-- 主界面设置-->

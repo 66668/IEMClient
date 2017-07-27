@@ -18,7 +18,7 @@ import com.xiaolin.R;
 import com.xiaolin.library.PermissionListener;
 import com.xiaolin.library.PermissionsUtil;
 import com.xiaolin.presenter.ipresenter.IMainPresenter;
-import com.xiaolin.presenter.ipresenter.MainPresenterImpl;
+import com.xiaolin.presenter.MainPresenterImpl;
 import com.xiaolin.ui.base.BaseActivity;
 import com.xiaolin.ui.iview.IMainView;
 import com.xiaolin.utils.DebugUtil;
