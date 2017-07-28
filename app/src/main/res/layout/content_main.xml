@@ -235,8 +235,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:text="@string/app_title"
+                android:layout_gravity="center"
                 android:textColor="@color/white"
                 android:textSize="18sp"/>
         </android.support.v7.widget.Toolbar>

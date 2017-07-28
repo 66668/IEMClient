@@ -41,7 +41,6 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     private IMainPresenter iMainPresenter;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,11 +145,10 @@ public class MainActivity extends BaseActivity implements IMainView {
     }
 
     /**
-     * IMainView 个人信息跳转
+     * IMainView 更新跳转
      */
     @Override
-    public void turnToInfo() {
-
+    public void turnToupdate() {
     }
 
     /**
@@ -158,7 +156,7 @@ public class MainActivity extends BaseActivity implements IMainView {
      */
     @Override
     public void turnToChangePs() {
-
+        startActivity(ChangePassWordActivity.class);
     }
 
     /**

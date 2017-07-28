@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/common_topbar_bgcolor" android:state_checked="true"/><!-- selected颜色 -->
+    <item android:drawable="@color/common_topbar_bgcolor" android:state_focused="true"/> <!-- focused颜色 -->
+    <item android:drawable="@color/lightgray" android:state_pressed="true"/> <!-- pressed颜色 -->
+    <item android:drawable="@color/white"/><!-- default颜色 -->
+</selector>

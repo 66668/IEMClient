@@ -7,7 +7,7 @@ package com.xiaolin.ui.iview;
 public interface IMainView {
 
     //跳转到个人信息界面
-    void turnToInfo();
+    void turnToupdate();
 
     //跳转到修改密码界面
     void turnToChangePs();

@@ -4,9 +4,26 @@
     <string name="action_settings">Settings</string>
 
     <!-- 我的-->
-    <string name="person_info">个人信息</string>
+    <string name="person_update">检查更新</string>
     <string name="person_changePSD">修改密码</string>
     <string name="person_quit">退出</string>
+
+    <string name="oldpsd">原密码</string>
+    <string name="newpsd">新密码</string>
+    <string name="newpsd_again">确认密码</string>
+    <string name="ChangePassWordActivity_oldpsd">请输入旧密码！</string>
+    <string name="ChangePassWordActivity_newpsd">请输入新密码！</string>
+    <string name="ChangePassWordActivity_newpsd_error">两次输入的新密码不一样！</string>
+    <string name="ChangePassWordActivity_newpsd_error_lenght">请检查密码长度，6-20位密码！</string>
+    <string name="ChangePassWordActivity_oldpsd_error">旧密码错误！</string>
+    <string name="requestForPsd">密码由6-20位英文字母、数字或"_"组成</string>
+    <string name="requestForPsd_error">密码不可以是 英文字母、数字 或 下划线 以外的字符！</string>
+    <string name="cancel">取消</string>
+    <string name="confirm">确定</string>
+    <string name="update_tips">升级提示</string>
+    <string name="no_update_this_time">暂不升级</string>
+    <string name="last_version_already">已是最新版本</string>
+    <string name="update_now">立即升级</string>
 
     <!-- 登录设置-->
     <string name="login_storeName_input">公司名称不能为空</string>
@@ -24,8 +41,6 @@
 
     <!-- 访客界面-->
     <string name="visitor_time">到访时间：</string>
-
-
 
 
     <!-- 主界面设置-->

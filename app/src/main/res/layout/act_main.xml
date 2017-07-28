@@ -17,11 +17,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="?attr/colorPrimary"
+        android:background="@color/white"
         app:headerLayout="@layout/nav_header_main"
-        app:itemIconTint="@color/select_nav_text_color"
+        app:itemIconTint="@color/select_nav_item_icon"
         app:itemTextColor="@color/select_nav_text_color"
         app:menu="@menu/menu_nav_drawer"
+        app:itemBackground="@drawable/select_nav_item_bg"
         >
     </android.support.design.widget.NavigationView>
 

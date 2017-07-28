@@ -27,8 +27,8 @@ public class MainPresenterImpl implements IMainPresenter {
     @Override
     public void switchNavigation(int id) {
         switch (id) {
-            case R.id.nav_menu_info://个人信息
-                iMainView.turnToInfo();
+            case R.id.nav_menu_update://更新
+                iMainView.turnToupdate();
                 break;
             case R.id.nav_menu_psd://修改密码
                 iMainView.turnToChangePs();

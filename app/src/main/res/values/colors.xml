@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimaryDark">#FF00609d</color>
-    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimary">#19a1f7</color>
     <color name="colorAccent">#FF000000</color>
     <!-- app应用的背景颜色-->
     <color name="common_topbar_bgcolor">#19a1f7</color>
     <color name="common_bgcolor_alpha">#33FFFFFF</color>
     <!--登录颜色设置-->
     <color name="login_btn_color">#128ee6</color>
+    <!-- 修改密码-->
+    <color name="scrollView_bg">#f3f3f3</color>
+    <color name="btn_bg_on">#173c6f</color>
 
     <!-- 通用颜色-->
     <color name="white">#FFFFFF</color><!--白色 -->
