@@ -8,6 +8,7 @@ import com.google.gson.FieldNamingStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.xiaolin.utils.CheckNetwork;
+import com.xiaolin.utils.DebugUtil;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -47,9 +48,6 @@ public class HttpUtils {
     private boolean debug;//判断 app版本，由application设置
 
     private final static String TAG = "HttpUtils";
-    private final static String API_BASE_URL = "http://192.168.1.245:1132/openapi/";//局域网测试
-    //    private final static String API_BASE_URL = "http://101.201.72.112:7016/openapi/";//阿里云测试
-    //    private final static String API_BASE_URL = "https://iemapi.yuevision.com/openapi/";//阿里云正式
 
     /**
      * 分页数据，每页的数量
@@ -85,7 +83,7 @@ public class HttpUtils {
     public <T> T getServer(Class<T> clz) {
         if (https == null) {
             synchronized (HttpUtils.class) {
-                https = getRetrofitBuilder(API_BASE_URL).build().create(clz);
+                https = getRetrofitBuilder(URLUtils.API_BASE_URL).build().create(clz);
             }
         }
         return (T) https;
@@ -102,7 +100,7 @@ public class HttpUtils {
 
         //retrofit配置 可用链式结构
         Retrofit.Builder builder = new Retrofit.Builder();
-        builder.client(getOkhttpClient());//设置okhttp（重点），不设置走默认的
+        builder.client(getOkhttp3Client());//设置okhttp（重点），不设置走默认的
         builder.baseUrl(apiUrl);//设置远程地址
         builder.addConverterFactory(new NullOnEmptyConverterFactory()); //添加自定义转换器，处理响应
         builder.addConverterFactory(GsonConverterFactory.create(getGson())); //添加Gson转换器，处理返回
@@ -120,7 +118,7 @@ public class HttpUtils {
 
         //retrofit配置 可用链式结构
         Retrofit.Builder builder = new Retrofit.Builder();
-        builder.client(getOkhttpClient());//设置okhttp（重点），不设置走默认的
+        builder.client(getOkhttp3Client());//设置okhttp3（重点），不设置走默认的
         builder.baseUrl(apiUrl);//设置远程地址
         builder.addConverterFactory(GsonConverterFactory.create());
         builder.addCallAdapterFactory(RxJavaCallAdapterFactory.create()); //Rx
@@ -150,7 +148,7 @@ public class HttpUtils {
     }
 
     //okhttp配置
-    public OkHttpClient getOkhttpClient() {
+    public OkHttpClient getOkhttp3Client() {
         OkHttpClient client1;
         //        client1 = getUnsafeOkHttpClient();//（https）
         client1 = getUnsafeOkHttpClient2();//（http）
@@ -209,18 +207,17 @@ public class HttpUtils {
     //okhttp配置 修正（http）
     public OkHttpClient getUnsafeOkHttpClient2() {
         try {
-
             //具体配置，可用链式结构
             OkHttpClient.Builder okBuilder = new OkHttpClient.Builder();
             okBuilder.readTimeout(20, TimeUnit.SECONDS);
             okBuilder.connectTimeout(10, TimeUnit.SECONDS);
             okBuilder.writeTimeout(20, TimeUnit.SECONDS);
-            okBuilder.addInterceptor(new HttpHeadInterceptor());
+//            okBuilder.addInterceptor(new HttpHeadInterceptor());
             okBuilder.addInterceptor(getInterceptor());//设置拦截器
             okBuilder.hostnameVerifier(new HostnameVerifier() {
                 @Override
                 public boolean verify(String hostname, SSLSession session) {
-                    Log.d("HttpUtils", "hostname: " + hostname);
+                    DebugUtil.d("HttpUtils", "hostname: " + hostname);
                     return true;
                 }
             });

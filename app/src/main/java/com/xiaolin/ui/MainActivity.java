@@ -137,6 +137,7 @@ public class MainActivity extends BaseActivity implements IMainView {
             case R.id.layout_attend://考勤记录
                 break;
             case R.id.layout_visitor://访客记录记录
+                iMainPresenter.toVisitor();
                 break;
             case R.id.loaction://地图定位
                 iMainPresenter.mapLocation();
@@ -197,8 +198,12 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     }
 
+    /**
+     * 访客记录
+     */
     @Override
     public void turnToVisitor() {
+        startActivity(VisitorActivity.class);
 
     }
 

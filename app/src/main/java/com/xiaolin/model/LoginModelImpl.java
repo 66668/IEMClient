@@ -2,7 +2,6 @@ package com.xiaolin.model;
 
 import com.xiaolin.app.Constants;
 import com.xiaolin.bean.CommonBean;
-import com.xiaolin.bean.LoginBean;
 import com.xiaolin.http.MyHttpService;
 import com.xiaolin.model.imodel.ILoginModel;
 import com.xiaolin.model.listener.OnLoginListener;
@@ -47,12 +46,12 @@ public class LoginModelImpl implements ILoginModel {
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<CommonBean<LoginBean>>() {
+                .subscribe(new Observer<CommonBean>() {
 
                     @Override
                     public void onCompleted() {
                         DebugUtil.d(TAG, "LoginModelImpl--onCompleted");
-                        //保存登录信息,退出需要清空
+                        //登录成功，保存登录信息
                         SPUtils.putString(Constants.STORENAME, storeName);
                         SPUtils.putString(Constants.USRENAME, userName);
                         SPUtils.putString(Constants.PASSWORD, passWord);
@@ -60,12 +59,12 @@ public class LoginModelImpl implements ILoginModel {
 
                     @Override
                     public void onError(Throwable e) {
-                        DebugUtil.d(TAG, "onError: " + e.toString());
+                        DebugUtil.e(TAG, "login--onError: " + e.toString());
                         listener.onLoginFailed("获取数据异常", (Exception) e);
                     }
 
                     @Override
-                    public void onNext(CommonBean<LoginBean> loginBeanCommonBean) {
+                    public void onNext(CommonBean loginBeanCommonBean) {
                         DebugUtil.d(TAG, "LoginModelImpl-onNext");
                         DebugUtil.d(TAG, loginBeanCommonBean.toString());
 

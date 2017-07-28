@@ -1,11 +1,9 @@
 package com.xiaolin.http;
 
 
+import com.xiaolin.bean.BaseBean;
 import com.xiaolin.bean.CommonBean;
-import com.xiaolin.bean.LoginBean;
-import com.xiaolin.bean.VisitorBean;
-
-import java.util.List;
+import com.xiaolin.bean.VisitorListBean;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -34,9 +32,9 @@ public interface MyHttpService {
      * @return
      */
     @FormUrlEncoded
-    @POST("User/AppDeviceLoginByPassword")
+    @POST(URLUtils.LOGIN)
     //post
-    Observable<CommonBean<LoginBean>> login(
+    Observable<CommonBean> login(
             @Field("adminUserName") String storeName
             , @Field("userName") String username
             , @Field("password") String password
@@ -52,6 +50,7 @@ public interface MyHttpService {
 
     /**
      * 获取访客记录
+     * <p>
      * pageSize：展示最多记录数量
      * timespan：获取今天（1）或者全部（其他）。
      * storeID：公司ID
@@ -63,9 +62,9 @@ public interface MyHttpService {
      * @return
      */
     @FormUrlEncoded
-    @POST("Main/GetVisitorRecordsByPage")
+    @POST(URLUtils.VISITOR)
     //post
-    Observable<CommonBean<List<VisitorBean>>> loadVisitor(
+    Observable<VisitorListBean> loadVisitor(
             @Field("storeID") String storeID
             , @Field("employeeID") String employeeID
             , @Field("isReceived") String isReceived
@@ -75,6 +74,14 @@ public interface MyHttpService {
 
             , @Field("timespan") String timespan
             , @Field("pageSize") String DeviceSN);
+
+    /**
+     * 地图签到 上传obj参数
+     */
+    @FormUrlEncoded
+    @POST(URLUtils.LOCATION)
+    //post
+    Observable<BaseBean> locationAttend(@Field("obj") String jsonStr);
 
 
     //    /**

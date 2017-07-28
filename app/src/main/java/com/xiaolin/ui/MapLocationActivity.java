@@ -23,7 +23,10 @@ import com.amap.api.maps2d.model.BitmapDescriptorFactory;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.MarkerOptions;
 import com.xiaolin.R;
+import com.xiaolin.presenter.LoactionPresenterImpl;
+import com.xiaolin.presenter.ipresenter.ILoactionPreseter;
 import com.xiaolin.ui.base.BaseActivity;
+import com.xiaolin.ui.iview.ILocationView;
 import com.xiaolin.utils.DebugUtil;
 
 import java.text.SimpleDateFormat;
@@ -37,7 +40,9 @@ import butterknife.OnClick;
 /**
  * 地图定位
  */
-public class MapLocationActivity extends BaseActivity implements LocationSource {
+public class MapLocationActivity extends BaseActivity implements LocationSource, ILocationView {
+    private static final String TAG = "loaction";
+
     @BindView(R.id.layout_back)
     RelativeLayout forBack;
 
@@ -62,6 +67,10 @@ public class MapLocationActivity extends BaseActivity implements LocationSource 
     private double lon;
     private String currentTime = null;
     private String address = null;
+
+    //签到相关
+    ILoactionPreseter loactionPreseter;
+
 
     //常量
     private final int POST_SUCESS = 1001; // 登陆成功
@@ -104,30 +113,10 @@ public class MapLocationActivity extends BaseActivity implements LocationSource 
         tv_right.setText(getResources().getString(R.string.forAttend));
         tvTitle.setText(getResources().getString(R.string.mapAttendance));
         mapView = (MapView) findViewById(R.id.map_view);
+
+        loactionPreseter = new LoactionPresenterImpl(MapLocationActivity.this, this);
     }
 
-    /**
-     * 返回
-     *
-     * @param view
-     */
-    @OnClick(R.id.imgBack)
-    void imgBack(View view) {
-        MapLocationActivity.this.finish();
-    }
-
-    /**
-     * 签到按钮
-     *
-     * @param view
-     */
-    @OnClick(R.id.tv_right)
-    void Commit(View view) {
-        if (!isEmpoty()) {
-            //签到接口
-        }
-
-    }
 
     private boolean isEmpoty() {
         if (TextUtils.isEmpty(currentTime)) {
@@ -142,23 +131,23 @@ public class MapLocationActivity extends BaseActivity implements LocationSource 
     }
 
 
-//    public void forAttend(View view) {
-//
-//
-//        Loading.run(this, new Runnable() {
-//
-//            @Override
-//            public void run() {
-//                try {
-//                    UserHelper.forAttend(MapLocationActivity.this, currentTime, address);
-//                    // 访问服务端成功，消息处理
-//                    sendMessage(POST_SUCESS);
-//                } catch (MyException e) {
-//                    sendMessage(POST_FAILED, e.getMessage());
-//                }
-//            }
-//        });
-//    }
+    //    public void forAttend(View view) {
+    //
+    //
+    //        Loading.run(this, new Runnable() {
+    //
+    //            @Override
+    //            public void run() {
+    //                try {
+    //                    UserHelper.forAttend(MapLocationActivity.this, currentTime, address);
+    //                    // 访问服务端成功，消息处理
+    //                    sendMessage(POST_SUCESS);
+    //                } catch (MyException e) {
+    //                    sendMessage(POST_FAILED, e.getMessage());
+    //                }
+    //            }
+    //        });
+    //    }
 
     //    @Override
     //    protected void handleMessage(Message msg) {
@@ -298,5 +287,57 @@ public class MapLocationActivity extends BaseActivity implements LocationSource 
     public void forBack(View view) {
         this.finish();
     }
+
+    //ILocationView
+    @Override
+    public void showProgress() {
+        loadingDialog.show();
+
+    }
+
+    //ILocationView
+    @Override
+    public void hideProgress() {
+        loadingDialog.dismiss();
+    }
+
+    //ILocationView 签到成功
+    @Override
+    public void postSuccessShow(String str) {
+        DebugUtil.ToastShort(MapLocationActivity.this, str);
+    }
+
+    //ILocationView 签到失败
+    @Override
+    public void postFaild(String msg, Exception e) {
+        DebugUtil.d(TAG, "MapLocationActivity--地图签到异常=" + e.toString());
+        DebugUtil.ToastShort(MapLocationActivity.this, msg);
+    }
+
+    /**
+     * 返回
+     *
+     * @param view
+     */
+    @OnClick(R.id.imgBack)
+    void imgBack(View view) {
+        MapLocationActivity.this.finish();
+    }
+
+    /**
+     * 签到按钮
+     *
+     * @param view
+     */
+    @OnClick(R.id.tv_right)
+    void Commit(View view) {
+        if (!isEmpoty()) {
+            //签到接口
+            loactionPreseter.pPostAttend(currentTime, address, lat + "", lon + "");
+        }
+
+    }
+
+
 }
 

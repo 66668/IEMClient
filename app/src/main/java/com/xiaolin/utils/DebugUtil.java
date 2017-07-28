@@ -1,6 +1,8 @@
 package com.xiaolin.utils;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -20,14 +22,20 @@ public class DebugUtil {
     public static final String TAG = "SJY";
     public static final boolean DEBUG = true;
 
+    //toast弹窗提示
     public static void toastLong(Context context, String content) {
         Toast.makeText(context, content, Toast.LENGTH_LONG).show();
     }
 
+    //toast弹窗提示
     public static void ToastShort(Context context, String content) {
         Toast.makeText(context, content, Toast.LENGTH_SHORT).show();
     }
 
+    //View的顶部Snackbar显示
+    public static void SnackbarShow(@NonNull View view, String content) {
+        Snackbar.make(view, "加载数据失败！", Snackbar.LENGTH_SHORT).show();//底部提示
+    }
 
     // 自定义toast
     public static void toastInMiddle(Context context, String str) {

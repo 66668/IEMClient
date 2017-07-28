@@ -3,14 +3,16 @@ package com.xiaolin.bean;
 import java.io.Serializable;
 
 /**
- * 登录返回 数据存储
+ * 处理 {code:"",message:"",result:""}
+ * 签到返回结果
+ * <p>
  * Created by sjy on 2017/7/24.
  */
 
-public class CommonBean implements Serializable {
+public class BaseBean implements Serializable {
     public String code;
     public String message;
-    public LoginBean result;
+    public String result;
 
     public String getCode() {
         return code;
@@ -28,21 +30,21 @@ public class CommonBean implements Serializable {
         this.message = message;
     }
 
-    public LoginBean getResult() {
+    public String getResult() {
+
         return result;
     }
 
-    public void setResult(LoginBean result) {
+    public void setResult(String result) {
         this.result = result;
     }
 
     @Override
     public String toString() {
-        return "CommonBean{" +
+        return "BaseBean{" +
                 "code='" + code + '\'' +
                 ", message='" + message + '\'' +
                 ", result=" + result.toString() +
                 '}';
     }
-
 }

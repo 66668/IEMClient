@@ -1,13 +1,10 @@
 package com.xiaolin.model;
 
-import com.xiaolin.bean.CommonBean;
-import com.xiaolin.bean.VisitorBean;
+import com.xiaolin.bean.VisitorListBean;
 import com.xiaolin.http.MyHttpService;
 import com.xiaolin.model.imodel.IVisitorModel;
 import com.xiaolin.model.listener.OnVisitorListener;
 import com.xiaolin.utils.DebugUtil;
-
-import java.util.List;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -29,12 +26,12 @@ public class VisitorModelImpl implements IVisitorModel {
                 , isReceived
                 , maxTime
                 , minTime
-                , "0"
+                , "0"//获取全部数据
                 , "20")
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<CommonBean<List<VisitorBean>>>() {
+                .subscribe(new Observer<VisitorListBean>() {
                     @Override
                     public void onCompleted() {
                         DebugUtil.d(TAG, "VisitorModelImpl--onCompleted");
@@ -48,7 +45,7 @@ public class VisitorModelImpl implements IVisitorModel {
 
 
                     @Override
-                    public void onNext(CommonBean<List<VisitorBean>> visitorBeanCommonBean) {
+                    public void onNext(VisitorListBean visitorBeanCommonBean) {
                         DebugUtil.d(TAG, "VisitorModelImpl--onNext");
                         DebugUtil.d(TAG, visitorBeanCommonBean.toString());
 

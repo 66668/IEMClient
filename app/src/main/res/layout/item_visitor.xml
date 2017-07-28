@@ -39,6 +39,7 @@
         android:textSize="12sp"/>
 
     <TextView
+        android:id="@+id/tv_time"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_alignBottom="@+id/tv_time_v"

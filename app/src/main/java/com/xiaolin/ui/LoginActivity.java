@@ -8,11 +8,13 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.xiaolin.R;
+import com.xiaolin.app.Constants;
 import com.xiaolin.presenter.LoginPresenterImpl;
 import com.xiaolin.presenter.ipresenter.ILoginPresenter;
 import com.xiaolin.ui.base.BaseActivity;
 import com.xiaolin.ui.iview.ILoginView;
 import com.xiaolin.utils.DebugUtil;
+import com.xiaolin.utils.SPUtils;
 import com.xiaolin.utils.Utils;
 
 import butterknife.BindView;
@@ -20,6 +22,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
+ *   有空修改成 checkbox记住密码,使用（状态模式+中介者模式） --07-28书
  *
  */
 
@@ -55,6 +58,22 @@ public class LoginActivity extends BaseActivity implements ILoginView {
         setContentView(R.layout.act_login);
         ButterKnife.bind(this);
         initMyView();
+        saveContent();
+    }
+
+    /**
+     * 自动保存设置
+     */
+    private void saveContent() {
+        if (!TextUtils.isEmpty(SPUtils.getString(Constants.STORENAME))) {
+            et_store.setText(SPUtils.getString(Constants.STORENAME));
+        }
+        if (!TextUtils.isEmpty(SPUtils.getString(Constants.USRENAME))) {
+            et_user.setText(SPUtils.getString(Constants.USRENAME));
+        }
+        if (!TextUtils.isEmpty(SPUtils.getString(Constants.PASSWORD))) {
+            et_ps.setText(SPUtils.getString(Constants.PASSWORD));
+        }
     }
 
     private void initMyView() {
@@ -71,7 +90,6 @@ public class LoginActivity extends BaseActivity implements ILoginView {
             //交给p层处理，接口回调处理
             loginPresenter.pLogin(storeName, userName, password, IP);
         }
-
         //        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         //        startActivity(intent);
         //        this.finish();
@@ -92,10 +110,12 @@ public class LoginActivity extends BaseActivity implements ILoginView {
             DebugUtil.ToastShort(LoginActivity.this, getResources().getString(R.string.login_storeName_input));
             return true;
         }
+
         if (TextUtils.isEmpty(userName)) {
             DebugUtil.ToastShort(LoginActivity.this, getResources().getString(R.string.login_userName_input));
             return true;
         }
+
         if (TextUtils.isEmpty(password)) {
             DebugUtil.ToastShort(LoginActivity.this, getResources().getString(R.string.login_password_input));
             return true;

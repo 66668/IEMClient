@@ -1,16 +1,17 @@
 package com.xiaolin.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 登录返回 数据存储
  * Created by sjy on 2017/7/24.
  */
 
-public class CommonBean implements Serializable {
+public class VisitorListBean implements Serializable {
     public String code;
     public String message;
-    public LoginBean result;
+    public List<VisitorBean> result;
 
     public String getCode() {
         return code;
@@ -28,21 +29,11 @@ public class CommonBean implements Serializable {
         this.message = message;
     }
 
-    public LoginBean getResult() {
+    public List<VisitorBean> getResult() {
         return result;
     }
 
-    public void setResult(LoginBean result) {
+    public void setResult(List<VisitorBean> result) {
         this.result = result;
     }
-
-    @Override
-    public String toString() {
-        return "CommonBean{" +
-                "code='" + code + '\'' +
-                ", message='" + message + '\'' +
-                ", result=" + result.toString() +
-                '}';
-    }
-
 }

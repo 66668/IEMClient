@@ -7,15 +7,15 @@ import java.io.Serializable;
  */
 
 public class LoginBean implements Serializable {
-   private String StoreId;
-   private String StoreUserId;
-   private String EmployeeId;
-   private String TodayDate;
-   private String DeviceId;
-   private String EmployeeName;
-   private String FirstAttend;
-   private String LastAttend;
-   private String YesterdayState;
+    private String StoreId;
+    private String StoreUserId;
+    private String EmployeeId;
+    private String TodayDate;
+    private String DeviceId;
+    private String EmployeeName;
+    private String FirstAttend;
+    private String LastAttend;
+    private String YesterdayState;
 
 
     public String getStoreId() {
