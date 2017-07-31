@@ -75,9 +75,19 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme_normal.NoActionBar">
 
-        </activity> <!-- ****************************************访客记录界面**********************************************-->
+        </activity>
+
+        <!-- ****************************************访客记录界面**********************************************-->
         <activity
             android:name=".ui.VisitorActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme_normal.NoActionBar">
+
+        </activity>
+
+        <!-- ****************************************修改密码界面**********************************************-->
+        <activity
+            android:name=".ui.ChangePassWordActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme_normal.NoActionBar">
 

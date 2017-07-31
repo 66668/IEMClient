@@ -18,4 +18,7 @@ public class URLUtils {
 
     //地图考勤
     public static final String LOCATION = "Attend/AddOneMapAttendanceRecord";
+
+    //修改密码
+    public static final String CHANGEPS = "User/ChangePasswordN";
 }

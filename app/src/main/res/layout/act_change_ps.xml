@@ -12,12 +12,12 @@
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/scrollView_bg">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <!-- 旧密码 -->
@@ -25,10 +25,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
                 android:layout_marginBottom="10dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/et_ps_style"
                 android:gravity="center"
@@ -39,45 +38,47 @@
                     android:id="@+id/et_oldpsd"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/et_ps_height"
-                    android:layout_gravity="left"
+                    android:layout_gravity="start"
                     android:layout_margin="16dp"
                     android:layout_weight="1"
                     android:background="#FFF"
                     android:ems="10"
                     android:hint="@string/oldpsd"
                     android:inputType="textPassword"
+                    android:maxLines="1"
                     android:padding="5dp"
-                    android:paddingLeft="11dp"
-                    android:singleLine="true"
+                    android:paddingEnd="11dp"
+                    android:paddingStart="5dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray"
-                    android:textSize="@dimen/common_textSize_default18"/>
+                    android:textSize="@dimen/common_textSize_default"/>
 
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
                     android:background="#d6d6d6"/>
 
                 <EditText
                     android:id="@+id/et_newpsd"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/et_ps_height"
-                    android:layout_gravity="left"
+                    android:layout_gravity="start"
                     android:layout_margin="16dp"
                     android:layout_weight="1"
                     android:background="#FFF"
                     android:ems="10"
                     android:hint="@string/newpsd"
                     android:inputType="textPassword"
+                    android:maxLines="1"
                     android:padding="5dp"
-                    android:paddingLeft="11dp"
-                    android:singleLine="true"
+                    android:paddingEnd="11dp"
+                    android:paddingStart="5dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray"
-                    android:textSize="@dimen/common_textSize_default18"/>
+                    android:textSize="@dimen/common_textSize_default"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -90,19 +91,20 @@
                     android:id="@+id/et_newpsd_again"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/et_ps_height"
-                    android:layout_gravity="left"
+                    android:layout_gravity="start"
                     android:layout_margin="16dp"
                     android:layout_weight="1"
                     android:background="#FFF"
                     android:ems="10"
                     android:hint="@string/newpsd_again"
                     android:inputType="textPassword"
+                    android:maxLines="1"
                     android:padding="5dp"
-                    android:paddingLeft="11dp"
-                    android:singleLine="true"
+                    android:paddingEnd="5dp"
+                    android:paddingStart="11dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/gray"
-                    android:textSize="@dimen/common_textSize_default18"/>
+                    android:textSize="@dimen/common_textSize_default"/>
 
 
             </LinearLayout>
@@ -111,10 +113,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:paddingLeft="20dp"
+                android:paddingEnd="5dp"
+                android:paddingStart="20dp"
                 android:text="@string/requestForPsd"
                 android:textColor="@color/black"
-                android:textSize="@dimen/common_textSize_default18"/>
+                android:textSize="@dimen/common_textSize_default"/>
             <!-- 修改按钮 -->
 
             <Button
@@ -122,8 +125,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginBottom="60dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="100dp"
                 android:background="@drawable/btn_ps_style"
                 android:text="确认修改"

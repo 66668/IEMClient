@@ -83,6 +83,15 @@ public interface MyHttpService {
     //post
     Observable<BaseBean> locationAttend(@Field("obj") String jsonStr);
 
+    /**
+     * 修改密码
+     */
+    @FormUrlEncoded
+    @POST(URLUtils.CHANGEPS)
+    //post
+    Observable<BaseBean> changeps(@Field("storeUserID") String storeUserID
+            , @Field("oldUserPassword") String oldUserPassword
+            , @Field("newUserPassword") String newUserPassword);
 
     //    /**
     //     * 03-01-01 添加新人员

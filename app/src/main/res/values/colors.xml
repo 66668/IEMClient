@@ -11,7 +11,8 @@
     <!-- 修改密码-->
     <color name="scrollView_bg">#f3f3f3</color>
     <color name="btn_bg_on">#173c6f</color>
-
+    <color name="btn_bg">#19a1f7</color> <!-- 按钮背景色 -->
+    <color name="btn_bg_off">#1E94D4</color> <!-- 按钮背景色(失效状态) -->
     <!-- 通用颜色-->
     <color name="white">#FFFFFF</color><!--白色 -->
     <color name="ivory">#0ff7f6f6</color><!--象牙色 -->

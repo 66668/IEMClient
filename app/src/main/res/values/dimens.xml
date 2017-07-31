@@ -12,9 +12,9 @@
     <dimen name="login_btn_radius">17dp</dimen>
     <dimen name="login_btn_height">35dp</dimen>
 
-    <dimen name="common_textSize_default18">18sp</dimen>
     <!-- 修改密码-->
     <dimen name="et_ps_height">40dp</dimen>
+    <dimen name="common_textSize_default">15sp</dimen>
 
 
 </resources>
