@@ -10,15 +10,30 @@ public class URLUtils {
     //    public final static String API_BASE_URL = "http://101.201.72.112:7016/openapi/";//阿里云测试
     public final static String API_BASE_URL = "https://iemapi.yuevision.com/openapi/";//阿里云正式
 
-    //登录
+    /**
+     * 登录
+     */
     public static final String LOGIN = "User/AppDeviceLoginByPassword";
 
-    //访客
+    /**
+     * 访客
+     */
+
     public static final String VISITOR = "Main/GetVisitorRecordsByPage";
 
-    //地图考勤
+    /**
+     * 地图考勤
+     */
     public static final String LOCATION = "Attend/AddOneMapAttendanceRecord";
 
-    //修改密码
+
+    /**
+     * 修改密码
+     */
     public static final String CHANGEPS = "User/ChangePasswordN";
+
+    /**
+     * 检查更新
+     */
+    public static final String CHECK_UPDATE = "Main/CheckVersion/1001";//1001表示android
 }

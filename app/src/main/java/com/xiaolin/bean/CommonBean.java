@@ -7,10 +7,10 @@ import java.io.Serializable;
  * Created by sjy on 2017/7/24.
  */
 
-public class CommonBean implements Serializable {
+public class CommonBean<T> implements Serializable {
     public String code;
     public String message;
-    public LoginBean result;
+    public T result;
 
     public String getCode() {
         return code;
@@ -28,11 +28,11 @@ public class CommonBean implements Serializable {
         this.message = message;
     }
 
-    public LoginBean getResult() {
+    public T getResult() {
         return result;
     }
 
-    public void setResult(LoginBean result) {
+    public void setResult(T result) {
         this.result = result;
     }
 

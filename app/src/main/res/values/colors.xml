@@ -13,6 +13,9 @@
     <color name="btn_bg_on">#173c6f</color>
     <color name="btn_bg">#19a1f7</color> <!-- 按钮背景色 -->
     <color name="btn_bg_off">#1E94D4</color> <!-- 按钮背景色(失效状态) -->
+    <!-- 更新-->
+    <color name="line">#b6b6b6</color> <!-- 分割线 -->
+
     <!-- 通用颜色-->
     <color name="white">#FFFFFF</color><!--白色 -->
     <color name="ivory">#0ff7f6f6</color><!--象牙色 -->

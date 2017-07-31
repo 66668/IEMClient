@@ -2,6 +2,7 @@ package com.xiaolin.model;
 
 import com.xiaolin.app.Constants;
 import com.xiaolin.bean.CommonBean;
+import com.xiaolin.bean.LoginBean;
 import com.xiaolin.http.MyHttpService;
 import com.xiaolin.model.imodel.ILoginModel;
 import com.xiaolin.model.listener.OnLoginListener;
@@ -46,7 +47,7 @@ public class LoginModelImpl implements ILoginModel {
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<CommonBean>() {
+                .subscribe(new Observer<CommonBean<LoginBean>>() {
 
                     @Override
                     public void onCompleted() {
@@ -64,17 +65,17 @@ public class LoginModelImpl implements ILoginModel {
                     }
 
                     @Override
-                    public void onNext(CommonBean loginBeanCommonBean) {
+                    public void onNext(CommonBean<LoginBean> bean) {
                         DebugUtil.d(TAG, "LoginModelImpl-onNext");
-                        DebugUtil.d(TAG, loginBeanCommonBean.toString());
+                        DebugUtil.d(TAG, bean.toString());
 
                         //处理返回结果
-                        if (loginBeanCommonBean.getCode().equals("1")) {
+                        if (bean.getCode().equals("1")) {
                             //code = 1
-                            listener.onLoginSuccess(loginBeanCommonBean.getResult());
-                        } else if (loginBeanCommonBean.getCode().equals("0")) {
+                            listener.onLoginSuccess(bean.getResult());
+                        } else if (bean.getCode().equals("0")) {
                             //code = 0处理
-                            listener.onLoginFailed(loginBeanCommonBean.getMessage(), new Exception("登陆失败"));
+                            listener.onLoginFailed(bean.getMessage(), new Exception("登陆失败"));
                         } else {
 
                         }

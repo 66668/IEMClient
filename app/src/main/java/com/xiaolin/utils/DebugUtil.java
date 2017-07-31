@@ -46,7 +46,7 @@ public class DebugUtil {
 
         Toast toast = new Toast(context);
         toast.setGravity(Gravity.CENTER, 0, 50);
-        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(view);
         toast.show();
     }

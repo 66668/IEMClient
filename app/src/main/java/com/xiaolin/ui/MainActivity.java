@@ -15,13 +15,16 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.xiaolin.R;
+import com.xiaolin.bean.UpgradeBean;
+import com.xiaolin.dialog.UpgradeDialog;
 import com.xiaolin.library.PermissionListener;
 import com.xiaolin.library.PermissionsUtil;
-import com.xiaolin.presenter.ipresenter.IMainPresenter;
 import com.xiaolin.presenter.MainPresenterImpl;
+import com.xiaolin.presenter.ipresenter.IMainPresenter;
 import com.xiaolin.ui.base.BaseActivity;
 import com.xiaolin.ui.iview.IMainView;
 import com.xiaolin.utils.DebugUtil;
+import com.xiaolin.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -128,12 +131,13 @@ public class MainActivity extends BaseActivity implements IMainView {
     }
 
     /**
-     * 多控件监听
+     * 多控件 监听
      */
     @OnClick({R.id.layout_attend, R.id.layout_visitor, R.id.loaction})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_attend://考勤记录
+                iMainPresenter.toAttendRecord();
                 break;
             case R.id.layout_visitor://访客记录记录
                 iMainPresenter.toVisitor();
@@ -144,12 +148,6 @@ public class MainActivity extends BaseActivity implements IMainView {
         }
     }
 
-    /**
-     * IMainView 更新跳转
-     */
-    @Override
-    public void turnToupdate() {
-    }
 
     /**
      * IMainView 修改密码跳转
@@ -167,6 +165,10 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     }
 
+
+    /**
+     * 地图定位
+     */
     @Override
     public void turnToMapLocation() {
         //地图定位+6.0权限设置
@@ -191,9 +193,12 @@ public class MainActivity extends BaseActivity implements IMainView {
         }
     }
 
+    /**
+     * 考勤记录
+     */
     @Override
     public void turnToAttendRecord() {
-
+        startActivity(ChangePassWordActivity.class);
     }
 
     /**
@@ -202,6 +207,64 @@ public class MainActivity extends BaseActivity implements IMainView {
     @Override
     public void turnToVisitor() {
         startActivity(VisitorActivity.class);
+
+    }
+
+    @Override
+    public void showProgress() {
+        loadingDialog.show();
+    }
+
+    @Override
+    public void hideProgress() {
+        loadingDialog.dismiss();
+    }
+
+    /**
+     * code=1 的String接口回调
+     *
+     * @param str
+     */
+    @Override
+    public void postSuccessShow(String str) {
+        DebugUtil.ToastShort(MainActivity.this, str);
+    }
+
+    /**
+     * 检查更新 回调
+     * <p>
+     * 弹窗提示
+     *
+     * @param bean
+     */
+    @Override
+    public void showUpgradeDialog(final UpgradeBean bean) {
+
+        if (!bean.getVersion().equals(Utils.getVersionName())) {
+            new UpgradeDialog(this, bean.getMessage(), false, new UpgradeDialog.UpdateAppDialogCallBack() {
+
+                @Override
+                public void confirm() {
+                    //使用浏览器打开连接
+                    Utils.openLink(MainActivity.this, bean.getPackageUrl());
+                }
+
+                @Override
+                public void cancel() {
+
+                }
+            }).show();
+        } else {
+            DebugUtil.toastInMiddle(MainActivity.this, "已是最新版本，不需要更新！");
+        }
+
+
+    }
+
+    @Override
+    public void postFaild(String msg, Exception e) {
+        DebugUtil.ToastShort(MainActivity.this, msg);
+        DebugUtil.e(TAG, e.toString());
 
     }
 

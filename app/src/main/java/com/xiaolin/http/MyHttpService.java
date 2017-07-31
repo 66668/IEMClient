@@ -3,10 +3,13 @@ package com.xiaolin.http;
 
 import com.xiaolin.bean.BaseBean;
 import com.xiaolin.bean.CommonBean;
+import com.xiaolin.bean.LoginBean;
+import com.xiaolin.bean.UpgradeBean;
 import com.xiaolin.bean.VisitorListBean;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import rx.Observable;
 
@@ -34,7 +37,7 @@ public interface MyHttpService {
     @FormUrlEncoded
     @POST(URLUtils.LOGIN)
     //post
-    Observable<CommonBean> login(
+    Observable<CommonBean<LoginBean>> login(
             @Field("adminUserName") String storeName
             , @Field("userName") String username
             , @Field("password") String password
@@ -85,13 +88,20 @@ public interface MyHttpService {
 
     /**
      * 修改密码
+     * post
      */
     @FormUrlEncoded
     @POST(URLUtils.CHANGEPS)
-    //post
     Observable<BaseBean> changeps(@Field("storeUserID") String storeUserID
             , @Field("oldUserPassword") String oldUserPassword
             , @Field("newUserPassword") String newUserPassword);
+
+    /**
+     * 检查更新
+     * get方式
+     */
+    @GET(URLUtils.CHECK_UPDATE)
+    Observable<CommonBean<UpgradeBean>> checkUpdate();
 
     //    /**
     //     * 03-01-01 添加新人员

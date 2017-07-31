@@ -25,16 +25,20 @@ public class ChangePsPresenterImpl implements OnCommonListener {
     }
 
     public void postChangePs(String old, String newps) {
+        iChangePsView.showProgress();
         iChangePsModel.postChangePs(old, newps, this);
     }
 
     @Override
     public void onSuccess(String str) {
+        iChangePsView.hideProgress();
+        iChangePsView.postSuccessShow(str);
 
     }
 
     @Override
     public void onFailed(String msg, Exception e) {
-
+        iChangePsView.hideProgress();
+        iChangePsView.postFaild(msg,e);
     }
 }

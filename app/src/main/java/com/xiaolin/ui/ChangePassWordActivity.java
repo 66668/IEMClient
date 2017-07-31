@@ -83,6 +83,11 @@ public class ChangePassWordActivity extends BaseActivity implements ICommonView 
         changePsPresenter.postChangePs(oldUserPassword, newUserPassword);
     }
 
+    @OnClick(R.id.layout_back)
+    public void forBack(View view) {
+        this.finish();
+    }
+
     // 非空验证
     public boolean isEmpoty() {
         // 非空
@@ -116,12 +121,6 @@ public class ChangePassWordActivity extends BaseActivity implements ICommonView 
         //判断是不是原密码
         return true;
     }
-
-    // back
-    public void forBack(View view) {
-        this.finish();
-    }
-
 
     @Override
     public void showProgress() {

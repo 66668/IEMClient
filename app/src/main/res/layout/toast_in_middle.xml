@@ -5,12 +5,23 @@
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/toast"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:background="@android:color/black"
-        android:textColor="#FFF"
-        android:textSize="18sp"
-        />
+        android:background="@color/white"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/toast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:textColor="@color/common_topbar_bgcolor"
+            android:textSize="18sp"
+            />
+    </RelativeLayout>
+
+
 </RelativeLayout>
