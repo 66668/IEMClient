@@ -7,6 +7,8 @@
     <dimen name="login_margin">50dp</dimen>
     <dimen name="login_drawablePadding">15dp</dimen>
     <dimen name="login_textSize">12sp</dimen>
+    <dimen name="visitor_etSize">13sp</dimen>
+    <dimen name="visitor_tvSize">15sp</dimen>
     <dimen name="login_btn_marginTop">25dp</dimen>
     <dimen name="login_btn_TextSize">16sp</dimen>
     <dimen name="login_btn_radius">17dp</dimen>

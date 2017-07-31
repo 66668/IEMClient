@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    android:id="@+id/layout_visitor"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_visitor"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.VisitorActivity">
 
-    <!-- 已到访，未到访tab设置-->
+    <include
+        android:id="@+id/topbar"
+        layout="@layout/topbar_common_iti"/>
+    <!-- 已接待 未接待tab设置-->
     <android.support.design.widget.TabLayout
         android:id="@+id/visitor_tab"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_below="@+id/topbar"
         android:background="@color/white"
         app:tabIndicatorColor="@color/common_topbar_bgcolor"
         app:tabSelectedTextColor="@color/common_topbar_bgcolor"

@@ -12,7 +12,7 @@
         android:layout_height="50dp"
         android:layout_centerVertical="true"
         android:layout_marginStart="10dp"
-        android:background="@mipmap/ic_launcher"
+        android:background="@mipmap/default_photo"
         android:contentDescription="@string/app_name"/>
 
     <TextView

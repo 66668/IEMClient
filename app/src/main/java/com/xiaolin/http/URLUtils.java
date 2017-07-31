@@ -40,5 +40,5 @@ public class URLUtils {
     /**
      * 检查更新
      */
-    public static final String CHECK_UPDATE = "Main/CheckVersion/1001";//1001表示android
+    public static final String CHECK_UPDATE = "Main/CheckVersionP/1001";//1001表示android
 }

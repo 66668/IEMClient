@@ -1,6 +1,7 @@
 package com.xiaolin.adpter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.xiaolin.R;
 import com.xiaolin.bean.VisitorBean;
+import com.xiaolin.utils.DebugUtil;
+import com.xiaolin.utils.GlideCircleTransform;
 
 import java.util.List;
 
@@ -18,6 +23,8 @@ import java.util.List;
  */
 
 public class VisitorListAdapter extends RecyclerView.Adapter {
+    public static final String TAG = "visitor";
+
     private static final int TYPE_ITEM = 0;
     private static final int TYPE_FOOTER = 1;//是否滑动到顶部的标记
 
@@ -68,14 +75,23 @@ public class VisitorListAdapter extends RecyclerView.Adapter {
 
         if (holder instanceof ItemViewHolder) {
             VisitorBean bean = listBean.get(position);
+            DebugUtil.d(TAG, "visitorAdapter--VisitorBean=" + bean.toString());
             if (bean == null) {
                 return;
             }
+
             ((ItemViewHolder) holder).tvName.setText(bean.getVisitorName());
             ((ItemViewHolder) holder).tvTime.setText(bean.getArrivalTimePlan());
 
             //图片加载
-
+            Glide.with(context)
+                    .load(bean.getImagePath())
+                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                    .placeholder(ContextCompat.getDrawable(context, R.mipmap.default_photo))
+                    .error(ContextCompat.getDrawable(context, R.mipmap.default_photo))
+                    .crossFade()//动画效果显示
+                    .transform(new GlideCircleTransform(context))//自定义圆形图片
+                    .into(((ItemViewHolder) holder).img);
 
         }
     }

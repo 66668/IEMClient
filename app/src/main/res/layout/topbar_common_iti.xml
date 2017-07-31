@@ -16,17 +16,21 @@
         android:textColor="#FFF"/>
 
     <!-- 右-->
-    <TextView
-        android:id="@+id/tv_right"
-        style="@style/topbarText.topbar_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <RelativeLayout
+        android:id="@+id/layout_right"
+        android:layout_width="45dp"
+        android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="10dp"
-        android:text="@string/commit"
-        android:textColor="#FFF"
-        />
+        android:layout_alignParentTop="true"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/img_right"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:contentDescription="@null"
+            android:src="@mipmap/addvisitor"/>
+    </RelativeLayout>
     <!--左 -->
     <RelativeLayout
         android:id="@+id/layout_back"

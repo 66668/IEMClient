@@ -25,10 +25,12 @@
         <item name="android:windowBackground">@color/white</item>
         <item name="android:windowTranslucentStatus">false</item>
     </style>
+
     <style name="AppTheme_normal.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
@@ -74,4 +76,23 @@
         <!--<item name="android:textStyle">bold</item>-->
     </style>
 
+    <!-- 访客统一字体-->
+    <style name="visitor_default">
+        <item name="android:shadowRadius">1.2</item>
+        <item name="android:textSize">@dimen/visitor_tvSize</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="visitor_et">
+        <item name="android:singleLine">true</item>
+        <item name="android:textColorHint">@color/gray</item>
+        <item name="android:textSize">@dimen/visitor_etSize</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:textCursorDrawable">@drawable/visitor_et_cursor</item>
+    </style>
+    <!-- 时间选择器对话框样式-->
+    <style name="dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@color/android:transparent</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
 </resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 地图定位,as无法@mipmap，所以将图片放在drawable下调用 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/attendmap_gray" android:state_focused="true" android:state_pressed="true"/>
+    <item android:drawable="@drawable/attendmap_gray" android:state_focused="false" android:state_pressed="true"/>
+    <item android:drawable="@drawable/attendmap_gray" android:state_focused="true"/>
+    <item android:drawable="@drawable/attendmap" android:state_enabled="false"/>
+    <item android:drawable="@drawable/attendmap" android:state_focused="false"/>
+
+</selector>

@@ -36,6 +36,11 @@ public class VisitorPresenterImpl implements IVisitorPresenter, OnVisitorListene
         visitorModel.mLoadData(storeID, employeeID, isReceived, maxTime, minTime, this);
     }
 
+    @Override
+    public void addVisitor(String name) {
+
+    }
+
     //OnVisitorListener接口实现
     @Override
     public void onVisitorSuccess(List<VisitorBean> listBean) {

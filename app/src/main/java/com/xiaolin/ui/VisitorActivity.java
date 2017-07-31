@@ -5,6 +5,9 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.xiaolin.R;
 import com.xiaolin.adpter.VisitorFragmentPaperAdapter;
@@ -15,6 +18,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 访客记录
@@ -30,6 +34,18 @@ public class VisitorActivity extends BaseActivity {
 
     @BindView(R.id.visitor_tab)
     TabLayout tabLayout;
+
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+
+    //添加
+    @BindView(R.id.layout_right)
+    RelativeLayout layout_Right;
+
+    //后退
+    @BindView(R.id.layout_back)
+    RelativeLayout layout_back;
+
 
     Fragment undoVisitorFragment;
     Fragment doneVisitorFragment;
@@ -48,6 +64,8 @@ public class VisitorActivity extends BaseActivity {
     }
 
     private void initMyView() {
+        tvTitle.setText("访客记录");
+
         titleList = new ArrayList<>();
         titleList.add("未接待");//0
         titleList.add("已接待");//1
@@ -72,4 +90,18 @@ public class VisitorActivity extends BaseActivity {
         viewPager.setCurrentItem(currentTab);
     }
 
+    @OnClick(R.id.layout_back)
+    public void forBack(View view) {
+        this.finish();
+    }
+
+    /**
+     * 添加新访客
+     *
+     * @param view
+     */
+    @OnClick(R.id.layout_right)
+    public void addOne(View view) {
+        startActivity(VisitorAddActivity.class);
+    }
 }

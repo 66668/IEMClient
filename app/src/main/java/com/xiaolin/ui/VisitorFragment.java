@@ -2,9 +2,12 @@ package com.xiaolin.ui;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -48,10 +51,10 @@ public class VisitorFragment extends Fragment implements IVisitorView, SwipeRefr
     String maxTime = "";
     String minTime = "";//
 
-    public static VisitorFragment newInstance(String Type) {
+    public static VisitorFragment newInstance(String isReceived) {
         Bundle bundle = new Bundle();
         VisitorFragment fragment = new VisitorFragment();
-        bundle.putString("isReceived", Type);
+        bundle.putString("isReceived", isReceived);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -63,6 +66,7 @@ public class VisitorFragment extends Fragment implements IVisitorView, SwipeRefr
         visitorPresenter = new VisitorPresenterImpl(this);
         //获取传值
         isReceived = getArguments().getString("isReceived");
+        DebugUtil.d(TAG, "已接待未接待参数：" + isReceived);
     }
 
     @Nullable
@@ -90,7 +94,7 @@ public class VisitorFragment extends Fragment implements IVisitorView, SwipeRefr
     private void initMyView(View view) {
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.layout_swipeRefresh);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        adapter = new VisitorListAdapter(getActivity().getApplicationContext());
+        adapter = new VisitorListAdapter(getActivity());
         layoutManager = new LinearLayoutManager(getActivity());
     }
 
@@ -106,6 +110,7 @@ public class VisitorFragment extends Fragment implements IVisitorView, SwipeRefr
                     && lastItem + 1 == adapter.getItemCount()
                     && adapter.isShowFooter()) {
                 DebugUtil.d(TAG, "VisitorFragment---OnScrollListener--加载更多");
+                DebugUtil.d(TAG, "adapter.getItemCount()=" + adapter.getItemCount() + "---adapter.isShowFooter()=" + adapter.isShowFooter());
 
                 //p层加载方法调用
                 visitorPresenter.pGetData(pageSize, isReceived, maxTime, minTime);
@@ -130,7 +135,19 @@ public class VisitorFragment extends Fragment implements IVisitorView, SwipeRefr
             }
             //跳转至详情
             VisitorBean bean = adapter.getItem(position);
-            DebugUtil.ToastShort(getActivity(), "详情跳转操作");
+            Intent intent = new Intent(getActivity(), VisitorDetailActivity.class);
+            intent.putExtra("VisitorBean", bean);
+
+            //添加动画效果
+            View transitionView = view.findViewById(R.id.img);
+            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+                    .makeSceneTransitionAnimation(getActivity()
+                            , transitionView
+                            , getString(R.string.transition_visitor_img));
+
+            //动画效果的跳转
+            ActivityCompat.startActivity(getActivity(), intent, optionsCompat.toBundle());
+
         }
     };
 
@@ -150,6 +167,7 @@ public class VisitorFragment extends Fragment implements IVisitorView, SwipeRefr
     //IVisitorView接口实现
     @Override
     public void addList(List<VisitorBean> list) {
+        DebugUtil.d("addList:size=" + list.size());
 
         adapter.isShowFooter(true);
         if (listBean == null) {
@@ -166,13 +184,14 @@ public class VisitorFragment extends Fragment implements IVisitorView, SwipeRefr
             adapter.notifyDataSetChanged();//刷新adapter
         }
         pageSize += list.size();//如果获取的数据不足20条
+        DebugUtil.d("addList:pageSize=" + pageSize);
     }
 
     //IVisitorView接口实现
     @Override
     public void showFailedMsg(String msg, Exception e) {
         //隐藏加载
-        if (pageSize == 0) {
+        if (pageSize >= 0) {
             adapter.isShowFooter(false);
             adapter.notifyDataSetChanged();
         }
@@ -192,6 +211,7 @@ public class VisitorFragment extends Fragment implements IVisitorView, SwipeRefr
         }
         maxTime = "";
         minTime = "";
+        DebugUtil.d(TAG, "清空设置--onRefresh");
 
         //p层获取数据
         visitorPresenter.pGetData(pageSize, isReceived, maxTime, minTime);

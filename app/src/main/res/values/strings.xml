@@ -41,6 +41,27 @@
 
     <!-- 访客界面-->
     <string name="visitor_time">到访时间：</string>
+    <string name="addpic">添加图片：</string>
+    <string name="pic">图片：</string>
+    <string name="name_hint">请输入姓名</string>
+    <string name="name">姓名:</string>
+    <string name="phoneNumber_hint">请输入电话号码</string>
+    <string name="phoneNumber">电话:</string>
+    <string name="planTime_hint">请选择到访时间</string>
+    <string name="planTime">到访时间:</string>
+    <string name="planleaveTime_hint">请选择结束时间</string>
+    <string name="planleaveTime">结束时间:</string>
+    <string name="visitorTo">受访人:</string>
+    <string name="porpurse">来访目的:</string>
+    <string name="porpurse_hint">请输入来访目的</string>
+    <string name="company">所属单位:</string>
+    <string name="company_hint">请输入所属单位</string>
+    <string name="remark">备注:</string>
+    <string name="remark_hint">请输入备注</string>
+
+
+    <string name="visitor_detail_title">访客详情</string>
+    <string name="visitor_add_title">添加访客</string>
 
 
     <!-- 主界面设置-->

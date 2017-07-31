@@ -36,4 +36,13 @@ public class VisitorListBean implements Serializable {
     public void setResult(List<VisitorBean> result) {
         this.result = result;
     }
+
+    @Override
+    public String toString() {
+        return "VisitorListBean{" +
+                "code='" + code + '\'' +
+                ", message='" + message + '\'' +
+                ", result=" + result.toArray().toString() +
+                '}';
+    }
 }

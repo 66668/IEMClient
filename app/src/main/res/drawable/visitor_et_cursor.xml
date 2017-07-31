@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 设置登录的et的光标颜色 由android:textCursorDrawable调用-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <size android:width="1dp"/>
+    <solid android:color="@color/black"/>
+
+</shape>

@@ -21,6 +21,7 @@ public class VisitorModelImpl implements IVisitorModel {
 
     @Override
     public void mLoadData(String storeID, String employeeID, String isReceived, String maxTime, String minTime, final OnVisitorListener listener) {
+
         MyHttpService.Builder.getHttpServer().loadVisitor(storeID
                 , employeeID
                 , isReceived

@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+    <include
+        android:id="@+id/layout_top"
+        layout="@layout/topbar_common_itt"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_top">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- 添加图片-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:gravity="center_vertical"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp">
+
+                <TextView
+                    style="@style/visitor_default"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:padding="5dp"
+                    android:text="@string/pic"/>
+
+                <ImageView
+                    android:id="@+id/pic_img"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:background="@mipmap/default_photo"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/linen"/>
+            </RelativeLayout>
+
+            <!-- 姓名-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/visitor_default"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_weight="0.28"
+                    android:padding="5dp"
+                    android:text="@string/name"/>
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    style="@style/visitor_et"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="0.78"
+                    android:background="@null"
+                    android:gravity="end|center_vertical"
+                    android:padding="5dp"
+                    android:paddingEnd="10dp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/linen"/>
+
+            <!-- 电话-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/visitor_default"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_weight="0.28"
+                    android:padding="5dp"
+                    android:text="@string/phoneNumber"/>
+
+                <TextView
+                    android:id="@+id/tv_phone"
+                    style="@style/visitor_et"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="0.78"
+                    android:background="@null"
+                    android:gravity="end|center_vertical"
+                    android:padding="5dp"
+                    android:paddingEnd="10dp"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/linen"/>
+
+            <!-- 开始时间-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/visitor_default"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_weight="0.28"
+                    android:padding="5dp"
+                    android:text="@string/planTime"/>
+
+                <TextView
+                    android:id="@+id/tv_startTime"
+                    style="@style/visitor_et"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="0.78"
+                    android:background="@null"
+                    android:gravity="end|center_vertical"
+                    android:padding="5dp"
+                    android:paddingEnd="10dp"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/linen"/>
+
+            <!-- 结束时间-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/visitor_default"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_weight="0.28"
+                    android:padding="5dp"
+                    android:text="@string/planleaveTime"/>
+
+                <TextView
+                    android:id="@+id/tv_endTime"
+                    style="@style/visitor_et"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="0.78"
+                    android:background="@null"
+                    android:gravity="end|center_vertical"
+                    android:padding="5dp"
+                    android:paddingEnd="10dp"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/linen"/>
+
+
+            <!-- 受访人-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/visitor_default"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_weight="0.28"
+                    android:padding="5dp"
+                    android:text="@string/visitorTo"/>
+
+                <TextView
+                    android:id="@+id/tv_visitorTo"
+                    style="@style/visitor_et"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="0.78"
+                    android:background="@null"
+                    android:gravity="end|center_vertical"
+                    android:padding="5dp"
+                    android:paddingEnd="10dp"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/linen"/>
+
+            <!-- 来访目的-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/visitor_default"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_weight="0.28"
+                    android:padding="5dp"
+                    android:text="@string/porpurse"/>
+
+                <TextView
+                    android:id="@+id/tv_purpose"
+                    style="@style/visitor_et"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="0.78"
+                    android:background="@null"
+                    android:gravity="end|center_vertical"
+                    android:padding="5dp"
+                    android:paddingEnd="10dp"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/linen"/>
+
+            <!-- 所属单位-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/visitor_default"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_weight="0.28"
+                    android:padding="5dp"
+                    android:text="@string/company"/>
+
+                <TextView
+                    android:id="@+id/tv_company"
+                    style="@style/visitor_et"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="0.78"
+                    android:background="@null"
+                    android:gravity="end|center_vertical"
+                    android:padding="5dp"
+                    android:paddingEnd="10dp"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/linen"/>
+
+            <!-- 备注-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/visitor_default"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_weight="0.28"
+                    android:padding="5dp"
+                    android:text="@string/remark"/>
+
+                <TextView
+                    android:id="@+id/tv_remark"
+                    style="@style/visitor_et"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="0.78"
+                    android:background="@null"
+                    android:gravity="end|center_vertical"
+                    android:padding="5dp"
+                    android:paddingEnd="10dp"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/linen"/>
+
+            <Button
+                android:id="@+id/btn_visitor"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/btn_ps_style"
+                android:text="已接待"
+                android:textColor="@color/white"
+                android:textSize="18sp"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>
