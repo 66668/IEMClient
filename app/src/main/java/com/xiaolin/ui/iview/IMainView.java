@@ -8,12 +8,6 @@ import com.xiaolin.bean.UpgradeBean;
 
 public interface IMainView {
 
-    //跳转到修改密码界面
-    void turnToChangePs();
-
-    //退出
-    void quitApp();
-
     //地图定位
     void turnToMapLocation();
 
@@ -22,6 +16,9 @@ public interface IMainView {
 
     //访客记录
     void turnToVisitor();
+
+    //退出
+    void quit();
 
     //检查更新/退出 要用的一下方法：
 

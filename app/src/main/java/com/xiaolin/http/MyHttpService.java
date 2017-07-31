@@ -103,6 +103,16 @@ public interface MyHttpService {
     @GET(URLUtils.CHECK_UPDATE)
     Observable<CommonBean<UpgradeBean>> checkUpdate();
 
+    /**
+     * 退出app
+     * post
+     */
+    @FormUrlEncoded
+    @POST(URLUtils.QUIT)
+    Observable<BaseBean> quit(@Field("storeId") String storeId
+            , @Field("userName") String userName
+            , @Field("deviceId") String deviceId);
+
     //    /**
     //     * 03-01-01 添加新人员
     //     */

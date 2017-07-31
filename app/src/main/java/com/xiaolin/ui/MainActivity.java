@@ -1,6 +1,7 @@
 package com.xiaolin.ui;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -148,24 +149,6 @@ public class MainActivity extends BaseActivity implements IMainView {
         }
     }
 
-
-    /**
-     * IMainView 修改密码跳转
-     */
-    @Override
-    public void turnToChangePs() {
-        startActivity(ChangePassWordActivity.class);
-    }
-
-    /**
-     * IMainView 退出
-     */
-    @Override
-    public void quitApp() {
-
-    }
-
-
     /**
      * 地图定位
      */
@@ -207,6 +190,17 @@ public class MainActivity extends BaseActivity implements IMainView {
     @Override
     public void turnToVisitor() {
         startActivity(VisitorActivity.class);
+
+    }
+    /**
+     * 退出具体操作
+     */
+    @Override
+    public void quit(){
+
+        Intent intent = new Intent();
+        intent.setAction(EXIT_APP_ACTION);
+        sendBroadcast(intent);//发送退出的广播
 
     }
 

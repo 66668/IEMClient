@@ -33,6 +33,11 @@ public class URLUtils {
     public static final String CHANGEPS = "User/ChangePasswordN";
 
     /**
+     * 退出
+     */
+    public static final String QUIT = "User/AppDeviceLogoutByPassword";
+
+    /**
      * 检查更新
      */
     public static final String CHECK_UPDATE = "Main/CheckVersion/1001";//1001表示android

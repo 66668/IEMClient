@@ -1,13 +1,16 @@
 package com.xiaolin.presenter;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.xiaolin.R;
 import com.xiaolin.bean.UpgradeBean;
 import com.xiaolin.model.MainModelImpl;
 import com.xiaolin.model.imodel.IMainModel;
+import com.xiaolin.model.listener.OnCommonListener;
 import com.xiaolin.model.listener.OnUpgradeListener;
 import com.xiaolin.presenter.ipresenter.IMainPresenter;
+import com.xiaolin.ui.ChangePassWordActivity;
 import com.xiaolin.ui.iview.IMainView;
 
 /**
@@ -38,13 +41,14 @@ public class MainPresenterImpl implements IMainPresenter, OnUpgradeListener {
                 break;
 
             case R.id.nav_menu_psd://修改密码
-
-                iMainView.turnToChangePs();
+                Intent intent = new Intent(context, ChangePassWordActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                context.startActivity(intent);
                 break;
 
             case R.id.nav_menu_quit://退出
 
-                iMainView.quitApp();
+                quitApp();
                 break;
 
         }
@@ -59,6 +63,28 @@ public class MainPresenterImpl implements IMainPresenter, OnUpgradeListener {
         mainModel.checkUpdate(this);
     }
 
+    /**
+     * 退出
+     */
+    private void quitApp() {
+        iMainView.showProgress();
+        mainModel.quit(new OnCommonListener() {
+            @Override
+            public void onSuccess(String str) {
+                iMainView.hideProgress();
+                iMainView.quit();
+
+            }
+
+            @Override
+            public void onFailed(String msg, Exception e) {
+                iMainView.hideProgress();
+                iMainView.postFaild(msg,e);
+            }
+        });
+    }
+
+
     @Override
     public void mapLocation() {
         iMainView.turnToMapLocation();
@@ -71,7 +97,7 @@ public class MainPresenterImpl implements IMainPresenter, OnUpgradeListener {
 
     @Override
     public void toAttendRecord() {
-        iMainView.turnToChangePs();
+        iMainView.turnToVisitor();
     }
 
     @Override
