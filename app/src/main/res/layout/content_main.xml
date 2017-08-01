@@ -220,7 +220,10 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/topbar_height"
         android:layout_alignParentTop="true">
-
+        <!--app:navigationIcon="?attr/homeAsUpIndicator"
+            android:theme="@style/AppTheme.AppBarOverlay"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+             -->
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -228,9 +231,8 @@
             android:background="@android:color/transparent"
             android:fitsSystemWindows="true"
             android:gravity="center"
-            android:theme="@style/AppTheme.AppBarOverlay"
             app:navigationIcon="?attr/homeAsUpIndicator"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
+            >
 
             <TextView
                 android:layout_width="wrap_content"

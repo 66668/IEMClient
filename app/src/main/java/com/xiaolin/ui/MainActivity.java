@@ -5,17 +5,19 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.xiaolin.R;
+import com.xiaolin.app.Constants;
 import com.xiaolin.app.MyApplication;
 import com.xiaolin.bean.UpgradeBean;
 import com.xiaolin.dialog.UpgradeDialog;
@@ -26,6 +28,7 @@ import com.xiaolin.presenter.ipresenter.IMainPresenter;
 import com.xiaolin.ui.base.BaseActivity;
 import com.xiaolin.ui.iview.IMainView;
 import com.xiaolin.utils.DebugUtil;
+import com.xiaolin.utils.SPUtils;
 import com.xiaolin.utils.Utils;
 
 import butterknife.BindView;
@@ -44,7 +47,29 @@ public class MainActivity extends BaseActivity implements IMainView {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    //昨日考勤
+    @BindView(R.id.tv_attendYestoday)
+    TextView tv_yestoday;
+
+    //今日打卡
+    @BindView(R.id.tv_attendToday)
+    TextView tv_attendToday;
+
+    //nav_head
+    TextView nav_tv_name;
+
+
     private IMainPresenter iMainPresenter;
+
+    /**
+     * 在onCreate()执行之后执行的onPostCreate()方法中执行修改toolbar的默认标题
+     * Toolbar 必须在onCreate()之后设置标题文本，否则默认标签将覆盖我们的设置
+     */
+    @Override
+    public void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        toolbar.setTitle("");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +89,9 @@ public class MainActivity extends BaseActivity implements IMainView {
     private void initView() {
         setSupportActionBar(toolbar);
 
+        //显示必要参数
+        showText();
+
         //设置抽屉布局开关(低于5.0版本不可用)
         if (Build.VERSION.SDK_INT >= 21) {
             ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.open, R.string.close);
@@ -78,9 +106,20 @@ public class MainActivity extends BaseActivity implements IMainView {
 
         //初始化p层
         iMainPresenter = new MainPresenterImpl(MainActivity.this, this);
-
         //navigation点击事件
         setDrawerContent(navigationView);
+    }
+
+    private void showText() {
+
+        //给NavigationView填充顶部区域，也可在xml中使用app:headerLayout="@layout/header_nav"来设置
+        navigationView.inflateHeaderView(R.layout.nav_header_main);
+        View headerView = navigationView.getHeaderView(0);
+        nav_tv_name = (TextView) headerView.findViewById(R.id.nav_tv_name);
+
+        nav_tv_name.setText(SPUtils.getString(Constants.EMPLOYEENAME));
+        tv_yestoday.setText(SPUtils.getString(Constants.YESTODY_DATE));
+        tv_attendToday.setText(SPUtils.getString(Constants.FIRSTATTEND));
     }
 
     /**
@@ -100,23 +139,25 @@ public class MainActivity extends BaseActivity implements IMainView {
     //            window.setStatusBarColor(Color.TRANSPARENT);
     //        }
     //    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+    //设置topbar
+    //    @Override
+    //    public boolean onCreateOptionsMenu(Menu menu) {
+    //        getMenuInflater().inflate(R.menu.menu_main, menu);
+    //        return true;
+    //    }
+    //
+    //    @Override
+    //    public boolean onOptionsItemSelected(MenuItem item) {
+    //
+    //        int id = item.getItemId();
+    //
+    //        if (id == R.id.action_settings) {
+    //            return true;
+    //        }
+    //
+    //        return super.onOptionsItemSelected(item);
+    //    }
 
     //NavigationView 监听事件
     private void setDrawerContent(NavigationView navigationView) {
