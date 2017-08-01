@@ -117,6 +117,7 @@
                     android:text="@string/phoneNumber"/>
 
                 <EditText
+                    android:inputType="number"
                     android:id="@+id/tv_phone"
                     style="@style/visitor_et"
                     android:layout_width="0dp"

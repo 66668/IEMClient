@@ -38,6 +38,11 @@ public class URLUtils {
     public static final String QUIT = "User/AppDeviceLogoutByPassword";
 
     /**
+     * 添加访客
+     */
+    public static final String ADD_VISITOR = "Main/AddOneVisitorRecord";
+
+    /**
      * 检查更新
      */
     public static final String CHECK_UPDATE = "Main/CheckVersionP/1001";//1001表示android

@@ -1,5 +1,6 @@
 package com.xiaolin.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -9,6 +10,8 @@ import android.widget.EditText;
 
 import com.xiaolin.R;
 import com.xiaolin.app.Constants;
+import com.xiaolin.app.MyApplication;
+import com.xiaolin.bean.LoginBean;
 import com.xiaolin.presenter.LoginPresenterImpl;
 import com.xiaolin.presenter.ipresenter.ILoginPresenter;
 import com.xiaolin.ui.base.BaseActivity;
@@ -22,8 +25,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- *   有空修改成 checkbox记住密码,使用（状态模式+中介者模式） --07-28书
- *
+ * 有空修改成 checkbox记住密码,使用（状态模式+中介者模式） --07-28书
  */
 
 public class LoginActivity extends BaseActivity implements ILoginView {
@@ -57,6 +59,11 @@ public class LoginActivity extends BaseActivity implements ILoginView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_login);
         ButterKnife.bind(this);
+        //判断自动登录
+        if (MyApplication.getInstance().isLogin()) {
+            startActivity(MainActivity.class);
+            this.finish();
+        }
         initMyView();
         saveContent();
     }
@@ -133,6 +140,30 @@ public class LoginActivity extends BaseActivity implements ILoginView {
     public void hideProgress() {
         //运行完弹窗消失
         loadingDialog.dismiss();
+    }
+
+    @Override
+    public void onSuccess(LoginBean bean) {
+        //将返回数据保存
+        SPUtils.putString(Constants.STORE_ID, bean.getStoreId());
+        SPUtils.putString(Constants.STORE_USER_ID, bean.getStoreUserId());
+        SPUtils.putString(Constants.EMPLOYEE_ID, bean.getEmployeeId());
+
+        SPUtils.putString(Constants.TODAY_DATE, bean.getTodayDate());
+        SPUtils.putString(Constants.DEVICEID, bean.getDeviceId());
+        SPUtils.putString(Constants.EMPLOYEENAME, bean.getEmployeeName());
+
+        SPUtils.putString(Constants.FIRSTATTEND, bean.getFirstAttend());
+        SPUtils.putString(Constants.LASTATTEND, bean.getLastAttend());
+        SPUtils.putString(Constants.YESTODY_DATE, bean.getYesterdayState());
+        DebugUtil.d(TAG, "LoginPresenterImpl--缓存数据");
+
+        //添加自动登录
+        MyApplication.getInstance().setLogin(true);
+        //界面跳转
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+        LoginActivity.this.finish();
     }
 
     @Override

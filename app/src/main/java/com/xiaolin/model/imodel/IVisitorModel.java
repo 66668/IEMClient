@@ -1,6 +1,9 @@
 package com.xiaolin.model.imodel;
 
+import com.xiaolin.model.listener.OnCommonListener;
 import com.xiaolin.model.listener.OnVisitorListener;
+
+import java.io.File;
 
 /**
  * m层，m接口层
@@ -22,5 +25,5 @@ public interface IVisitorModel {
     /**
      *
      */
-    void mLoadDataDetail();
+    void maddVisitor(String jsonstr, File file, OnCommonListener listener);
 }

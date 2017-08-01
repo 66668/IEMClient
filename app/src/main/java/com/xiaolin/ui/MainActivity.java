@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.xiaolin.R;
+import com.xiaolin.app.MyApplication;
 import com.xiaolin.bean.UpgradeBean;
 import com.xiaolin.dialog.UpgradeDialog;
 import com.xiaolin.library.PermissionListener;
@@ -192,12 +193,16 @@ public class MainActivity extends BaseActivity implements IMainView {
         startActivity(VisitorActivity.class);
 
     }
+
     /**
-     * 退出具体操作
+     * 退出
      */
     @Override
-    public void quit(){
+    public void quit() {
+        //关闭自动登录设置
+        MyApplication.getInstance().setLogin(false);
 
+        //广播退出
         Intent intent = new Intent();
         intent.setAction(EXIT_APP_ACTION);
         sendBroadcast(intent);//发送退出的广播

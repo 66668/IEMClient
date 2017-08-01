@@ -17,12 +17,12 @@ import java.io.File;
 public class MyApplication extends Application {
     private final static String sdcardDirName = "ISS";//内存根目录名
     private static MyApplication MyApplication;
+    private boolean isLogin= false;
 
     public static MyApplication getInstance() {
         return MyApplication;
     }
 
-    @SuppressWarnings("unused")
     @Override
     public void onCreate() {
         super.onCreate();
@@ -91,6 +91,13 @@ public class MyApplication extends Application {
         return sdcard_base_path;
     }
 
+    public boolean isLogin() {
+        return isLogin;
+    }
+
+    public void setLogin(boolean login) {
+        isLogin = login;
+    }
 }
 
 

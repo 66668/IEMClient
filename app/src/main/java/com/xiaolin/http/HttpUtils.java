@@ -74,7 +74,7 @@ public class HttpUtils {
     }
 
     /**
-     * 01 登录
+     * 01
      *
      * @param clz
      * @param <T>
@@ -183,9 +183,9 @@ public class HttpUtils {
 
             //具体配置，可用链式结构
             OkHttpClient.Builder okBuilder = new OkHttpClient.Builder();
-            okBuilder.readTimeout(20, TimeUnit.SECONDS);
-            okBuilder.connectTimeout(10, TimeUnit.SECONDS);
-            okBuilder.writeTimeout(20, TimeUnit.SECONDS);
+            okBuilder.readTimeout(60, TimeUnit.SECONDS);
+            okBuilder.connectTimeout(60, TimeUnit.SECONDS);
+            okBuilder.writeTimeout(60, TimeUnit.SECONDS);
             okBuilder.addInterceptor(new HttpHeadInterceptor());
             okBuilder.addInterceptor(getInterceptor());//设置拦截器
             okBuilder.sslSocketFactory(sslSocketFactory);
