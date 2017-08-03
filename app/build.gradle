@@ -101,7 +101,9 @@ dependencies {
     compile files('libs/jcore-android_v1.1.0.jar')
     //极光推送
     compile files('libs/jpush-android_v3.0.1.jar')
+
     //添加模块库依赖
     compile project(':permissionLibs')
+    compile project(':calendarlib')
 
 }

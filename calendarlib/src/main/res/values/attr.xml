@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="cbd_calendar_row" format="integer"/>
+
+    <!-- CalendarDateView中设置-->
+    <declare-styleable name="CalendarDateView">
+        <attr name="cbd_calendar_row"/>
+    </declare-styleable>
+
+</resources>

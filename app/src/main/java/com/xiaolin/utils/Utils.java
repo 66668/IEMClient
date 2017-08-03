@@ -31,15 +31,12 @@ import android.widget.TextView;
 
 import com.xiaolin.app.MyApplication;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.lang.reflect.Field;
@@ -54,6 +51,7 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
@@ -70,10 +68,23 @@ public class Utils {
 
     private Utils() {
     }
+
     //获取图片所在文件夹名称
     public static String getDir(String path) {
         String subString = path.substring(0, path.lastIndexOf('/'));
         return subString.substring(subString.lastIndexOf('/') + 1, subString.length());
+    }
+
+    /**
+     * 获取日期
+     * int[]保存
+     */
+    public static int[] getYearMonthDay(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return new int[]{cal.get(Calendar.YEAR)
+                , cal.get(Calendar.MONTH) + 1
+                , cal.get(Calendar.DATE)};
     }
 
     public static int getWindowWidth(Context context) {
@@ -204,6 +215,7 @@ public class Utils {
         Intent intent = new Intent(Intent.ACTION_VIEW, issuesUrl);
         context.startActivity(intent);
     }
+
     /**
      * dip/dp convert to pixel
      *
@@ -711,53 +723,6 @@ public class Utils {
         return Integer.parseInt(Build.VERSION.SDK);
     }
 
-    public static JSONObject getJsonObject(JSONObject json, String key) {
-        try {
-            return json.getJSONObject(key);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public static JSONArray getJsonArray(JSONObject json, String key) {
-        try {
-            return json.getJSONArray(key);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public static int getJsonInt(JSONObject json, String key) {
-        try {
-            return json.getInt(key);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return 0;
-        }
-    }
-
-    public static String getJsonString(JSONObject json, String key) {
-        try {
-            if (!json.has(key))
-                return "";
-            return json.getString(key);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return "";
-        }
-    }
-
-    public static Boolean getJsonBoolean(JSONObject json, String key) {
-        try {
-            return json.getBoolean(key);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
     /**
      * 秒转成分钟形式
      *
@@ -839,61 +804,6 @@ public class Utils {
     }
 
     /**
-     * 格式化成绩
-     *
-     * @param score
-     * @return
-     */
-    @SuppressLint("DefaultLocale")
-    public static String formatScore(int score) {
-        return String.format("%04d", score);
-    }
-
-
-    /**
-     * 格式化数字
-     *
-     * @param
-     * @return
-     */
-    @SuppressLint("DefaultLocale")
-    public static String formatInt(int i, int len) {
-        return String.format("%0" + len + "d", i);
-    }
-
-    /**
-     * 字符串是否空
-     *
-     * @param searchKeyWords
-     * @return
-     */
-    public static boolean isNullOrEmpty(String searchKeyWords) {
-        if (searchKeyWords == null || searchKeyWords.length() == 0) {
-            return true;
-        }
-        return false;
-    }
-
-    public static String toSQL(String sql) {
-        return sql.replace("'", "''");
-    }
-
-    /**
-     * 数组包含关系
-     *
-     * @param strings
-     * @param str
-     * @return
-     */
-    public static boolean contains(String[] strings, String str) {
-        for (String string : strings) {
-            if (string.equals(str))
-                return true;
-        }
-        return false;
-    }
-
-    /**
      * 打乱List
      *
      * @param list
@@ -910,65 +820,6 @@ public class Utils {
         return resultList;
     }
 
-    public static Bitmap readBitMap(Context context, String filePath) {
-        BitmapFactory.Options opt = new BitmapFactory.Options();
-        opt.inPreferredConfig = Bitmap.Config.RGB_565;
-        opt.inPurgeable = true;
-        opt.inInputShareable = true;
-        opt.inSampleSize = computeSampleSize(opt, -1, 100 * 100); // 计算出图片使用的inSampleSize
-        opt.inJustDecodeBounds = false;
-        // 获取资源图片
-        InputStream is = null;
-        try {
-            is = new FileInputStream(filePath);
-            return BitmapFactory.decodeStream(is, null, opt);
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return null;
-        } finally {
-            if (is != null) {
-                try {
-                    is.close();
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-        }
-        // InputStream is = context.getResources().openRawResource(resId);
-
-    }
-
-    public static Bitmap readBitMap(Context context, int resId) {
-        BitmapFactory.Options opt = new BitmapFactory.Options();
-        opt.inPreferredConfig = Bitmap.Config.RGB_565;
-        opt.inPurgeable = true;
-        opt.inInputShareable = true;
-        opt.inSampleSize = computeSampleSize(opt, -1, 100 * 100); // 计算出图片使用的inSampleSize
-        opt.inJustDecodeBounds = false;
-        // 获取资源图片
-        InputStream is = context.getResources().openRawResource(resId);
-        return BitmapFactory.decodeStream(is, null, opt);
-    }
-
-    public static int computeSampleSize(BitmapFactory.Options options,
-                                        int minSideLength, int maxNumOfPixels) {
-        int initialSize = computeInitialSampleSize(options, minSideLength,
-                maxNumOfPixels);
-
-        int roundedSize;
-        if (initialSize <= 8) {
-            roundedSize = 1;
-            while (roundedSize < initialSize) {
-                roundedSize <<= 1;
-            }
-        } else {
-            roundedSize = (initialSize + 7) / 8 * 8;
-        }
-
-        return roundedSize;
-    }
 
     private static int computeInitialSampleSize(BitmapFactory.Options options,
                                                 int minSideLength, int maxNumOfPixels) {
@@ -1178,25 +1029,6 @@ public class Utils {
             return null;
         }
 
-    }
-
-    /**
-     * 类型安全转换(八大类型)
-     */
-    //(1)int型
-    public final static int convertToInt(Object value, int defaultValue) {
-        if (value == null || "".equals(value.toString().trim())) {
-            return defaultValue;
-        }
-        try {
-            return Integer.valueOf(value.toString());
-        } catch (Exception e) {
-            try {
-                return Double.valueOf(value.toString()).intValue();
-            } catch (Exception e1) {
-                return defaultValue;
-            }
-        }
     }
 
 }

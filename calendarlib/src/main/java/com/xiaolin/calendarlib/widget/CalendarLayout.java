@@ -8,7 +8,6 @@ import android.support.v4.view.VelocityTrackerCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ScrollerCompat;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
@@ -21,6 +20,7 @@ import android.widget.ListView;
 
 import com.xiaolin.calendarlib.interfaceView.CalendarTopView;
 import com.xiaolin.calendarlib.listener.CalendarTopViewChangeListener;
+import com.xiaolin.calendarlib.util.LogUtil;
 
 /**
  * 日历控件的布局，添加了Event监听，方便切换日历视图，周视图。
@@ -148,7 +148,7 @@ public class CalendarLayout extends FrameLayout {
                 closeVelocityTracker();//关闭跟踪类
                 activityPointerId = ev.getPointerId(0);
                 int top = viewGroup.getTop();
-                Log.d(TAG, "ACTION_DOWN: top值：" + top);
+                LogUtil.d(TAG, "ACTION_DOWN: top值：" + top);
                 if (top < topHeight) {
                     type = TYPE_CLOSE;
                 } else {
@@ -163,33 +163,33 @@ public class CalendarLayout extends FrameLayout {
                 float yDiff = y - eventY;
 
                 if (Math.abs(yDiff) > 5 && Math.abs(yDiff) > Math.abs(xDiff)) {
-                    Log.d(TAG, "ACTION_MOVE:");
+                    LogUtil.d(TAG, "ACTION_MOVE:");
                     isFlag = true;
                     if (isClickBottomView) {
                         boolean isScroll = isScroll(viewGroup);
                         if (yDiff > 0) {
                             //向下
-                            Log.d(TAG, "ACTION_MOVE:向下");
+                            LogUtil.d(TAG, "ACTION_MOVE:向下");
                             if (type == TYPE_OPEN) {
-                                Log.d(TAG, "ACTION_MOVE:向下TYPE_OPEN");
+                                LogUtil.d(TAG, "ACTION_MOVE:向下TYPE_OPEN");
                                 return super.onInterceptTouchEvent(ev);
                             } else {
-                                Log.d(TAG, "ACTION_MOVE:向下TYPE_CLOSE");
+                                LogUtil.d(TAG, "ACTION_MOVE:向下TYPE_CLOSE");
                                 if (isScroll) {
-                                    Log.d(TAG, "ACTION_MOVE:向下TYPE_CLOSE---isScroll=true");
+                                    LogUtil.d(TAG, "ACTION_MOVE:向下TYPE_CLOSE---isScroll=true");
                                     return super.onInterceptTouchEvent(ev);
                                 }
                             }
 
                         } else {
                             //向上
-                            Log.d(TAG, "ACTION_MOVE:向上");
+                            LogUtil.d(TAG, "ACTION_MOVE:向上");
                             if (type == TYPE_CLOSE) {
-                                Log.d(TAG, "ACTION_MOVE:向上--TYPE_CLOSE");
+                                LogUtil.d(TAG, "ACTION_MOVE:向上--TYPE_CLOSE");
                                 return super.onInterceptTouchEvent(ev);
                             } else {
                                 if (isScroll) {
-                                    Log.d(TAG, "ACTION_MOVE:向上--TYPE_CLOSE--isScroll=true");
+                                    LogUtil.d(TAG, "ACTION_MOVE:向上--TYPE_CLOSE--isScroll=true");
                                     return super.onInterceptTouchEvent(ev);
                                 }
                             }
@@ -359,7 +359,7 @@ public class CalendarLayout extends FrameLayout {
         Rect rect = new Rect();
         view.getHitRect(rect);
         boolean isClick = rect.contains((int) event.getX(), (int) event.getY());
-        Log.d("SJY", "CalendarLayout--isClickView() called with: isClick = [" + isClick + "]");
+        LogUtil.d("SJY", "CalendarLayout--isClickView() called with: isClick = [" + isClick + "]");
         return isClick;
     }
 

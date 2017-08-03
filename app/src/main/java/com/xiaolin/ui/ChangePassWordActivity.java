@@ -27,6 +27,7 @@ public class ChangePassWordActivity extends BaseActivity implements ICommonView 
 
     @BindView(R.id.tv_title)
     TextView tv_title;
+
     @BindView(R.id.tv_right)
     TextView tv_right;
     // 修改按钮

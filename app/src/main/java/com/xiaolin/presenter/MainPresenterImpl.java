@@ -97,7 +97,7 @@ public class MainPresenterImpl implements IMainPresenter, OnUpgradeListener {
 
     @Override
     public void toAttendRecord() {
-        iMainView.turnToVisitor();
+        iMainView.turnToAttendRecord();
     }
 
     @Override

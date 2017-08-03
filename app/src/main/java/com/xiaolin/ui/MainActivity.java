@@ -223,7 +223,8 @@ public class MainActivity extends BaseActivity implements IMainView {
      */
     @Override
     public void turnToAttendRecord() {
-        startActivity(ChangePassWordActivity.class);
+        //        startActivity(AttendDayActivity.class);
+        startActivity(AttendMonthActivity.class);
     }
 
     /**

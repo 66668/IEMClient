@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.xiaolin.ui.AttendDayActivity">
+
+    <!-- actionBar -->
+    <include layout="@layout/topbar_common_itt"/>
+    <!-- 日期显示-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/tv_CalendarCenter"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:drawableEnd="@mipmap/rightarrow"
+            android:drawableStart="@mipmap/lefrarrow"
+            android:gravity="center"
+            android:padding="5dp"
+            android:textColor="@color/common_topbar_bgcolor"
+            android:textSize="@dimen/common_textSize_default"
+            android:typeface="sans"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/linen"/>
+    <!-- 星期排序-->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/month1"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="一月"
+                android:textColor="@color/weektextColor"/>
+
+            <TextView
+                android:id="@+id/month2"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="二月"
+                android:textColor="@color/weektextColor"/>
+
+
+            <TextView
+                android:id="@+id/month3"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@mipmap/bluecircle"
+                android:gravity="center"
+                android:text="三月"
+                android:textColor="@color/weektextColor"/>
+
+            <TextView
+                android:id="@+id/month4"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="四月"
+                android:textColor="@color/weektextColor"/>
+
+            <TextView
+                android:id="@+id/month5"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="五月"
+                android:textColor="@color/weektextColor"/>
+
+            <TextView
+                android:id="@+id/month6"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="六月"
+                android:textColor="@color/weektextColor"/>
+
+            <TextView
+                android:id="@+id/month7"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="七月"
+                android:textColor="@color/weektextColor"/>
+
+            <TextView
+                android:id="@+id/month8"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="八月"
+                android:textColor="@color/weektextColor"/>
+
+            <TextView
+                android:id="@+id/month9"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="九月"
+                android:textColor="@color/weektextColor"/>
+
+            <TextView
+                android:id="@+id/month10"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="十月"
+                android:textColor="@color/weektextColor"/>
+
+            <TextView
+                android:id="@+id/month11"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="十一月"
+                android:textColor="@color/weektextColor"/>
+
+            <TextView
+                android:id="@+id/month12"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="十二月"
+                android:textColor="@color/weektextColor"/>
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/common_topbar_bgcolor">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv1"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:gravity="center"
+                android:text="正常打卡"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/tv_normal"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_below="@+id/tv1"
+                android:gravity="center"
+                android:text="18"
+                android:textColor="@color/white"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv2"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:gravity="center"
+                android:text="迟到"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/tv_late"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_below="@+id/tv2"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="@color/white"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv3"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:gravity="center"
+                android:text="早退"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/tv_leave"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_below="@+id/tv3"
+                android:gravity="center"
+                android:text="2"
+                android:textColor="@color/white"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv4"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:gravity="center"
+                android:text="缺勤"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/tv_gone"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_below="@+id/tv4"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="@color/white"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/attend_bg">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <!-- 迟到界面-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentTop="true"
+                    android:background="@color/linen"/>
+
+                <TextView
+                    android:id="@+id/tv_latelable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:drawablePadding="5dp"
+                    android:drawableStart="@mipmap/yellowcircle"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="迟到"/>
+
+                <TextView
+                    android:id="@+id/tv_lateContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_latelable"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginStart="15dp"
+                    android:padding="5dp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/linen"/>
+            </RelativeLayout>
+
+            <!-- 早退界面-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_above="@+id/tv_leavelable"
+                    android:layout_alignParentTop="true"
+                    android:background="@color/linen"/>
+
+                <TextView
+                    android:id="@+id/tv_leavelable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:drawableStart="@mipmap/yellowcircle"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="早退"/>
+
+                <TextView
+                    android:id="@+id/tv_leaveContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_leavelable"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginStart="15dp"
+                    android:padding="5dp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@+id/tv_leaveContent"
+                    android:background="@color/linen"/>
+            </RelativeLayout>
+
+            <!-- 缺勤-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_above="@+id/tv_gonelable"
+                    android:layout_alignParentTop="true"
+                    android:background="@color/linen"/>
+
+                <TextView
+                    android:id="@+id/tv_gonelable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:drawableStart="@mipmap/redcircle"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="缺勤"/>
+
+                <TextView
+                    android:id="@+id/tv_goneContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_gonelable"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginStart="15dp"
+                    android:padding="5dp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@+id/tv_goneContent"
+                    android:background="@color/linen"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
