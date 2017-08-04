@@ -1,8 +1,10 @@
 package com.xiaolin.http;
 
 
+import com.xiaolin.bean.AttendStatusMonthBean;
 import com.xiaolin.bean.BaseBean;
 import com.xiaolin.bean.CommonBean;
+import com.xiaolin.bean.CommonListBean;
 import com.xiaolin.bean.LoginBean;
 import com.xiaolin.bean.UpgradeBean;
 import com.xiaolin.bean.VisitorListBean;
@@ -95,9 +97,11 @@ public interface MyHttpService {
      */
     @FormUrlEncoded
     @POST(URLUtils.CHANGEPS)
-    Observable<BaseBean> changeps(@Field("storeUserID") String storeUserID
+    Observable<BaseBean> changeps(
+            @Field("storeUserID") String storeUserID
             , @Field("oldUserPassword") String oldUserPassword
             , @Field("newUserPassword") String newUserPassword);
+
 
     /**
      * 检查更新
@@ -112,7 +116,8 @@ public interface MyHttpService {
      */
     @FormUrlEncoded
     @POST(URLUtils.QUIT)
-    Observable<BaseBean> quit(@Field("storeId") String storeId
+    Observable<BaseBean> quit(
+            @Field("storeId") String storeId
             , @Field("userName") String userName
             , @Field("deviceId") String deviceId);
 
@@ -126,8 +131,46 @@ public interface MyHttpService {
      */
     @Multipart
     @POST(URLUtils.ADD_VISITOR)
-    Observable<BaseBean> addVisitor(@Part("obj") String obj
+    Observable<BaseBean> addVisitor(
+            @Part("obj") String obj
             , @Part MultipartBody.Part file);
+
+    /**
+     * 获取考勤月状态
+     * post
+     */
+    @FormUrlEncoded
+    @POST(URLUtils.MONTHSTATUS)
+    Observable<CommonBean<AttendStatusMonthBean>> getAttendStateMonth(
+            @Field("storeId") String storeId
+            , @Field("employeeId") String employeeId
+            , @Field("year") String year
+            , @Field("month") String month);
+
+    /**
+     * 获取考勤月记录
+     * post
+     */
+    @FormUrlEncoded
+    @POST(URLUtils.MONTH_ALL)
+    Observable<CommonListBean<AttendStatusMonthBean>> getAttendList(
+            @Field("storeId") String storeId
+            , @Field("employeeId") String employeeId
+            , @Field("year") String year
+            , @Field("month") String month);
+
+    /**
+     * 获取日考勤记录
+     * post
+     */
+    @FormUrlEncoded
+    @POST(URLUtils.DAYOFMONTH)
+    Observable<CommonListBean<AttendStatusMonthBean>> getDayList(
+            @Field("storeId") String storeId
+            , @Field("employeeId") String employeeId
+            , @Field("year") String year
+            , @Field("month") String month
+            , @Field("day") String day);
 
 
 }

@@ -26,6 +26,16 @@ import rx.schedulers.Schedulers;
 public class VisitorModelImpl implements IVisitorModel {
     private static final String TAG = "visitor";
 
+    /**
+     * 获取访客记录
+     *
+     * @param storeID
+     * @param employeeID
+     * @param isReceived
+     * @param maxTime
+     * @param minTime
+     * @param listener
+     */
     @Override
     public void mLoadData(String storeID, String employeeID, String isReceived, String maxTime, String minTime, final OnVisitorListener listener) {
 
@@ -70,6 +80,14 @@ public class VisitorModelImpl implements IVisitorModel {
                     }
                 });
     }
+
+    /**
+     * 添加访客
+     *
+     * @param jsonstr
+     * @param picFile
+     * @param listener
+     */
 
     @Override
     public void maddVisitor(String jsonstr, File picFile, final OnCommonListener listener) {

@@ -38,9 +38,22 @@ public class URLUtils {
     public static final String QUIT = "User/AppDeviceLogoutByPassword";
 
     /**
+     * 获取月考勤状态接口
+     */
+    public static final String MONTHSTATUS = "Employee/GetAttendStatusByMonth";
+    /**
+     * 获取考勤月记录接口
+     */
+    public static final String MONTH_ALL = "Employee/GetAttendListByMonth";
+    /**
+     * 获取考勤日记录接口
+     */
+    public static final String DAYOFMONTH = "Employee/GetAttendStatusByDayC";
+
+    /**
      * 添加访客
      */
-    public static final String ADD_VISITOR = "Main/AddOneVisitorRecord";
+    public static final String ADD_VISITOR = "Employee/GetAttendStatusByMonth";
 
     /**
      * 检查更新

@@ -79,12 +79,24 @@ public class Utils {
      * 获取日期
      * int[]保存
      */
-    public static int[] getYearMonthDay(Date date) {
+    public static int[] getYearMonthDayInt(Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         return new int[]{cal.get(Calendar.YEAR)
                 , cal.get(Calendar.MONTH) + 1
                 , cal.get(Calendar.DATE)};
+    }
+
+    /**
+     * 获取日期
+     * int[]保存
+     */
+    public static String[] getYearMonthDayStr(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return new String[]{cal.get(Calendar.YEAR) + ""
+                , cal.get(Calendar.MONTH) + 1 + ""
+                , cal.get(Calendar.DATE) + ""};
     }
 
     public static int getWindowWidth(Context context) {
