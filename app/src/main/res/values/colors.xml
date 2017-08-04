@@ -15,6 +15,7 @@
     <color name="btn_bg_off">#1E94D4</color> <!-- 按钮背景色(失效状态) -->
     <!-- 更新-->
     <color name="line">#b6b6b6</color> <!-- 分割线 -->
+    <color name="nav_item_bg">#66b6b6b6</color> <!-- 分割线 -->
     <!-- 考勤-->
     <color name="weektextColor">#444444</color> <!-- 分割线 -->
     <color name="item_thisMonth">#ff444444</color>

@@ -169,9 +169,8 @@ public class AttendMonthActivity extends BaseActivity implements IAttendMonthSta
             case R.id.layout_back://退出
                 this.finish();
                 break;
-
             case R.id.layout_right://详情日历
-                DebugUtil.ToastShort(AttendMonthActivity.this, "详情日历");
+                startActivity(AttendDayActivity.class);
                 break;
             case R.id.month1:
                 currentMonth = "1";

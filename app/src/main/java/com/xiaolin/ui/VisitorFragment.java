@@ -13,6 +13,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +43,7 @@ public class VisitorFragment extends Fragment implements IVisitorView, SwipeRefr
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
     private VisitorListAdapter adapter;
-    private LinearLayoutManager layoutManager;
+    private LinearLayoutManager layoutManager;//recyclerView的管理类
 
     private int pageSize = 0;//记录item的个数；
 
@@ -102,18 +103,21 @@ public class VisitorFragment extends Fragment implements IVisitorView, SwipeRefr
     private RecyclerView.OnScrollListener mOnscrollListener = new RecyclerView.OnScrollListener() {
         int lastItem = -1;
 
-        //加载
+        /**
+         * 上拉加载
+         */
+
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
+            adapter.isShowFooter(true);
             if (newState == RecyclerView.SCROLL_STATE_IDLE
-                    && lastItem + 1 == adapter.getItemCount()
-                    && adapter.isShowFooter()) {
+                    && lastItem + 1 == adapter.getItemCount() && adapter.isShowFooter()) {
                 DebugUtil.d(TAG, "VisitorFragment---OnScrollListener--加载更多");
                 DebugUtil.d(TAG, "adapter.getItemCount()=" + adapter.getItemCount() + "---adapter.isShowFooter()=" + adapter.isShowFooter());
 
                 //p层加载方法调用
-                visitorPresenter.pGetData(pageSize, isReceived, maxTime, minTime);
+                visitorPresenter.pGetData(pageSize, isReceived, "", minTime);//加载 max和minTime不能同时有值
             }
 
         }
@@ -167,24 +171,44 @@ public class VisitorFragment extends Fragment implements IVisitorView, SwipeRefr
     //IVisitorView接口实现
     @Override
     public void addList(List<VisitorBean> list) {
-        DebugUtil.d("addList:size=" + list.size());
-
+        DebugUtil.d(TAG, "获取数据size=" + list.size());
+        splitTime(list);//拆选出
         adapter.isShowFooter(true);
         if (listBean == null) {
             listBean = new ArrayList<>();
         }
-        listBean.addAll(list);
+        listBean.addAll(list);//拼接数据
         if (pageSize == 0) {
+            //            adapter.setListBean();
             adapter.setListBean(listBean);
+            DebugUtil.d(TAG, "刷新数据显示:" + listBean.size());
         } else {
+            DebugUtil.d(TAG, "--------------pageSize>0-------------");
             //如果没有跟多数据，隐藏footer布局
             if (list == null || list.size() == 0) {
+                DebugUtil.d(TAG, "--------------没有跟多数据，隐藏footer布局-------------");
                 adapter.isShowFooter(false);
             }
             adapter.notifyDataSetChanged();//刷新adapter
         }
+        adapter.isShowFooter(false);
         pageSize += list.size();//如果获取的数据不足20条
-        DebugUtil.d("addList:pageSize=" + pageSize);
+        DebugUtil.d(TAG, "addList:pageSize=" + pageSize);
+    }
+
+    private void splitTime(List<VisitorBean> list) {
+        if (list == null || list.size() <= 0) {
+            return;
+        }
+        if (isReceived.equals("0")) {//未接待用参数iLastUpdateTime
+            minTime = list.get(list.size() - 1).getiLastUpdateTime();
+            Log.d(TAG, "0--splitTime:minTime= " + minTime);
+        } else {
+            minTime = list.get(list.size() - 1).getArrivalTimePlan();
+            Log.d(TAG, "1--splitTime:minTime= " + minTime);
+
+        }
+
     }
 
     //IVisitorView接口实现
@@ -211,7 +235,7 @@ public class VisitorFragment extends Fragment implements IVisitorView, SwipeRefr
         }
         maxTime = "";
         minTime = "";
-        DebugUtil.d(TAG, "清空设置--onRefresh");
+        DebugUtil.d(TAG, "清空--onRefresh");
 
         //p层获取数据
         visitorPresenter.pGetData(pageSize, isReceived, maxTime, minTime);

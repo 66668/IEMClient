@@ -12,7 +12,7 @@
     <RelativeLayout
         android:id="@+id/layout_pic"
         android:layout_width="match_parent"
-        android:layout_height="270dp"
+        android:layout_height="300dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:background="@mipmap/main_bg">
