@@ -117,7 +117,6 @@
                     android:text="@string/phoneNumber"/>
 
                 <EditText
-                    android:inputType="number"
                     android:id="@+id/tv_phone"
                     style="@style/visitor_et"
                     android:layout_width="0dp"
@@ -129,6 +128,7 @@
                     android:background="@null"
                     android:gravity="end|center_vertical"
                     android:hint="@string/phoneNumber_hint"
+                    android:inputType="number"
                     android:padding="5dp"
                     android:paddingEnd="10dp"/>
             </LinearLayout>
@@ -400,13 +400,13 @@
             <Button
                 android:id="@+id/btn_visitor"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/btn_ps_style"
-                android:text="已接待"
+                android:text="提交"
                 android:textColor="@color/white"
                 android:textSize="18sp"/>
 

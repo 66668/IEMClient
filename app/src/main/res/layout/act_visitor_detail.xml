@@ -374,6 +374,7 @@
                 android:background="@color/linen"/>
 
             <Button
+                android:visibility="invisible"
                 android:id="@+id/btn_visitor"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
