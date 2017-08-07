@@ -1,4 +1,4 @@
-package com.xiaolin.calendarlib.common;
+package com.xiaolin.calendar.common;
 
 /**
  * item上具体的信息：日期
@@ -12,7 +12,7 @@ public class CalendarItemBean {
     public int week;
 
     //-1,0,1 CalendarFactory中设置,
-    public int mothFlag;//是否本月
+    public int mothFlag = 0;//是否本月
 
     //显示
     public String chinaMonth;

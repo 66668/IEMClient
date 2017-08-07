@@ -1,6 +1,4 @@
-package com.xiaolin.calendarlib.util;
-
-import android.util.Log;
+package com.xiaolin.calendar.common;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -23,7 +21,7 @@ public class CalendarUtil {
     public static int getDayOfWeek(int y, int m, int day) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(y, m - 1, day);
-        Log.d(TAG, "--CalendarUtil--getDayOfWeek: calendar.get(Calendar.DAY_OF_WEEK)=" + calendar.get(Calendar.DAY_OF_WEEK));
+//        Log.d(TAG, "--CalendarUtil--getDayOfWeek: calendar.get(Calendar.DAY_OF_WEEK)=" + calendar.get(Calendar.DAY_OF_WEEK));
         return calendar.get(Calendar.DAY_OF_WEEK);
     }
 
@@ -34,7 +32,7 @@ public class CalendarUtil {
         Calendar calendar = Calendar.getInstance();
         calendar.set(y, m - 1, 1);
         int dayOfMonth = calendar.getActualMaximum(Calendar.DATE);
-        Log.d(TAG, "--CalendarUtil--getDayofMonth: dayOfMonth=" + dayOfMonth);
+//        Log.d(TAG, "--CalendarUtil--getDayofMonth: dayOfMonth=" + dayOfMonth);
         return dayOfMonth;
     }
 

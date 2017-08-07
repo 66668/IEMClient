@@ -104,6 +104,5 @@ dependencies {
 
     //添加模块库依赖
     compile project(':permissionLibs')
-    compile project(':calendarlib')
 
 }

@@ -223,9 +223,8 @@ public class MainActivity extends BaseActivity implements IMainView {
      */
     @Override
     public void turnToAttendRecord() {
-        //        startActivity(AttendDayActivity.class);
-                startActivity(AttendMonthActivity.class);
-//        startActivity(VisitorActivity.class);
+        startActivity(AttendDayActivity.class);
+        //                startActivity(AttendMonthActivity.class);
     }
 
     /**

@@ -6,29 +6,39 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.xiaolin.R;
-import com.xiaolin.calendarlib.common.CalendarAdapter;
-import com.xiaolin.calendarlib.common.CalendarItemBean;
-import com.xiaolin.calendarlib.util.CalendarUtil;
-import com.xiaolin.calendarlib.widget.CalendarDateView;
-import com.xiaolin.calendarlib.widget.CalendarView;
+import com.xiaolin.adpter.AttendDayAdapter;
+import com.xiaolin.bean.AttendDaysOFMonthBean;
+import com.xiaolin.calendar.common.CalendarAdapter;
+import com.xiaolin.calendar.common.CalendarItemBean;
+import com.xiaolin.calendar.common.CalendarUtil;
+import com.xiaolin.calendar.widget.CalendarDateView;
+import com.xiaolin.calendar.widget.CalendarLayout;
+import com.xiaolin.calendar.widget.CalendarView;
+import com.xiaolin.presenter.AttendPersenterImpl;
 import com.xiaolin.ui.base.BaseActivity;
+import com.xiaolin.ui.iview.IAttendDayView;
+import com.xiaolin.utils.DebugUtil;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 考勤记录的 日历日期具体显示
  */
 
-public class AttendDayActivity extends BaseActivity {
+public class AttendDayActivity extends BaseActivity implements IAttendDayView {
+
+    private static final String TAG = "calendar";
 
     @BindView(R.id.layout_back)
     RelativeLayout layout_back;
@@ -48,6 +58,15 @@ public class AttendDayActivity extends BaseActivity {
     @BindView(R.id.list)
     ListView listView;
 
+    AttendPersenterImpl attendPersenter;
+    CalendarLayout calendarLayout;
+    AttendDayAdapter adapter;
+    ArrayList<AttendDaysOFMonthBean> listBean;
+    int[] currentDate;
+    String currentYear;
+    String currentMonth;
+    String currentDay;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
@@ -55,18 +74,35 @@ public class AttendDayActivity extends BaseActivity {
         setContentView(R.layout.act_attend_day);
         ButterKnife.bind(this);
         initMyView();
-        initList();
+        initCalendar();
+        getDate();
+        getDayDate();
     }
 
     private void initMyView() {
         tv_right.setText("");
         tv_title.setText("考勤记录");
-        int[] data = CalendarUtil.getYearMonthDay(new Date());
-        tv_CalendarCenter.setText(data[0] + "年" + data[1] + "月" + data[2] + "日");
 
-        calendarDateView.setCalendarAdapter(new CalendarAdapter() {
+        calendarLayout = (CalendarLayout) findViewById(R.id.calendarLayout);
+        listView = (ListView) findViewById(R.id.list);
+
+        attendPersenter = new AttendPersenterImpl(AttendDayActivity.this, this);
+        currentDate = CalendarUtil.getYearMonthDay(new Date());
+        currentYear = currentDate[0] + "";
+        currentMonth = currentDate[1] + "";
+        currentDay = currentDate[2] + "";
+        listBean = new ArrayList<>();
+    }
+
+    private void initCalendar() {
+
+        tv_CalendarCenter.setText(currentYear + "年" + currentMonth + "月" + currentDay + "日");
+
+        calendarDateView.setAdapter(new CalendarAdapter() {
             @Override
             public View getView(View convertView, ViewGroup parentView, CalendarItemBean bean) {
+                DebugUtil.d(TAG, "--ACT--getView");
+
                 if (convertView == null) {
                     convertView = LayoutInflater.from(parentView.getContext()).inflate(R.layout.item_calendar, null);
                 }
@@ -91,38 +127,66 @@ public class AttendDayActivity extends BaseActivity {
             @Override
             public void onItemClick(View view, int postion, CalendarItemBean bean) {
                 tv_CalendarCenter.setText(bean.year + "年" + bean.moth + "月" + bean.day + "日");
+                currentYear = bean.year + "";
+                currentMonth = bean.moth + "";
+                currentDay = bean.day + "";
+                getDayDate();
             }
         });
     }
 
-    private void initList() {
-        listView.setAdapter(new BaseAdapter() {
-            @Override
-            public int getCount() {
-                return 100;
-            }
+    /**
+     * 获取月记录数据
+     */
+    private void getDate() {
+        DebugUtil.d(TAG, "currentYear=" + currentYear + "--currentMonth=" + currentMonth);
+        attendPersenter.getAttendListOfMonth(currentYear, currentMonth);
+    }
 
-            @Override
-            public Object getItem(int position) {
-                return null;
-            }
+    /**
+     * 获取日记录数据
+     */
+    private void getDayDate() {
+        attendPersenter.getAttendDayDetail(currentYear, currentMonth, currentDay);
 
-            @Override
-            public long getItemId(int position) {
-                return 0;
-            }
+    }
 
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                if (convertView == null) {
-                    convertView = LayoutInflater.from(AttendDayActivity.this).inflate(android.R.layout.simple_list_item_1, null);
-                }
+    @OnClick(R.id.layout_back)
+    public void BackClick(View view) {
+        this.finish();
+    }
 
-                TextView textView = (TextView) convertView;
-                textView.setText("position:" + position);
+    @Override
+    public void showProgress() {
+        loadingDialog.show();
 
-                return convertView;
-            }
-        });
+    }
+
+    @Override
+    public void hideProgress() {
+        loadingDialog.dismiss();
+    }
+
+    //日记录使用 listView显示
+    @Override
+    public void postSuccessShow(AttendDaysOFMonthBean bean) {
+        //
+        listBean.clear();
+        listBean.add(bean);
+        adapter = new AttendDayAdapter(AttendDayActivity.this, listBean);
+        listView.setAdapter(adapter);
+    }
+
+    //月记录使用
+    @Override
+    public void postSuccessUse(List<AttendDaysOFMonthBean> list) {
+        //调用下边方法，更新日历视图
+        calendarDateView.setSourseDate();
+    }
+
+    @Override
+    public void postFaild(String msg, Exception e) {
+        DebugUtil.ToastShort(AttendDayActivity.this, msg);
+        DebugUtil.e(TAG, e.toString());
     }
 }

@@ -1,1 +1,1 @@
-include ':app', ':permissionLibs', ':calendarlib'
+include ':app', ':permissionLibs'

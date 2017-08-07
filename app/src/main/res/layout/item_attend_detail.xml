@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <RelativeLayout
+            android:id="@+id/layout_moring"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="2dp"
+                android:text="签到"
+                android:textColor="@color/weektextColor"
+                android:textSize="@dimen/common_textSize_default"/>
+
+            <TextView
+                android:id="@+id/tv_moringTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv1"
+                android:padding="2dp"
+                android:text="2017-11-11 10:11:11"
+                android:textSize="13sp"/>
+
+            <TextView
+                android:id="@+id/tv_morningState"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/tv_moringTime"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/tv_moringTime"
+                android:padding="2dp"
+                android:text="正常"
+                android:textSize="13sp"/>
+
+            <TextView
+                android:id="@+id/tv_morningType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_moringTime"
+                android:gravity="center_vertical"
+                android:padding="2dp"
+                android:text="人脸识别考勤"
+                android:textSize="13sp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_late"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="2dp"
+                android:text="签退"
+                android:textColor="@color/weektextColor"
+                android:textSize="@dimen/common_textSize_default"/>
+
+            <TextView
+                android:id="@+id/tv_lateTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv2"
+                android:padding="2dp"
+                android:text="2017-11-11 10:11:11"
+                android:textSize="13sp"/>
+
+            <TextView
+                android:id="@+id/tv_lateState"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/tv_lateTime"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/tv_lateTime"
+                android:padding="2dp"
+                android:text="正常"
+                android:textSize="13sp"/>
+
+            <TextView
+                android:id="@+id/tv_lateType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_lateTime"
+                android:gravity="center_vertical"
+                android:padding="2dp"
+                android:text="人脸识别考勤"
+                android:textSize="13sp"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

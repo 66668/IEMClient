@@ -6,7 +6,7 @@ import com.xiaolin.bean.AttendStatusMonthBean;
  * 月考勤的状态监听
  */
 
-public interface OnAttendMontStateListener {
+public interface OnAttendMonthStateListener {
 
     void onAttendMontStateSuccess(AttendStatusMonthBean bean);
 

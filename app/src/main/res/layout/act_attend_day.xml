@@ -98,11 +98,12 @@
     </LinearLayout>
 
 
-    <com.xiaolin.calendarlib.widget.CalendarLayout
+    <com.xiaolin.calendar.widget.CalendarLayout
+        android:id="@+id/calendarLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.xiaolin.calendarlib.widget.CalendarDateView
+        <com.xiaolin.calendar.widget.CalendarDateView
             android:id="@+id/calendarDateView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -114,7 +115,7 @@
             android:background="#ffffff"
             />
 
-    </com.xiaolin.calendarlib.widget.CalendarLayout>
+    </com.xiaolin.calendar.widget.CalendarLayout>
 
 
 </LinearLayout>

@@ -1,6 +1,4 @@
-package com.xiaolin.calendarlib.common;
-
-import com.xiaolin.calendarlib.util.CalendarUtil;
+package com.xiaolin.calendar.common;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -13,15 +11,14 @@ import java.util.List;
 
 public class CalendarFactory {
     private static HashMap<String, List<CalendarItemBean>> cache = new HashMap<>();
+    private static final String TAG = "calendar";
 
     /**
      * 获取一个月中的day集合
-     *
-     * @param year
-     * @param month
-     * @return
      */
     public static List<CalendarItemBean> getMonthOfDayList(int year, int month) {
+
+
         String key = year + " " + month;//以 年 月 为key
         if (cache.containsKey(key)) {
             List<CalendarItemBean> listBean = cache.get(key);
@@ -46,12 +43,21 @@ public class CalendarFactory {
             bean.mothFlag = -1;
             list.add(bean);
         }
+
+        //获取当月的天数
+        for (int i = 0; i < totalDaysOfMonth; i++) {
+            CalendarItemBean bean = getCalendarItemBean(year, month, i + 1);
+            list.add(bean);
+        }
+
+
         //为了塞满42个格子，显示多出当月的天数
         for (int i = 0; i < 42 - (fweek - 1) - totalDaysOfMonth; i++) {
             CalendarItemBean bean = getCalendarItemBean(year, month, totalDaysOfMonth + i + 1);
             bean.mothFlag = 1;
             list.add(bean);
         }
+//        LogUtil.d(TAG, "CalendarFactory--getMonthOfDayList:" + list.size() + "--" + list.toArray().toString());
         return list;
     }
 
@@ -74,6 +80,7 @@ public class CalendarFactory {
         String[] chinaDate = ChinaDateUtil.getChinaDate(year, month, day);
         bean.chinaMonth = chinaDate[0];
         bean.chinaDay = chinaDate[1];
+
         return bean;
     }
 

@@ -1,6 +1,6 @@
-package com.xiaolin.calendarlib.interfaceView;
+package com.xiaolin.calendar.interfaceView;
 
-import com.xiaolin.calendarlib.listener.CalendarTopViewChangeListener;
+import com.xiaolin.calendar.listener.CalendarTopViewChangeListener;
 
 /**
  * 由CalendarDateView具体实现该接口
@@ -8,7 +8,7 @@ import com.xiaolin.calendarlib.listener.CalendarTopViewChangeListener;
 
 public interface CalendarTopView {
 
-    int[] getCurrentSelectPostion();
+    int[] getCurrentSelectPosition();
 
     int getItemHeight();
 
