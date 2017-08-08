@@ -4,16 +4,19 @@ import android.text.TextUtils;
 
 import com.xiaolin.app.Constants;
 import com.xiaolin.bean.AttendDaysOFMonthBean;
+import com.xiaolin.bean.AttendDaysOFMonthStateBean;
 import com.xiaolin.bean.AttendStatusMonthBean;
 import com.xiaolin.bean.CommonBean;
 import com.xiaolin.bean.CommonListBean;
 import com.xiaolin.http.MyHttpService;
 import com.xiaolin.model.imodel.IAttendModel;
 import com.xiaolin.model.listener.OnAttendDayDetailListener;
-import com.xiaolin.model.listener.OnAttendDayOfMonthListener;
+import com.xiaolin.model.listener.OnAttendDayOfMonthStateListener;
 import com.xiaolin.model.listener.OnAttendMonthStateListener;
 import com.xiaolin.utils.DebugUtil;
 import com.xiaolin.utils.SPUtils;
+
+import java.util.ArrayList;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -46,18 +49,18 @@ public class AttendModelImpl implements IAttendModel {
                 .subscribe(new Observer<CommonBean<AttendStatusMonthBean>>() {
                     @Override
                     public void onCompleted() {
-                        DebugUtil.d(TAG, "onCompleted");
+                        DebugUtil.d(TAG, "getAttendStatusByMonth--onCompleted");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        DebugUtil.d(TAG, "onError");
+                        DebugUtil.d(TAG, "getAttendStatusByMonth--onError");
                         listener.onAttendMontStateFailed("数据异常！", (Exception) e);
                     }
 
                     @Override
                     public void onNext(CommonBean<AttendStatusMonthBean> bean) {
-                        DebugUtil.d(TAG, "onNext");
+                        DebugUtil.d(TAG, "getAttendStatusByMonth--onNext");
 
                         if (bean.getCode().equals("1")) {
                             listener.onAttendMontStateSuccess(bean.getResult());
@@ -71,7 +74,7 @@ public class AttendModelImpl implements IAttendModel {
     }
 
     /**
-     * 获取日历月记录
+     * 获取日历月记录的状态记录
      *
      * @param year
      * @param month
@@ -79,39 +82,39 @@ public class AttendModelImpl implements IAttendModel {
      */
 
     @Override
-    public void getAttendList(String year, String month, final OnAttendDayOfMonthListener listener) {
+    public void getAttendSateList(String year, String month, final OnAttendDayOfMonthStateListener listener) {
         String employeeID = SPUtils.getString(Constants.EMPLOYEE_ID);
         String storeId = SPUtils.getString(Constants.STORE_ID);
         if (TextUtils.isEmpty(employeeID) || TextUtils.isEmpty(storeId)) {
             DebugUtil.e("数据存储异常，没有获取到存储数据！");
             return;
         }
-        MyHttpService.Builder.getHttpServer().getAttendList(storeId, employeeID, year, month)
+        MyHttpService.Builder.getHttpServer().getAttendStateList(storeId, employeeID, year, month)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<CommonListBean<AttendDaysOFMonthBean>>() {
+                .subscribe(new Observer<CommonListBean<AttendDaysOFMonthStateBean>>() {
                     @Override
                     public void onCompleted() {
-                        DebugUtil.d(TAG, "getAttendList--onCompleted");
+                        DebugUtil.d(TAG, "getAttendSateList--onCompleted");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        DebugUtil.e(TAG, "getAttendList--onError:" + e.toString());
+                        DebugUtil.e(TAG, "getAttendSateList--onError:" + e.toString());
                         listener.onAttendDaysFailed("获取数据异常", (Exception) e);
 
                     }
 
                     @Override
-                    public void onNext(CommonListBean<AttendDaysOFMonthBean> listBean) {
-                        DebugUtil.d(TAG, "getAttendList--onNext");
+                    public void onNext(CommonListBean<AttendDaysOFMonthStateBean> listBean) {
+                        DebugUtil.d(TAG, "getAttendSateList--onNext");
 
 
                         if (listBean.getCode().equals("0")) {
-                            listener.onAttendDaysFailed(listBean.getMessage(), new Exception("没有该月的数据！"));
+                            listener.onAttendDaysFailed(listBean.getMessage(), new Exception("没有该月的状态数据！"));
                         } else {
-                            listener.onAttendDaysSuccess(listBean.getResult());
+                            listener.onAttendDaysSuccess((ArrayList<AttendDaysOFMonthStateBean>) listBean.getResult());
                         }
                     }
                 });
@@ -138,19 +141,19 @@ public class AttendModelImpl implements IAttendModel {
                 .subscribe(new Observer<CommonBean<AttendDaysOFMonthBean>>() {
                     @Override
                     public void onCompleted() {
-                        DebugUtil.d(TAG, "getAttendList--onCompleted");
+                        DebugUtil.d(TAG, "getAttendDetailDay--onCompleted");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        DebugUtil.e(TAG, "getAttendList--onError:" + e.toString());
+                        DebugUtil.e(TAG, "getAttendDetailDay--onError:" + e.toString());
                         listener_2.onAttendDaysFailed("获取数据异常", (Exception) e);
 
                     }
 
                     @Override
                     public void onNext(CommonBean<AttendDaysOFMonthBean> bean) {
-                        DebugUtil.d(TAG, "getAttendList--onNext");
+                        DebugUtil.d(TAG, "getAttendDetailDay--onNext");
 
 
                         if (bean.getCode().equals("0")) {

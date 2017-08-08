@@ -2,6 +2,7 @@ package com.xiaolin.http;
 
 
 import com.xiaolin.bean.AttendDaysOFMonthBean;
+import com.xiaolin.bean.AttendDaysOFMonthStateBean;
 import com.xiaolin.bean.AttendStatusMonthBean;
 import com.xiaolin.bean.BaseBean;
 import com.xiaolin.bean.CommonBean;
@@ -152,9 +153,21 @@ public interface MyHttpService {
      * 获取考勤月记录
      * post
      */
+//    @FormUrlEncoded
+//    @POST(URLUtils.MONTH_ALL)
+//    Observable<CommonListBean<AttendDaysOFMonthBean>> getAttendList(
+//            @Field("storeId") String storeId
+//            , @Field("employeeId") String employeeId
+//            , @Field("year") String year
+//            , @Field("month") String month);
+
+    /**
+     * 获取考勤月记录的状态记录
+     * post
+     */
     @FormUrlEncoded
-    @POST(URLUtils.MONTH_ALL)
-    Observable<CommonListBean<AttendDaysOFMonthBean>> getAttendList(
+    @POST(URLUtils.MONTH_STATE_ALL)
+    Observable<CommonListBean<AttendDaysOFMonthStateBean>> getAttendStateList(
             @Field("storeId") String storeId
             , @Field("employeeId") String employeeId
             , @Field("year") String year

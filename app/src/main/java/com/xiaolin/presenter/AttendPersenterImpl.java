@@ -3,16 +3,17 @@ package com.xiaolin.presenter;
 import android.content.Context;
 
 import com.xiaolin.bean.AttendDaysOFMonthBean;
+import com.xiaolin.bean.AttendDaysOFMonthStateBean;
 import com.xiaolin.bean.AttendStatusMonthBean;
 import com.xiaolin.model.AttendModelImpl;
 import com.xiaolin.model.imodel.IAttendModel;
 import com.xiaolin.model.listener.OnAttendDayDetailListener;
-import com.xiaolin.model.listener.OnAttendDayOfMonthListener;
+import com.xiaolin.model.listener.OnAttendDayOfMonthStateListener;
 import com.xiaolin.model.listener.OnAttendMonthStateListener;
 import com.xiaolin.ui.iview.IAttendDayView;
 import com.xiaolin.ui.iview.IAttendMonthStateView;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * 考勤p层
@@ -49,10 +50,10 @@ public class AttendPersenterImpl {
     }
 
     /**
-     * 月考勤状态
+     * 月考勤状态(月份使用)
      */
 
-    public void getAttendMonthState(String year, String month) {
+    public synchronized void getAttendMonthState(String year, String month) {
         iAttendMonthStateView.showProgress();
         attendModel.getAttendStatusByMonth(year, month, new OnAttendMonthStateListener() {
             @Override
@@ -73,11 +74,32 @@ public class AttendPersenterImpl {
     /**
      * 获取月考勤记录
      */
-    public void getAttendListOfMonth(String year, String month) {
+//    public void getAttendListOfMonth(String year, String month) {
+//        attendDayView.showProgress();
+//        attendModel.getAttendList(year, month, new OnAttendDayOfMonthListener() {
+//            @Override
+//            public void onAttendDaysSuccess(ArrayList<AttendDaysOFMonthBean> list) {
+//                attendDayView.hideProgress();
+//                attendDayView.postSuccessUse(list);
+//            }
+//
+//            @Override
+//            public void onAttendDaysFailed(String msg, Exception e) {
+//                attendDayView.hideProgress();
+//                attendDayView.postFaild(msg, e);
+//            }
+//        });
+//    }
+
+    /**
+     * 获取月考勤记录的状态记录（月日历使用）
+     */
+    public synchronized void getAttendStateList(String year, String month) {
         attendDayView.showProgress();
-        attendModel.getAttendList(year, month, new OnAttendDayOfMonthListener() {
+        attendModel.getAttendSateList(year, month, new OnAttendDayOfMonthStateListener() {
+
             @Override
-            public void onAttendDaysSuccess(List<AttendDaysOFMonthBean> list) {
+            public void onAttendDaysSuccess(ArrayList<AttendDaysOFMonthStateBean> list) {
                 attendDayView.hideProgress();
                 attendDayView.postSuccessUse(list);
             }
@@ -93,7 +115,7 @@ public class AttendPersenterImpl {
     /**
      * 获取日历日记录
      */
-    public void getAttendDayDetail(String year, String month, String day) {
+    public synchronized void getAttendDayDetail(String year, String month, String day) {
         attendDayView.showProgress();
         attendModel.getAttendDetailDay(year, month, day, new OnAttendDayDetailListener() {
             @Override

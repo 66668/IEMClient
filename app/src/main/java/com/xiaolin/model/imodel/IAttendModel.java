@@ -1,7 +1,7 @@
 package com.xiaolin.model.imodel;
 
 import com.xiaolin.model.listener.OnAttendDayDetailListener;
-import com.xiaolin.model.listener.OnAttendDayOfMonthListener;
+import com.xiaolin.model.listener.OnAttendDayOfMonthStateListener;
 import com.xiaolin.model.listener.OnAttendMonthStateListener;
 
 /**
@@ -20,7 +20,7 @@ public interface IAttendModel {
     /**
      *
      */
-    void getAttendList(String year, String month, OnAttendDayOfMonthListener listener);
+    void getAttendSateList(String year, String month, OnAttendDayOfMonthStateListener listener);
 
     /**
      *

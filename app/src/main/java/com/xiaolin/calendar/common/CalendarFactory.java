@@ -1,5 +1,8 @@
 package com.xiaolin.calendar.common;
 
+import com.xiaolin.bean.AttendDaysOFMonthStateBean;
+import com.xiaolin.utils.LogUtil;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -14,9 +17,9 @@ public class CalendarFactory {
     private static final String TAG = "calendar";
 
     /**
-     * 获取一个月中的day集合
+     * 获取一个月中的day集合,同时绑定考勤数据
      */
-    public static List<CalendarItemBean> getMonthOfDayList(int year, int month) {
+    public static List<CalendarItemBean> getMonthOfDayList(int year, int month, ArrayList<AttendDaysOFMonthStateBean> listSource) {
 
 
         String key = year + " " + month;//以 年 月 为key
@@ -47,6 +50,18 @@ public class CalendarFactory {
         //获取当月的天数
         for (int i = 0; i < totalDaysOfMonth; i++) {
             CalendarItemBean bean = getCalendarItemBean(year, month, i + 1);
+            LogUtil.d("calendar", "month=" + month);
+            //将该月对应的state参数值赋值
+            if (listSource != null && listSource.size() > 0) {
+                LogUtil.d("calendar", "month=" + month + "---listSource.get(0).getDMonth()=" + listSource.get(0).getDMonth());
+                //月份对应才可赋值
+                if (listSource.get(0).getDMonth().equals(month)) {
+                    bean.setState(listSource.get(i).getDayState());
+                    LogUtil.d("calendar", listSource.get(i).toString());
+                }
+            }
+
+            //获取存储的日历考勤状态
             list.add(bean);
         }
 
@@ -57,7 +72,7 @@ public class CalendarFactory {
             bean.mothFlag = 1;
             list.add(bean);
         }
-//        LogUtil.d(TAG, "CalendarFactory--getMonthOfDayList:" + list.size() + "--" + list.toArray().toString());
+        //        LogUtil.d(TAG, "CalendarFactory--getMonthOfDayList:" + list.size() + "--" + list.toArray().toString());
         return list;
     }
 
@@ -77,9 +92,9 @@ public class CalendarFactory {
 
         bean.week = CalendarUtil.getDayOfWeek(year, month, day);
         //农历设置
-        String[] chinaDate = ChinaDateUtil.getChinaDate(year, month, day);
-        bean.chinaMonth = chinaDate[0];
-        bean.chinaDay = chinaDate[1];
+//        String[] chinaDate = ChinaDateUtil.getChinaDate(year, month, day);
+//        bean.chinaMonth = chinaDate[0];
+//        bean.chinaDay = chinaDate[1];
 
         return bean;
     }

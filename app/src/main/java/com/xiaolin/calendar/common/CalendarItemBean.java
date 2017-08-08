@@ -10,6 +10,7 @@ public class CalendarItemBean {
     public int moth;
     public int day;
     public int week;
+    public String state;
 
     //-1,0,1 CalendarFactory中设置,
     public int mothFlag = 0;//是否本月
@@ -22,6 +23,14 @@ public class CalendarItemBean {
         this.year = year;
         this.moth = moth;
         this.day = day;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     public String getDisplayWeek() {
@@ -56,8 +65,12 @@ public class CalendarItemBean {
 
     @Override
     public String toString() {
-        String s = year + "-" + moth + "-" + day;
-        return s;
+        return "CalendarItemBean{" +
+                "year=" + year +
+                ", moth=" + moth +
+                ", day=" + day +
+                ", state='" + state + '\'' +
+                '}';
     }
 
     public String getDate() {

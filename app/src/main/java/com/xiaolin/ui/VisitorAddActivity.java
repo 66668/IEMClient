@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.xiaolin.R;
 import com.xiaolin.app.Constants;
 import com.xiaolin.dialog.CameraChooseDialog;
@@ -28,6 +31,7 @@ import com.xiaolin.ui.base.BaseActivity;
 import com.xiaolin.ui.iview.ICommonView;
 import com.xiaolin.utils.DebugUtil;
 import com.xiaolin.utils.EditPictureUtil;
+import com.xiaolin.utils.GlideCircleTransform;
 import com.xiaolin.utils.SPUtils;
 import com.xiaolin.utils.Utils;
 
@@ -270,7 +274,7 @@ public class VisitorAddActivity extends BaseActivity implements ICommonView {
      */
     private void takepic_permission() {
         //相机+读写权限组 提示
-        if (PermissionsUtil.hasPermission(this, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {//ACCESS_FINE_LOCATION ACCESS_COARSE_LOCATION这两个是一组，用一个判断就够了
+        if (PermissionsUtil.hasPermission(this, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)) {//ACCESS_FINE_LOCATION ACCESS_COARSE_LOCATION这两个是一组，用一个判断就够了
             takepic();
         } else {
             //第一次使用该权限调用
@@ -287,7 +291,7 @@ public class VisitorAddActivity extends BaseActivity implements ICommonView {
                             DebugUtil.toastLong(VisitorAddActivity.this, "该功能不可用");
                         }
                     }
-                    , Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                    , Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
         }
 
     }
@@ -301,6 +305,7 @@ public class VisitorAddActivity extends BaseActivity implements ICommonView {
             dialog = new CameraChooseDialog(VisitorAddActivity.this, new CameraChooseDialog.ClickCallback() {
                 @Override
                 public void PhotoCallback() {
+                    DebugUtil.d(TAG, "相机");
                     dialog.dismiss();
                     Intent intent = EditPictureUtil.getCaptureIntent(VisitorAddActivity.this);
                     startActivityForResult(intent, CAMERA_REQUEST);
@@ -308,6 +313,7 @@ public class VisitorAddActivity extends BaseActivity implements ICommonView {
 
                 @Override
                 public void galleryCallback() {
+                    DebugUtil.d(TAG, "相册");
                     dialog.dismiss();
                     Intent intent = EditPictureUtil.getGalleryIntent(width, width, EditPictureUtil.createTempCropImageFile(VisitorAddActivity.this));
                     startActivityForResult(intent, CLIP_REQUEST);
@@ -331,12 +337,21 @@ public class VisitorAddActivity extends BaseActivity implements ICommonView {
                 startActivityForResult(intent, CLIP_REQUEST);
             }
             if (requestCode == CLIP_REQUEST) {// 剪切
-
+                DebugUtil.d(TAG, "图片剪裁");
                 uri = EditPictureUtil.getCropImageTempFileUri(VisitorAddActivity.this);
                 file = EditPictureUtil.getCropImageTempFile(VisitorAddActivity.this);
                 DebugUtil.d("最终图片路径：" + uri.toString());
                 Bitmap bitmap = EditPictureUtil.getBitmapFromUri(VisitorAddActivity.this, uri);
-                pic_img.setImageBitmap(bitmap);
+                //显示图片
+                Glide.with(VisitorAddActivity.this)
+                        .load(file)
+                        .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                        .placeholder(ContextCompat.getDrawable(VisitorAddActivity.this, R.mipmap.default_photo))
+                        .error(ContextCompat.getDrawable(VisitorAddActivity.this, R.mipmap.default_photo))
+                        .crossFade()//动画效果显示
+                        .transform(new GlideCircleTransform(VisitorAddActivity.this))//自定义圆形图片
+                        .into(pic_img);
+                //                pic_img.setImageBitmap(bitmap);
 
             }
         }

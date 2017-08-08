@@ -24,7 +24,7 @@ import java.util.List;
 
 public class CalendarView extends ViewGroup {
 
-    private static final String TAG = "calendar";
+    private static final String TAG = "CalendarView";
 
     private int selectPostion = -1;
 
@@ -85,7 +85,7 @@ public class CalendarView extends ViewGroup {
     }
 
     /**
-     * 将该月的数据显示到ViewGroup上
+     * 将该月的数据显示到item上
      */
 
     private void setItem() {
@@ -166,8 +166,10 @@ public class CalendarView extends ViewGroup {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        LogUtil.d(TAG, "CalendarView--getSelectPostion=" + (new int[]{rect.left, rect.top, rect.right, rect.top}).toString());
-        return new int[]{rect.left, rect.top, rect.right, rect.top};
+        int[] selectposition = new int[]{rect.left, rect.top, rect.right, rect.top};
+        LogUtil.d(TAG, "CalendarView--getSelectPostion=selectposition=" + selectposition[0] +
+                "--" + selectposition[1] + "--" + selectposition[2] + "--" + selectposition[3]);
+        return selectposition;
     }
 
     @Override

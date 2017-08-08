@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.xiaolin.R;
 import com.xiaolin.adpter.AttendDayAdapter;
 import com.xiaolin.bean.AttendDaysOFMonthBean;
+import com.xiaolin.bean.AttendDaysOFMonthStateBean;
 import com.xiaolin.calendar.common.CalendarAdapter;
 import com.xiaolin.calendar.common.CalendarItemBean;
 import com.xiaolin.calendar.common.CalendarUtil;
@@ -26,7 +27,6 @@ import com.xiaolin.utils.DebugUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -75,6 +75,7 @@ public class AttendDayActivity extends BaseActivity implements IAttendDayView {
         ButterKnife.bind(this);
         initMyView();
         initCalendar();
+
         getDate();
         getDayDate();
     }
@@ -101,7 +102,6 @@ public class AttendDayActivity extends BaseActivity implements IAttendDayView {
         calendarDateView.setAdapter(new CalendarAdapter() {
             @Override
             public View getView(View convertView, ViewGroup parentView, CalendarItemBean bean) {
-                DebugUtil.d(TAG, "--ACT--getView");
 
                 if (convertView == null) {
                     convertView = LayoutInflater.from(parentView.getContext()).inflate(R.layout.item_calendar, null);
@@ -131,16 +131,17 @@ public class AttendDayActivity extends BaseActivity implements IAttendDayView {
                 currentMonth = bean.moth + "";
                 currentDay = bean.day + "";
                 getDayDate();
+                getDate();
             }
         });
     }
 
     /**
-     * 获取月记录数据
+     * 获取月记录的状态记录
      */
     private void getDate() {
         DebugUtil.d(TAG, "currentYear=" + currentYear + "--currentMonth=" + currentMonth);
-        attendPersenter.getAttendListOfMonth(currentYear, currentMonth);
+        attendPersenter.getAttendStateList(currentYear, currentMonth);
     }
 
     /**
@@ -179,9 +180,9 @@ public class AttendDayActivity extends BaseActivity implements IAttendDayView {
 
     //月记录使用
     @Override
-    public void postSuccessUse(List<AttendDaysOFMonthBean> list) {
+    public void postSuccessUse(ArrayList<AttendDaysOFMonthStateBean> list) {
         //调用下边方法，更新日历视图
-        calendarDateView.setSourseDate();
+        calendarDateView.setSourseDate(list);
     }
 
     @Override

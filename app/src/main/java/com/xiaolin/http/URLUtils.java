@@ -20,7 +20,10 @@ public class URLUtils {
      */
 
     public static final String VISITOR = "Main/GetVisitorRecordsByPage";
-
+    /**
+     * 添加访客
+     */
+    public static final String ADD_VISITOR = "Main/AddOneVisitorRecord";
     /**
      * 地图考勤
      */
@@ -45,15 +48,16 @@ public class URLUtils {
      * 获取考勤月记录接口
      */
     public static final String MONTH_ALL = "Employee/GetAttendListByMonth";
+
+    /**
+     * 获取考勤月记录接口
+     */
+    public static final String MONTH_STATE_ALL = "Employee/GetAttendStatusByMonthC";
     /**
      * 获取考勤日记录接口
      */
     public static final String DAYOFMONTH = "Employee/GetAttendStatusByDayC";
 
-    /**
-     * 添加访客
-     */
-    public static final String ADD_VISITOR = "Employee/GetAttendStatusByMonth";
 
     /**
      * 检查更新
