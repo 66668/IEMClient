@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.xiaolin.R;
-import com.xiaolin.bean.AttendDaysOFMonthStateBean;
 import com.xiaolin.calendar.common.CalendarAdapter;
 import com.xiaolin.calendar.common.CalendarItemBean;
 import com.xiaolin.calendar.common.CalendarUtil;
@@ -18,7 +17,6 @@ import com.xiaolin.calendar.interfaceView.ICalendarDateView;
 import com.xiaolin.calendar.listener.CalendarTopViewChangeListener;
 import com.xiaolin.utils.LogUtil;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -52,13 +50,13 @@ public class CalendarDateView extends ViewPager implements ICalendarDateView {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CalendarDateView);//解析attrs.xml，取出属性
         row = typedArray.getInteger(R.styleable.CalendarDateView_cbd_calendar_row, 6);
         typedArray.recycle();//回收
-
+        viewAdapter = new MyViewAdapter();
         init();
     }
 
     private void init() {
-        viewAdapter = new MyViewAdapter();
         LogUtil.d(TAG, "init()1");
+        LogUtil.d("SJY", "setAdapter()");
         setAdapter(viewAdapter);
 
         //添加页面切换监听
@@ -81,17 +79,8 @@ public class CalendarDateView extends ViewPager implements ICalendarDateView {
         LogUtil.d(TAG, "init()3");
     }
 
-    /**
-     * 网络数据赋值，
-     */
-    ArrayList<AttendDaysOFMonthStateBean> listSource = new ArrayList<>();
-
-    public void setSourseDate(ArrayList<AttendDaysOFMonthStateBean> list) {
-        LogUtil.d(TAG, "赋网络数据--setSourseDate");
-        viewAdapter.setListSource(list);
-    }
-
-    public void setAdapter(CalendarAdapter adapter) {
+    public void setCalendarAdapter(CalendarAdapter adapter) {
+        LogUtil.d("SJY", "setCalendarAdapter()");
         mAdapter = adapter;
         initData();
     }
@@ -163,10 +152,6 @@ public class CalendarDateView extends ViewPager implements ICalendarDateView {
 
     public class MyViewAdapter extends PagerAdapter {
 
-        void setListSource(ArrayList<AttendDaysOFMonthStateBean> list) {
-            listSource.clear();
-            listSource = list;
-        }
 
         @Override
         public int getCount() {
@@ -200,24 +185,13 @@ public class CalendarDateView extends ViewPager implements ICalendarDateView {
             int year = dateArr[0];
             int month = dateArr[1] + position - Integer.MAX_VALUE / 2;
 
-            String key = year + " " + month;//给Viewpager加标识
-            calendarView.setTag(key);//给Viewpager加标识
+            calendarView.setTag(position);//给Viewpager加标识，getItemPosition来调用
 
             //赋值
-            LogUtil.d(TAG, "instantiateItem（）--月：" + month + "--Integer.MAX_VALUE / 2=" + Integer.MAX_VALUE / 2 + "--position=" + position);
+            LogUtil.d(TAG, "instantiateItem（）--月：" + month);
 
             //将考勤状态封装到数据集合中
-            List<CalendarItemBean> list;
-            if (listSource != null && listSource.size() > 0) {
-                if (listSource.get(0).getDMonth().equals(month)) {
-                    list = getMonthOfDayList(year, month, listSource);
-                } else {
-                    list = getMonthOfDayList(year, month, null);
-                }
-
-            } else {
-                list = getMonthOfDayList(year, month, null);
-            }
+            List<CalendarItemBean> list = getMonthOfDayList(year, month, null);
 
             //打印
             for (CalendarItemBean bean : list) {
@@ -242,10 +216,19 @@ public class CalendarDateView extends ViewPager implements ICalendarDateView {
          */
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((View) object);
+
+            container.removeView((View) object);//移除ViewPager
             cache.addLast((CalendarView) object);
             viewMap.remove(position);
         }
+
+        //更新已有界面的方法
+        @Override
+        public int getItemPosition(Object object) {
+            LogUtil.d(TAG, "getItemPosition（）");
+            return POSITION_NONE;//该值默认是-2
+        }
+
     }
 
 

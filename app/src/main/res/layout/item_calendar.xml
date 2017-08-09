@@ -4,8 +4,7 @@
               android:layout_height="48dp"
               android:background="@drawable/item_calendar_bg"
               android:gravity="center"
-              android:orientation="vertical"
-    >
+              android:orientation="vertical">
 
     <TextView
         android:id="@+id/text"

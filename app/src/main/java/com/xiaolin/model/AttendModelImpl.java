@@ -123,6 +123,53 @@ public class AttendModelImpl implements IAttendModel {
     }
 
     /**
+     * 获取日历月记录的状态记录
+     * 获取三个月的数据
+     */
+
+    @Override
+    public void getAttendSateOFThree(String year, String month, final OnAttendDayOfMonthStateListener listener) {
+
+        String employeeID = SPUtils.getString(Constants.EMPLOYEE_ID);
+        String storeId = SPUtils.getString(Constants.STORE_ID);
+        if (TextUtils.isEmpty(employeeID) || TextUtils.isEmpty(storeId)) {
+            DebugUtil.e("数据存储异常，没有获取到存储数据！");
+            return;
+        }
+        MyHttpService.Builder.getHttpServer().getAttendStateOFTHREE(storeId, employeeID, year, month)
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<CommonListBean<AttendDaysOFMonthStateBean>>() {
+                    @Override
+                    public void onCompleted() {
+                        DebugUtil.d(TAG, "getAttendSateOFThree--onCompleted");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        DebugUtil.e(TAG, "getAttendSateOFThree--onError:" + e.toString());
+                        listener.onAttendDaysFailed("获取数据异常", (Exception) e);
+
+                    }
+
+                    @Override
+                    public void onNext(CommonListBean<AttendDaysOFMonthStateBean> listBean) {
+                        DebugUtil.d(TAG, "getAttendSateOFThree--onNext");
+
+
+                        if (listBean.getCode().equals("0")) {
+                            listener.onAttendDaysFailed(listBean.getMessage(), new Exception("没有三个月的状态数据！"));
+                        } else {
+                            listener.onAttendDaysSuccess((ArrayList<AttendDaysOFMonthStateBean>) listBean.getResult());
+                        }
+                    }
+                });
+
+
+    }
+
+    /**
      * 获取日历日记录
      */
 

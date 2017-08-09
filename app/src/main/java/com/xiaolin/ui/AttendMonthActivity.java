@@ -10,13 +10,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.xiaolin.R;
+import com.xiaolin.bean.AttendDaysOFMonthStateBean;
 import com.xiaolin.bean.AttendStatusMonthBean;
+import com.xiaolin.calendar.common.CalendarCache;
 import com.xiaolin.presenter.AttendPersenterImpl;
 import com.xiaolin.ui.base.BaseActivity;
 import com.xiaolin.ui.iview.IAttendMonthStateView;
 import com.xiaolin.utils.DebugUtil;
 import com.xiaolin.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import butterknife.BindView;
@@ -115,6 +118,7 @@ public class AttendMonthActivity extends BaseActivity implements IAttendMonthSta
         setContentView(R.layout.act_attend_month);
         ButterKnife.bind(this);
         initMyView();
+        getCacheDate();
     }
 
     private void initMyView() {
@@ -246,7 +250,6 @@ public class AttendMonthActivity extends BaseActivity implements IAttendMonthSta
         }
         //调接口修改数据
         attendPersenter.getAttendMonthState(currentYear, currentMonth);
-        DebugUtil.d(TAG, "可以调接口修改数据了！！");
     }
 
     //根据currentMonth找出对应的tv,并修改tv的状态
@@ -369,5 +372,89 @@ public class AttendMonthActivity extends BaseActivity implements IAttendMonthSta
         DebugUtil.ToastShort(AttendMonthActivity.this, msg);
         DebugUtil.e(TAG, e.toString());
 
+    }
+
+    String month;
+    String year;
+
+    void getCacheDate() {
+        String[] currentDate = Utils.getYearMonthDayStr(new Date());
+        year = currentDate[0];
+        month = currentDate[1];
+
+        //为缓存三个月数据，设置key值 year+" "+month
+        key2 = year + " " + month;
+        if (month.equals("1")) {
+            key1 = (Integer.parseInt(year) - 1) + " 12";
+            key3 = year + " 2";
+        } else if (month.equals("12")) {
+            key1 = year + " 11";
+            key3 = (Integer.parseInt(year) + 1) + " 1";
+        } else {
+            key1 = year + " " + (Integer.parseInt(month) - 1);
+            key3 = year + " " + (Integer.parseInt(month) + 1);
+        }
+        attendPersenter.getAttendMonthOfThreeState(year, month);
+    }
+
+    /**
+     * 为下个界面缓存三个月的数据
+     *
+     * @param listStateBean
+     */
+    ArrayList<AttendDaysOFMonthStateBean> list1 = new ArrayList<>();
+    ArrayList<AttendDaysOFMonthStateBean> list2 = new ArrayList<>();
+    ArrayList<AttendDaysOFMonthStateBean> list3 = new ArrayList<>();
+    String key1, key2, key3;
+
+    @Override
+    public void cacheDateSuccess(ArrayList<AttendDaysOFMonthStateBean> listStateBean) {
+
+        int size = listStateBean.size();
+        for (int i = 0; i < size; i++) {
+            //在当前月是1月 12月时特殊情况处理
+            if (month.equals("1")) {
+                if (listStateBean.get(i).getDMonth().equals("12")) {
+                    list1.add(listStateBean.get(i));
+                }
+                if (listStateBean.get(i).getDMonth().equals(month)) {
+                    list2.add(listStateBean.get(i));
+                }
+                if (listStateBean.get(i).getDMonth().equals("2")) {
+                    list3.add(listStateBean.get(i));
+                }
+            } else if (month.equals("12")) {
+                if (listStateBean.get(i).getDMonth().equals("11")) {
+                    list1.add(listStateBean.get(i));
+                }
+                if (listStateBean.get(i).getDMonth().equals(month)) {
+                    list2.add(listStateBean.get(i));
+                }
+                if (listStateBean.get(i).getDMonth().equals("1")) {
+                    list3.add(listStateBean.get(i));
+                }
+            } else {
+                if (listStateBean.get(i).getDMonth().equals(Integer.parseInt(month) - 1 + "")) {
+                    list1.add(listStateBean.get(i));
+                }
+                if (listStateBean.get(i).getDMonth().equals(month)) {
+                    list2.add(listStateBean.get(i));
+                }
+                if (listStateBean.get(i).getDMonth().equals(Integer.parseInt(month) + 1 + "")) {
+                    list3.add(listStateBean.get(i));
+                }
+            }
+        }
+        CalendarCache.getInstance().setCacahe(key1, list1);
+        CalendarCache.getInstance().setCacahe(key2, list2);
+        CalendarCache.getInstance().setCacahe(key3, list3);
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //退出这个界面，清空全局变量缓存
+        CalendarCache.getInstance().clearAll();
     }
 }

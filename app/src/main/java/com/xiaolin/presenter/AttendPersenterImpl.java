@@ -72,24 +72,45 @@ public class AttendPersenterImpl {
     }
 
     /**
+     * 月考勤状态(月份使用)
+     * 三个月的记录(无加载dialog)
+     */
+
+    public synchronized void getAttendMonthOfThreeState(String year, String month) {
+        attendModel.getAttendSateOFThree(year, month, new OnAttendDayOfMonthStateListener() {
+
+            @Override
+            public void onAttendDaysSuccess(ArrayList<AttendDaysOFMonthStateBean> list) {
+                iAttendMonthStateView.cacheDateSuccess(list);
+            }
+
+            @Override
+            public void onAttendDaysFailed(String msg, Exception e) {
+                iAttendMonthStateView.postFaild(msg, e);
+            }
+        });
+
+    }
+
+    /**
      * 获取月考勤记录
      */
-//    public void getAttendListOfMonth(String year, String month) {
-//        attendDayView.showProgress();
-//        attendModel.getAttendList(year, month, new OnAttendDayOfMonthListener() {
-//            @Override
-//            public void onAttendDaysSuccess(ArrayList<AttendDaysOFMonthBean> list) {
-//                attendDayView.hideProgress();
-//                attendDayView.postSuccessUse(list);
-//            }
-//
-//            @Override
-//            public void onAttendDaysFailed(String msg, Exception e) {
-//                attendDayView.hideProgress();
-//                attendDayView.postFaild(msg, e);
-//            }
-//        });
-//    }
+    //    public void getAttendListOfMonth(String year, String month) {
+    //        attendDayView.showProgress();
+    //        attendModel.getAttendList(year, month, new OnAttendDayOfMonthListener() {
+    //            @Override
+    //            public void onAttendDaysSuccess(ArrayList<AttendDaysOFMonthBean> list) {
+    //                attendDayView.hideProgress();
+    //                attendDayView.postSuccessUse(list);
+    //            }
+    //
+    //            @Override
+    //            public void onAttendDaysFailed(String msg, Exception e) {
+    //                attendDayView.hideProgress();
+    //                attendDayView.postFaild(msg, e);
+    //            }
+    //        });
+    //    }
 
     /**
      * 获取月考勤记录的状态记录（月日历使用）

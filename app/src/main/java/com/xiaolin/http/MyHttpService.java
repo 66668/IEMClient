@@ -153,13 +153,13 @@ public interface MyHttpService {
      * 获取考勤月记录
      * post
      */
-//    @FormUrlEncoded
-//    @POST(URLUtils.MONTH_ALL)
-//    Observable<CommonListBean<AttendDaysOFMonthBean>> getAttendList(
-//            @Field("storeId") String storeId
-//            , @Field("employeeId") String employeeId
-//            , @Field("year") String year
-//            , @Field("month") String month);
+    //    @FormUrlEncoded
+    //    @POST(URLUtils.MONTH_ALL)
+    //    Observable<CommonListBean<AttendDaysOFMonthBean>> getAttendList(
+    //            @Field("storeId") String storeId
+    //            , @Field("employeeId") String employeeId
+    //            , @Field("year") String year
+    //            , @Field("month") String month);
 
     /**
      * 获取考勤月记录的状态记录
@@ -168,6 +168,19 @@ public interface MyHttpService {
     @FormUrlEncoded
     @POST(URLUtils.MONTH_STATE_ALL)
     Observable<CommonListBean<AttendDaysOFMonthStateBean>> getAttendStateList(
+            @Field("storeId") String storeId
+            , @Field("employeeId") String employeeId
+            , @Field("year") String year
+            , @Field("month") String month);
+
+    /**
+     * 获取考勤月记录的状态记录
+     * 获取三个月的记录
+     * post
+     */
+    @FormUrlEncoded
+    @POST(URLUtils.MONTH_STATE_THREE)
+    Observable<CommonListBean<AttendDaysOFMonthStateBean>> getAttendStateOFTHREE(
             @Field("storeId") String storeId
             , @Field("employeeId") String employeeId
             , @Field("year") String year

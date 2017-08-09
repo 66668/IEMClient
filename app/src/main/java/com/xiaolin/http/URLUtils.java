@@ -53,6 +53,11 @@ public class URLUtils {
      * 获取考勤月记录接口
      */
     public static final String MONTH_STATE_ALL = "Employee/GetAttendStatusByMonthC";
+     /**
+     * 获取考勤月记录接口 以此获取三个月的记录
+     */
+    public static final String MONTH_STATE_THREE = "Employee/GetAttendStatusByMonthCThree";
+
     /**
      * 获取考勤日记录接口
      */

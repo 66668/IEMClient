@@ -14,7 +14,7 @@ import java.util.List;
 
 public class CalendarFactory {
     private static HashMap<String, List<CalendarItemBean>> cache = new HashMap<>();
-    private static final String TAG = "calendar";
+    private static final String TAG = "CalendarDateView";
 
     /**
      * 获取一个月中的day集合,同时绑定考勤数据
@@ -48,19 +48,22 @@ public class CalendarFactory {
         }
 
         //获取当月的天数
+        if (CalendarCache.getInstance().getCache(key) != null) {
+            //即使从act获取到数据，也要优先用缓存
+            listSource = CalendarCache.getInstance().getCache(key);
+            LogUtil.d(TAG, "listSource:" + listSource.size());
+        } else {
+            LogUtil.d(TAG, "listSource没有缓存");
+        }
         for (int i = 0; i < totalDaysOfMonth; i++) {
             CalendarItemBean bean = getCalendarItemBean(year, month, i + 1);
-            LogUtil.d("calendar", "month=" + month);
             //将该月对应的state参数值赋值
             if (listSource != null && listSource.size() > 0) {
-                LogUtil.d("calendar", "month=" + month + "---listSource.get(0).getDMonth()=" + listSource.get(0).getDMonth());
                 //月份对应才可赋值
-                if (listSource.get(0).getDMonth().equals(month)) {
+                if (listSource.get(0).getDMonth().equals(month + "")) {
                     bean.setState(listSource.get(i).getDayState());
-                    LogUtil.d("calendar", listSource.get(i).toString());
                 }
             }
-
             //获取存储的日历考勤状态
             list.add(bean);
         }
@@ -92,9 +95,9 @@ public class CalendarFactory {
 
         bean.week = CalendarUtil.getDayOfWeek(year, month, day);
         //农历设置
-//        String[] chinaDate = ChinaDateUtil.getChinaDate(year, month, day);
-//        bean.chinaMonth = chinaDate[0];
-//        bean.chinaDay = chinaDate[1];
+        //        String[] chinaDate = ChinaDateUtil.getChinaDate(year, month, day);
+        //        bean.chinaMonth = chinaDate[0];
+        //        bean.chinaDay = chinaDate[1];
 
         return bean;
     }

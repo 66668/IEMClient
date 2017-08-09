@@ -15,6 +15,7 @@ import com.xiaolin.adpter.AttendDayAdapter;
 import com.xiaolin.bean.AttendDaysOFMonthBean;
 import com.xiaolin.bean.AttendDaysOFMonthStateBean;
 import com.xiaolin.calendar.common.CalendarAdapter;
+import com.xiaolin.calendar.common.CalendarCache;
 import com.xiaolin.calendar.common.CalendarItemBean;
 import com.xiaolin.calendar.common.CalendarUtil;
 import com.xiaolin.calendar.widget.CalendarDateView;
@@ -66,6 +67,7 @@ public class AttendDayActivity extends BaseActivity implements IAttendDayView {
     String currentYear;
     String currentMonth;
     String currentDay;
+    String key;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,7 +77,6 @@ public class AttendDayActivity extends BaseActivity implements IAttendDayView {
         ButterKnife.bind(this);
         initMyView();
         initCalendar();
-
         getDate();
         getDayDate();
     }
@@ -92,6 +93,8 @@ public class AttendDayActivity extends BaseActivity implements IAttendDayView {
         currentYear = currentDate[0] + "";
         currentMonth = currentDate[1] + "";
         currentDay = currentDate[2] + "";
+
+        key = currentYear + " " + currentMonth;
         listBean = new ArrayList<>();
     }
 
@@ -99,7 +102,7 @@ public class AttendDayActivity extends BaseActivity implements IAttendDayView {
 
         tv_CalendarCenter.setText(currentYear + "年" + currentMonth + "月" + currentDay + "日");
 
-        calendarDateView.setAdapter(new CalendarAdapter() {
+        calendarDateView.setCalendarAdapter(new CalendarAdapter() {
             @Override
             public View getView(View convertView, ViewGroup parentView, CalendarItemBean bean) {
 
@@ -139,9 +142,16 @@ public class AttendDayActivity extends BaseActivity implements IAttendDayView {
     /**
      * 获取月记录的状态记录
      */
+    String beforeMonth;
+
     private void getDate() {
-        DebugUtil.d(TAG, "currentYear=" + currentYear + "--currentMonth=" + currentMonth);
-        attendPersenter.getAttendStateList(currentYear, currentMonth);
+        beforeMonth = (Integer.parseInt(currentMonth) - 2) + "";
+        key = currentYear + " " + beforeMonth;
+
+        if (CalendarCache.getInstance().getCache(key) == null) {
+            DebugUtil.d(TAG, "currentYear=" + currentYear + "--beforeMonth=" + beforeMonth);
+            attendPersenter.getAttendStateList(currentYear, beforeMonth);
+        }
     }
 
     /**
@@ -181,8 +191,17 @@ public class AttendDayActivity extends BaseActivity implements IAttendDayView {
     //月记录使用
     @Override
     public void postSuccessUse(ArrayList<AttendDaysOFMonthStateBean> list) {
+
+
+        //缓存
+        if (list != null && list.size() > 0) {
+            if (list.get(0).getDMonth().equals(beforeMonth)) {
+                CalendarCache.getInstance().setCacahe(key, list);
+            }
+        }
         //调用下边方法，更新日历视图
-        calendarDateView.setSourseDate(list);
+        //        calendarDateView.setSourseDate(list);
+
     }
 
     @Override

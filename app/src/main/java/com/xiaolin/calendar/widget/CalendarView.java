@@ -16,10 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by codbking on 2016/12/18.
- * email:codbking@gmail.com
- * github:https://github.com/codbking
- * blog:http://www.jianshu.com/users/49d47538a2dd/latest_articles
+ *
  */
 
 public class CalendarView extends ViewGroup {
@@ -77,6 +74,7 @@ public class CalendarView extends ViewGroup {
         this.adapter = adapter;
     }
 
+    //
     public void setData(List<CalendarItemBean> listBean, boolean isToday) {
         this.listBean = listBean;
         this.isToday = isToday;
@@ -97,7 +95,9 @@ public class CalendarView extends ViewGroup {
         }
 
         for (int i = 0; i < listBean.size(); i++) {
+
             CalendarItemBean bean = listBean.get(i);
+            LogUtil.d(TAG, "bean.toString()=" + bean.toString());
             View view = getChildAt(i);
             View chidView = adapter.getView(view, this, bean);
 
@@ -113,9 +113,18 @@ public class CalendarView extends ViewGroup {
                 }
             } else {
                 if (selectPostion == -1 && bean.day == 1) {
-                    LogUtil.d(TAG, "CalendarView--setData--setItem--" + "bean.day == 1:" + (bean.day == 1) + "--selectPostion=" + i);
+                    LogUtil.d(TAG, "--selectPostion=" + i);
                     selectPostion = i;
                 }
+                //迟到早退设置
+                if (bean.DayState != null) {
+                    if (bean.DayState.equals("迟到") || bean.DayState.equals("早退")) {
+                        //                        selectPostion = i;
+                        chidView.setSelected(true);
+                        LogUtil.d(TAG, "--selectPostion=迟到--早退:" + i);
+                    }
+                }
+
             }
 
             chidView.setSelected(selectPostion == i);
@@ -124,52 +133,6 @@ public class CalendarView extends ViewGroup {
             setItemClick(chidView, i, bean);
 
         }
-    }
-
-    public Object[] getSelect() {
-        return new Object[]{getChildAt(selectPostion)
-                , selectPostion, listBean.get(selectPostion)};
-    }
-
-    /**
-     * item的点击事件
-     *
-     * @param view
-     * @param potsion
-     * @param bean
-     */
-    public void setItemClick(final View view, final int potsion, final CalendarItemBean bean) {
-        view.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                LogUtil.d(TAG, "CalendarView--点击的位置potsion=" + potsion + "bean:" + bean.toString());
-                if (selectPostion != -1) {
-
-                    getChildAt(selectPostion).setSelected(false);
-                    getChildAt(potsion).setSelected(true);
-
-                }
-                selectPostion = potsion;
-
-                if (onItemClickListener != null) {
-                    onItemClickListener.onItemClick(view, potsion, bean);
-                }
-            }
-        });
-    }
-
-    public int[] getSelectPostion() {
-        Rect rect = new Rect();
-        try {
-            getChildAt(selectPostion).getHitRect(rect);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        int[] selectposition = new int[]{rect.left, rect.top, rect.right, rect.top};
-        LogUtil.d(TAG, "CalendarView--getSelectPostion=selectposition=" + selectposition[0] +
-                "--" + selectposition[1] + "--" + selectposition[2] + "--" + selectposition[3]);
-        return selectposition;
     }
 
     @Override
@@ -222,5 +185,49 @@ public class CalendarView extends ViewGroup {
         b = t + itemHeight;
         view.layout(l, t, r, b);
 
+    }
+
+    public Object[] getSelect() {
+        return new Object[]{getChildAt(selectPostion), selectPostion, listBean.get(selectPostion)};
+    }
+
+    /**
+     * item的点击事件
+     *
+     * @param view
+     * @param potsion
+     * @param bean
+     */
+    public void setItemClick(final View view, final int potsion, final CalendarItemBean bean) {
+        view.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                LogUtil.d(TAG, "CalendarView--点击的位置potsion=" + potsion + "bean:" + bean.toString());
+                if (selectPostion != -1) {
+
+                    getChildAt(selectPostion).setSelected(false);
+                    getChildAt(potsion).setSelected(true);
+
+                }
+                selectPostion = potsion;
+
+                if (onItemClickListener != null) {
+                    onItemClickListener.onItemClick(view, potsion, bean);
+                }
+            }
+        });
+    }
+
+
+    public int[] getSelectPostion() {
+        Rect rect = new Rect();
+        try {
+            getChildAt(selectPostion).getHitRect(rect);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        int[] selectposition = new int[]{rect.left, rect.top, rect.right, rect.top};
+        return selectposition;
     }
 }

@@ -25,6 +25,11 @@ public interface IAttendModel {
     /**
      *
      */
+    void getAttendSateOFThree(String year, String month, OnAttendDayOfMonthStateListener listener);
+
+    /**
+     *
+     */
 
     void getAttendDetailDay(String year, String month,String day, OnAttendDayDetailListener listener);
 }
