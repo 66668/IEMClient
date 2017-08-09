@@ -99,6 +99,7 @@
 
 
     <com.xiaolin.calendar.widget.CalendarLayout
+        android:background="@color/ghostwhite"
         android:id="@+id/calendarLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -110,9 +111,9 @@
 
         <ListView
             android:id="@+id/list"
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#ffffff"
             />
 
     </com.xiaolin.calendar.widget.CalendarLayout>

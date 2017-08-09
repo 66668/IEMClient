@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="48dp"
-              android:background="@drawable/item_calendar_bg"
+              android:background="@drawable/item_calendar_today"
               android:gravity="center"
               android:orientation="vertical">
 

@@ -3,7 +3,7 @@
 
     <item android:state_selected="true">
         <shape android:shape="oval">
-            <solid android:color="@color/orangered"/>
+            <solid android:color="@color/common_topbar_bgcolor"/>
         </shape>
     </item>
 

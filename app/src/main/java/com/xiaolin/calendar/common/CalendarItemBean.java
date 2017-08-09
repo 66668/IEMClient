@@ -69,7 +69,7 @@ public class CalendarItemBean {
                 "year=" + year +
                 ", moth=" + moth +
                 ", day=" + day +
-                ", state='" + DayState + '\'' +
+                ", DayState='" + DayState + '\'' +
                 '}';
     }
 
