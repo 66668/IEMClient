@@ -17,6 +17,8 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal">
 
+        <!--  android:drawableEnd="@mipmap/rightarrow"
+            android:drawableStart="@mipmap/lefrarrow"-->
         <TextView
             android:id="@+id/tv_CalendarCenter"
             android:layout_width="200dp"
@@ -25,8 +27,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
-            android:drawableEnd="@mipmap/rightarrow"
-            android:drawableStart="@mipmap/lefrarrow"
+
             android:gravity="center"
             android:padding="5dp"
             android:textColor="@color/common_topbar_bgcolor"
@@ -111,7 +112,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <View
                 android:layout_width="match_parent"
@@ -181,9 +182,9 @@
                 android:background="@color/line"/>
 
             <ListView
-                android:id="@+id/list"
+                android:id="@+id/list_1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_below="@+id/view"
                 android:background="@color/white"
                 />

@@ -171,6 +171,17 @@ public class EditPictureUtil {
 
     }
 
+    /**
+     * 返回图片剪切后图片的file文件
+     *
+     * @param context
+     * @return
+     */
+    public static File getCropImageTempFile(Context context) {
+        return createTempCropImageFile(context);
+
+    }
+
     public static Bitmap getBitmapFromUri(Context context, Uri uri) {
         try {
             return MediaStore.Images.Media.getBitmap(context.getContentResolver(), uri);

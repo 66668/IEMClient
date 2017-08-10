@@ -25,8 +25,8 @@ import java.util.List;
 
 public class CalendarView extends ViewGroup {
 
-    //    private static final String TAG = "CalendarView";
-    private static final String TAG = "SJY";
+    private static final String TAG = "CalendarView";
+    //    private static final String TAG = "SJY";
 
     private int selectPostion = -1;
 

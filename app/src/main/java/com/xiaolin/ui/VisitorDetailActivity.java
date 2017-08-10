@@ -153,6 +153,7 @@ public class VisitorDetailActivity extends BaseActivity implements ICommonView {
     @Override
     public void postSuccessShow(String str) {
         DebugUtil.ToastShort(VisitorDetailActivity.this, "修改成功！");
+        this.finish();
     }
 
 

@@ -3,11 +3,11 @@ package com.xiaolin.ui;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.xiaolin.R;
 import com.xiaolin.app.Constants;
 import com.xiaolin.dialog.CameraChooseDialog;
@@ -28,8 +30,8 @@ import com.xiaolin.ui.base.BaseActivity;
 import com.xiaolin.ui.iview.ICommonView;
 import com.xiaolin.utils.DebugUtil;
 import com.xiaolin.utils.EditPictureUtil;
+import com.xiaolin.utils.GlideCircleTransform;
 import com.xiaolin.utils.SPUtils;
-import com.xiaolin.utils.Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -103,7 +105,7 @@ public class VisitorAddActivity extends BaseActivity implements ICommonView {
     CameraChooseDialog dialog;
     Uri uri;
     File file;
-    int width = -1;
+    int width = -1;//设定保存图片的宽高,经测试，图片宽度过大比如屏幕宽当width，保存图片app会崩，目前没解决大图保存的问题
     IVisitorPresenter visitorPresenter;
 
     String startTime;
@@ -133,7 +135,8 @@ public class VisitorAddActivity extends BaseActivity implements ICommonView {
     private void initMyView() {
         ButterKnife.bind(this);
         pic_img = (ImageView) findViewById(R.id.pic_img);
-        width = Utils.getWindowWidth(VisitorAddActivity.this);//以手机屏宽截图
+        //        width = Utils.getWindowWidth(VisitorAddActivity.this) / 2;//以手机屏宽截图
+        width = 300;//以手机屏宽截图
         tv_title.setText(R.string.visitor_add_title);
         tv_right.setText("");
         visitorTo = SPUtils.getString(Constants.EMPLOYEENAME);
@@ -178,6 +181,10 @@ public class VisitorAddActivity extends BaseActivity implements ICommonView {
     }
 
     private boolean isEmpoty() {
+        if (file == null) {
+            DebugUtil.ToastShort(VisitorAddActivity.this, "图片为空，请检查！");
+            return true;
+        }
         if (TextUtils.isEmpty(name)) {
             DebugUtil.ToastShort(VisitorAddActivity.this, "姓名不能为空！");
             return true;
@@ -301,7 +308,6 @@ public class VisitorAddActivity extends BaseActivity implements ICommonView {
         if (width <= 0) {
             return;
         }
-        width = Utils.getWindowWidth(VisitorAddActivity.this);//以手机屏宽截图
         //选择图片方式
         dialog = new CameraChooseDialog(VisitorAddActivity.this, new CameraChooseDialog.ClickCallback() {
             @Override
@@ -330,7 +336,6 @@ public class VisitorAddActivity extends BaseActivity implements ICommonView {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        width = Utils.getWindowWidth(VisitorAddActivity.this);//以手机屏宽截图
         if (resultCode == Activity.RESULT_OK) {
 
             if (requestCode == 1) {
@@ -345,21 +350,21 @@ public class VisitorAddActivity extends BaseActivity implements ICommonView {
             if (requestCode == 2) {// 剪切
 
                 uri = EditPictureUtil.getCropImageTempFileUri(VisitorAddActivity.this);
-                //                file = EditPictureUtil.getCropImageTempFile(VisitorAddActivity.this);
+                file = EditPictureUtil.getCropImageTempFile(VisitorAddActivity.this);
 
                 //显示图片
                 DebugUtil.d("最终图片路径：" + uri.toString());
-                Bitmap bitmap = EditPictureUtil.getBitmapFromUri(VisitorAddActivity.this, uri);
-                pic_img.setImageBitmap(bitmap);
-                //                if (file != null) {
-                //                    Glide.with(VisitorAddActivity.this)
-                //                            .load(file)
-                //                            .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                //                            .placeholder(ContextCompat.getDrawable(VisitorAddActivity.this, R.mipmap.default_photo))
-                //                            .error(ContextCompat.getDrawable(VisitorAddActivity.this, R.mipmap.default_photo))
-                //                            .transform(new GlideCircleTransform(VisitorAddActivity.this))//自定义圆形图片
-                //                            .into(pic_img);
-                //                }
+                //                Bitmap bitmap = EditPictureUtil.getBitmapFromUri(VisitorAddActivity.this, uri);
+                //                pic_img.setImageBitmap(bitmap);
+                if (file != null) {
+                    Glide.with(VisitorAddActivity.this)
+                            .load(file)
+                            .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                            .placeholder(ContextCompat.getDrawable(VisitorAddActivity.this, R.mipmap.default_photo))
+                            .error(ContextCompat.getDrawable(VisitorAddActivity.this, R.mipmap.default_photo))
+                            .transform(new GlideCircleTransform(VisitorAddActivity.this))//自定义圆形图片
+                            .into(pic_img);
+                }
 
 
             }

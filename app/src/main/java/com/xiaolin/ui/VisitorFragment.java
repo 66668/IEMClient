@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
@@ -111,8 +110,7 @@ public class VisitorFragment extends Fragment implements IVisitorView, SwipeRefr
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
             adapter.isShowFooter(true);
-            if (newState == RecyclerView.SCROLL_STATE_IDLE
-                    && lastItem + 1 == adapter.getItemCount() && adapter.isShowFooter()) {
+            if (newState == RecyclerView.SCROLL_STATE_IDLE && lastItem + 1 == adapter.getItemCount() && adapter.isShowFooter()) {
                 DebugUtil.d(TAG, "VisitorFragment---OnScrollListener--加载更多");
                 DebugUtil.d(TAG, "adapter.getItemCount()=" + adapter.getItemCount() + "---adapter.isShowFooter()=" + adapter.isShowFooter());
 
@@ -170,9 +168,12 @@ public class VisitorFragment extends Fragment implements IVisitorView, SwipeRefr
     //IVisitorView接口实现
     @Override
     public void addList(List<VisitorBean> list) {
-        DebugUtil.d(TAG, "获取数据size=" + list.size());
-        splitTime(list);//拆选出
+
+        splitTime(list);//刷新时间设置
+
+        //隐藏加载视图
         adapter.isShowFooter(true);
+
         if (listBean == null) {
             listBean = new ArrayList<>();
         }
@@ -218,11 +219,12 @@ public class VisitorFragment extends Fragment implements IVisitorView, SwipeRefr
             adapter.isShowFooter(false);
             adapter.notifyDataSetChanged();
         }
-        View view = getActivity() == null ? recyclerView.getRootView() : getActivity().findViewById(R.id.layout_visitor);
-        Snackbar.make(view, msg, Snackbar.LENGTH_SHORT).show();//底部提示
+
+        //底部提示
+        //        View view = getActivity() == null ? recyclerView.getRootView() : getActivity().findViewById(R.id.layout_visitor);
+        //        Snackbar.make(view, msg, Snackbar.LENGTH_SHORT).show();//底部提示
         DebugUtil.e(TAG, "VisitorFragment--异常：" + e.toString());
     }
-
 
     //SwipeRefreshLayout刷新接口
     @Override
@@ -238,5 +240,11 @@ public class VisitorFragment extends Fragment implements IVisitorView, SwipeRefr
 
         //p层获取数据
         visitorPresenter.pGetData(pageSize, isReceived, maxTime, minTime);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //        onRefresh();
     }
 }

@@ -98,7 +98,8 @@
             android:drawablePadding="@dimen/login_drawablePadding"
             android:drawableStart="@mipmap/login_ps"
             android:gravity="center_vertical"
-            android:hint="@string/login_password_hint"/>
+            android:hint="@string/login_password_hint"
+            android:inputType="textPassword"/>
 
         <View
             android:layout_width="match_parent"

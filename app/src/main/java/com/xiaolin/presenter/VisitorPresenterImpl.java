@@ -43,7 +43,14 @@ public class VisitorPresenterImpl implements IVisitorPresenter {
 
     }
 
-    //IVisitorPresenter接口实现
+    /**
+     * 获取数据记录
+     *
+     * @param pageSize
+     * @param isReceived
+     * @param maxTime
+     * @param minTime
+     */
     @Override
     public void pGetData(int pageSize, String isReceived, String maxTime, String minTime) {
         //获取缓存数据

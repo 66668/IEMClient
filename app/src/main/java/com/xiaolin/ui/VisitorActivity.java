@@ -104,4 +104,10 @@ public class VisitorActivity extends BaseActivity {
     public void addOne(View view) {
         startActivity(VisitorAddActivity.class);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        initMyView();
+    }
 }

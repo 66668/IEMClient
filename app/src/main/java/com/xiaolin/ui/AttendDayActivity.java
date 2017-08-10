@@ -56,7 +56,6 @@ public class AttendDayActivity extends BaseActivity implements IAttendDayView {
     @BindView(R.id.calendarDateView)
     CalendarDateView calendarDateView;
 
-    @BindView(R.id.list)
     ListView listView;
 
     AttendPersenterImpl attendPersenter;
@@ -84,9 +83,9 @@ public class AttendDayActivity extends BaseActivity implements IAttendDayView {
     private void initMyView() {
         tv_right.setText("");
         tv_title.setText("考勤记录");
-
+        listView = (ListView) findViewById(R.id.list_1);
         calendarLayout = (CalendarLayout) findViewById(R.id.calendarLayout);
-        listView = (ListView) findViewById(R.id.list);
+        listView = (ListView) findViewById(R.id.list_1);
 
         attendPersenter = new AttendPersenterImpl(AttendDayActivity.this, this);
         currentDate = CalendarUtil.getYearMonthDay(new Date());
@@ -129,7 +128,7 @@ public class AttendDayActivity extends BaseActivity implements IAttendDayView {
         calendarDateView.setOnItemClickListener(new CalendarView.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int postion, CalendarItemBean bean) {
-                tv_CalendarCenter.setText(bean.year + "年" + bean.moth + "月" + bean.day + "日");
+                tv_CalendarCenter.setText(bean.year + "年" + bean.moth + "月");
                 currentYear = bean.year + "";
                 currentMonth = bean.moth + "";
                 currentDay = bean.day + "";
@@ -158,6 +157,7 @@ public class AttendDayActivity extends BaseActivity implements IAttendDayView {
      * 获取日记录数据
      */
     private void getDayDate() {
+        DebugUtil.d(TAG, "获取日具体记录");
         attendPersenter.getAttendDayDetail(currentYear, currentMonth, currentDay);
 
     }
@@ -181,10 +181,12 @@ public class AttendDayActivity extends BaseActivity implements IAttendDayView {
     //日记录使用 listView显示
     @Override
     public void postSuccessShow(AttendDaysOFMonthBean bean) {
-        //
-        listBean.clear();
+
+
+        listBean = new ArrayList<>();
         listBean.add(bean);
         adapter = new AttendDayAdapter(AttendDayActivity.this, listBean);
+        DebugUtil.d(TAG, "日具体记录显示" + bean.toString());
         listView.setAdapter(adapter);
     }
 
@@ -192,7 +194,7 @@ public class AttendDayActivity extends BaseActivity implements IAttendDayView {
     @Override
     public void postSuccessUse(ArrayList<AttendDaysOFMonthStateBean> list) {
 
-
+        DebugUtil.d(TAG, "月状态缓存");
         //缓存
         if (list != null && list.size() > 0) {
             if (list.get(0).getDMonth().equals(beforeMonth)) {
