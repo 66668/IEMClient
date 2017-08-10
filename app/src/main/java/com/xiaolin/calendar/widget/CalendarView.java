@@ -3,6 +3,7 @@ package com.xiaolin.calendar.widget;
 import android.content.Context;
 import android.graphics.Rect;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.xiaolin.calendar.common.CalendarUtil;
 import com.xiaolin.utils.LogUtil;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -31,6 +33,7 @@ public class CalendarView extends ViewGroup {
     private CalendarAdapter adapter;
     private List<CalendarItemBean> listBean;
     private OnItemClickListener onItemClickListener;
+    private HashMap<Integer, String> stateMap = new HashMap<>();//利用map存储考勤状态
 
     private int row = 6;
     private int column = 7;
@@ -90,17 +93,15 @@ public class CalendarView extends ViewGroup {
      */
 
     private void setItem() {
-
         selectPostion = -1;
-
+        isFisrtClick = true;
         if (adapter == null) {
             throw new RuntimeException("adapter is null,please setadapter");
         }
 
         for (int i = 0; i < listBean.size(); i++) {
-            isLateFlag = false;
             CalendarItemBean bean = listBean.get(i);
-            LogUtil.d(TAG, "bean.toString()=" + bean.toString());
+            LogUtil.d(TAG, "setItem()--bean.toString()=" + bean.toString());
             View view = getChildAt(i);
             View chidView = adapter.getView(view, this, bean);
 
@@ -108,14 +109,16 @@ public class CalendarView extends ViewGroup {
                 addViewInLayout(chidView, i, chidView.getLayoutParams(), true);
             }
 
+            //今天状态存储
             if (isToday && selectPostion == -1) {
                 int[] date = CalendarUtil.getYearMonthDay(new Date());
                 if (bean.year == date[0] && bean.moth == date[1]) {
                     if (bean.day == date[2]) {
                         selectPostion = i;
-                        chidView.setBackground(ContextCompat.getDrawable(chidView.getContext(), R.drawable.item_calendar_today_bg));
+                        stateMap.put(i, bean.DayState);
+                        chidView.setBackground(ContextCompat.getDrawable(chidView.getContext(), R.drawable.item_calendar_today_bg));//设置无色
                     }
-                    LogUtil.d(TAG, "CalendarView--setData--setItem--" + "isToday=" + isToday + "--selectPostion=" + i);
+                    LogUtil.d(TAG, "isToday=" + isToday + "--selectPostion=" + i);
                 }
             } else {
                 if (selectPostion == -1 && bean.day == 1) {
@@ -125,33 +128,168 @@ public class CalendarView extends ViewGroup {
                 }
             }
 
-            //迟到早退设置
+            //迟到早退状态存储
             if (bean.DayState != null) {
                 LogUtil.d(TAG, "bean.DayState:" + bean.DayState);
                 if (bean.DayState.contains("迟到") || bean.DayState.contains("早退")) {
                     LogUtil.d(TAG, "--selectPostion=迟到--早退:" + i);
                     selectPostion = i;
                     chidView.setBackground(ContextCompat.getDrawable(chidView.getContext(), R.drawable.item_calendar_late_bg));//设置早退背景色
-                    isLateFlag = true;
-                    oldIsLate = true;
+                    stateMap.put(i, bean.DayState);
+                } else if (bean.DayState.contains("缺勤")) { //缺勤状态存储
+                    LogUtil.d(TAG, "--selectPostion=缺勤:" + i);
+                    selectPostion = i;
+                    chidView.setBackground(ContextCompat.getDrawable(chidView.getContext(), R.drawable.item_calendar_gone_bg));//设置早退背景色
+                    stateMap.put(i, bean.DayState);
                 } else if (bean.DayState.contains("正常")) {
                     LogUtil.d(TAG, "--selectPostion=正常:" + i);
+                    stateMap.put(i, bean.DayState);
                 } else {
-
                 }
+
+
+            }
+
+
+            if (bean.DayState != null) {
+                LogUtil.d(TAG, "bean.DayState:" + bean.DayState);
+
             }
 
             //满足就将该item设为选定状态
             chidView.setSelected(selectPostion == i);
 
             //设置监听
-            setItemClick(chidView, i, bean, isLateFlag);
+            setItemClick(chidView, i, bean);
 
             LogUtil.d(TAG, "selectPostion=" + selectPostion);
         }
     }
 
-    boolean isLateFlag = false;
+    /**
+     * item的点击事件(疑难点)
+     * <p>
+     * 具体处理 后台传值状态有：早退 迟到/缺勤/正常/"",根据这四种状态具体处理显示颜色
+     *
+     * @param view
+     * @param potsion
+     * @param bean
+     */
+    boolean isFisrtClick = true;
+
+    public void setItemClick(final View view, final int potsion, final CalendarItemBean bean) {
+        view.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                LogUtil.d(TAG, "potsion=" + potsion + "selectPostion=" + selectPostion);
+
+                //处理 早退迟到/缺勤/正常
+                if (bean.DayState != null && !TextUtils.isEmpty(bean.DayState)) {
+
+                    //点击的item状态
+                    if (bean.DayState.contains("迟到") || bean.DayState.contains("早退")) {
+                        LogUtil.d(TAG, "1--" + bean.DayState);
+
+                        //处理selectPosition的状态
+                        if (stateMap.get(selectPostion) != null) {
+                            LogUtil.d(TAG, "监听item=迟到--stateMap.get(selectPostion)非空--select处理");
+                            if (stateMap.get(selectPostion).contains("迟到") || stateMap.get(selectPostion).contains("早退")) {
+                                view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_late_bg));//
+                                getChildAt(selectPostion).setSelected(true);
+                            } else if (stateMap.get(selectPostion).contains("缺勤")) {
+                                view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_gone_bg));//
+                                getChildAt(selectPostion).setSelected(true);
+                            }
+                        } else {
+                            LogUtil.d(TAG, "监听item=迟到--stateMap.get(selectPostion)空--select处理");
+                            getChildAt(selectPostion).setSelected(false);
+                        }
+                        view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_late_bg));//
+                        getChildAt(potsion).setSelected(true);
+
+                    } else if (bean.DayState.contains("缺勤")) {
+                        LogUtil.d(TAG, "2--" + bean.DayState);
+
+                        //处理selectPosition的状态
+                        if (stateMap.get(selectPostion) != null) {
+                            LogUtil.d(TAG, "监听item=缺勤--stateMap.get(selectPostion)非空--select处理");
+                            if (stateMap.get(selectPostion).contains("迟到") || stateMap.get(selectPostion).contains("早退")) {
+                                view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_late_bg));//
+                                getChildAt(selectPostion).setSelected(true);
+                            } else if (stateMap.get(selectPostion).contains("缺勤")) {
+                                view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_gone_bg));//
+                                getChildAt(selectPostion).setSelected(true);
+                            }
+                        } else {
+                            LogUtil.d(TAG, "监听item=缺勤--stateMap.get(selectPostion)空--select处理");
+                            getChildAt(selectPostion).setSelected(false);
+                        }
+                        view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_gone_bg));//
+                        getChildAt(potsion).setSelected(true);
+
+                    } else {//点击item状态为 正常
+                        LogUtil.d(TAG, "3--" + bean.DayState);
+
+                        //处理selectPosition的状态
+                        if (stateMap.get(selectPostion) != null) {
+                            LogUtil.d(TAG, "监听item=正常--stateMap.get(selectPostion)非空--select处理");
+                            if (stateMap.get(selectPostion).contains("迟到") || stateMap.get(selectPostion).contains("早退")) {
+                                view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_late_bg));//
+                                getChildAt(selectPostion).setSelected(true);
+                            } else if (stateMap.get(selectPostion).contains("缺勤")) {
+                                view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_gone_bg));//
+                                getChildAt(selectPostion).setSelected(true);
+                            } else if (stateMap.get(selectPostion).contains("正常") || stateMap.get(selectPostion).contains("")) {
+                                getChildAt(selectPostion).setSelected(false);
+                            } else {
+
+                            }
+                        } else {
+                            LogUtil.d(TAG, "监听item=正常--stateMap.get(selectPostion)空--select处理");
+                            getChildAt(selectPostion).setSelected(false);
+                        }
+                        view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_today));//
+                        getChildAt(potsion).setSelected(true);
+
+
+                    }
+
+                } else {//处理状态： ""/null
+                    LogUtil.d(TAG, "bean.DayState空=");
+
+                    //处理selectPosition的状态
+                    if (stateMap.get(selectPostion) != null) {
+                        LogUtil.d(TAG, "监听item空--stateMap.get(selectPostion)非空--select处理");
+                        if (stateMap.get(selectPostion).contains("迟到") || stateMap.get(selectPostion).contains("早退")) {
+                            view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_late_bg));//
+                            getChildAt(selectPostion).setSelected(true);
+                        } else if (stateMap.get(selectPostion).contains("缺勤")) {
+                            view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_gone_bg));//
+                            getChildAt(selectPostion).setSelected(true);
+                        } else if (stateMap.get(selectPostion).contains("正常") || stateMap.get(selectPostion).contains("")) {
+                            getChildAt(selectPostion).setSelected(false);
+                        } else {
+
+                        }
+                    } else {
+                        LogUtil.d(TAG, "监听item=空--stateMap.get(selectPostion)空--select处理");
+                        getChildAt(selectPostion).setSelected(false);
+                    }
+
+                    view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_today));//
+                    getChildAt(potsion).setSelected(true);
+
+                }
+
+                selectPostion = potsion;
+
+                if (onItemClickListener != null) {
+                    onItemClickListener.onItemClick(view, potsion, bean);
+                }
+            }
+        });
+    }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -207,67 +345,6 @@ public class CalendarView extends ViewGroup {
 
     public Object[] getSelect() {
         return new Object[]{getChildAt(selectPostion), selectPostion, listBean.get(selectPostion)};
-    }
-
-    /**
-     * item的点击事件
-     * <p>
-     * 具体处理
-     *
-     * @param view
-     * @param potsion
-     * @param bean
-     */
-    boolean oldIsLate = false;//
-
-    public void setItemClick(final View view, final int potsion, final CalendarItemBean bean, final boolean isLate) {
-        view.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                LogUtil.d(TAG, "监听potsion=" + potsion + "--selectPostion:" + selectPostion + "是否迟到：" + "isLate" + isLate + "--oldIsLate=" + oldIsLate);
-                if (selectPostion != -1) {
-
-                    if (isLate) {//点击的item是否是迟到状态,且上一个状态也是
-                        LogUtil.d(TAG, "1-isLate=true");
-
-                        if (oldIsLate) {
-                            LogUtil.d(TAG, "1-oldIsLate=ture");
-                            view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_late_bg));//
-                            getChildAt(selectPostion).setSelected(true);
-                        } else {
-                            LogUtil.d(TAG, "1-oldIsLate=false");
-                            view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_today));//
-                            getChildAt(selectPostion).setSelected(false);
-                        }
-                        view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_late_bg));//
-                        getChildAt(potsion).setSelected(true);
-                    } else {
-                        LogUtil.d(TAG, "2-isLate=false");
-
-                        if (oldIsLate) {
-                            LogUtil.d(TAG, "2-oldIsLate=ture");
-                            view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_late_bg));//
-                            getChildAt(selectPostion).setSelected(true);
-                        } else {
-                            LogUtil.d(TAG, "2-oldIsLate=false");
-                            view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_today));//
-                            getChildAt(selectPostion).setSelected(false);
-                        }
-                        view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_today));//
-                        getChildAt(potsion).setSelected(true);
-
-                    }
-
-                }
-                
-                selectPostion = potsion;
-                oldIsLate = isLate;
-                if (onItemClickListener != null) {
-                    onItemClickListener.onItemClick(view, potsion, bean);
-                }
-            }
-        });
     }
 
 
