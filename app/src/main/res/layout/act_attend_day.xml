@@ -99,23 +99,95 @@
 
 
     <com.xiaolin.calendar.widget.CalendarLayout
-        android:background="@color/ghostwhite"
         android:id="@+id/calendarLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/ghostwhite">
 
         <com.xiaolin.calendar.widget.CalendarDateView
             android:id="@+id/calendarDateView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <ListView
-            android:id="@+id/list"
-            android:background="@color/white"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content">
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_above="@+id/layout_remark"
+                android:layout_alignParentTop="true"
+                android:background="@color/line"/>
+
+            <LinearLayout
+                android:id="@+id/layout_remark"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@color/white"
+                android:gravity="end|center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="注："
+                    android:textColor="@color/black"
+                    android:textSize="13sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@mipmap/smallred"
+                    android:gravity="center_vertical"
+                    android:padding="2dp"
+                    android:paddingEnd="5dp"
+                    android:paddingStart="5dp"
+                    android:text="缺勤"
+                    android:textColor="@color/weektextColor"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@mipmap/smallyellow"
+                    android:gravity="center_vertical"
+                    android:padding="2dp"
+                    android:paddingEnd="5dp"
+                    android:paddingStart="5dp"
+                    android:text="迟到早退"
+                    android:textColor="@color/weektextColor"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@mipmap/smallblue"
+                    android:gravity="center_vertical"
+                    android:padding="2dp"
+                    android:paddingEnd="5dp"
+                    android:paddingStart="5dp"
+                    android:text="今天"
+                    android:textColor="@color/weektextColor"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/layout_remark"
+                android:background="@color/line"/>
+
+            <ListView
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view"
+                android:background="@color/white"
+                />
+        </RelativeLayout>
     </com.xiaolin.calendar.widget.CalendarLayout>
 
 
