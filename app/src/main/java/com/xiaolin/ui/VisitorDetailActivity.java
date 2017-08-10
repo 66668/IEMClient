@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -12,7 +13,11 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.xiaolin.R;
 import com.xiaolin.bean.VisitorBean;
+import com.xiaolin.presenter.VisitorPresenterImpl;
+import com.xiaolin.presenter.ipresenter.IVisitorPresenter;
 import com.xiaolin.ui.base.BaseActivity;
+import com.xiaolin.ui.iview.ICommonView;
+import com.xiaolin.utils.DebugUtil;
 import com.xiaolin.utils.GlideCircleTransform;
 
 import butterknife.BindView;
@@ -21,9 +26,12 @@ import butterknife.OnClick;
 
 /**
  * 访客详情接口
+ * 修改状态
  */
 
-public class VisitorDetailActivity extends BaseActivity {
+public class VisitorDetailActivity extends BaseActivity implements ICommonView {
+    private static final String TAG = "visitor";
+
 
     //topbar
     @BindView(R.id.tv_title)
@@ -64,9 +72,13 @@ public class VisitorDetailActivity extends BaseActivity {
     @BindView(R.id.tv_remark)
     TextView tv_remark;
 
+    @BindView(R.id.btn_visitor)
+    Button btn_visitor;
+
 
     //变量
     VisitorBean bean;
+    IVisitorPresenter presenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,6 +93,12 @@ public class VisitorDetailActivity extends BaseActivity {
         tv_title.setText(R.string.visitor_detail_title);
         tv_right.setText("");
         bean = (VisitorBean) getIntent().getSerializableExtra("VisitorBean");
+        if (bean.getIsReceived().contains("true")) {
+            btn_visitor.setVisibility(View.INVISIBLE);
+        } else {
+            btn_visitor.setVisibility(View.VISIBLE);
+        }
+        presenter = new VisitorPresenterImpl(VisitorDetailActivity.this, this);
 
     }
 
@@ -106,11 +124,41 @@ public class VisitorDetailActivity extends BaseActivity {
 
     }
 
+    @OnClick(R.id.btn_visitor)
+    public void setIsReceived(View view) {
+        presenter.pIsReceived(bean.getVisitorID(), bean.getStoreID());
+    }
+
     /**
      * 后退
      */
     @OnClick(R.id.layout_back)
     public void forBack(View view) {
+
         this.finish();
+    }
+
+
+    @Override
+    public void showProgress() {
+        loadingDialog.show();
+
+    }
+
+    @Override
+    public void hideProgress() {
+        loadingDialog.dismiss();
+    }
+
+    @Override
+    public void postSuccessShow(String str) {
+        DebugUtil.ToastShort(VisitorDetailActivity.this, "修改成功！");
+    }
+
+
+    @Override
+    public void postFaild(String msg, Exception e) {
+        DebugUtil.ToastShort(VisitorDetailActivity.this, msg);
+        DebugUtil.e(TAG, e.toString());
     }
 }

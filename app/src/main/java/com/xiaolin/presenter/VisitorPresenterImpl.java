@@ -80,7 +80,7 @@ public class VisitorPresenterImpl implements IVisitorPresenter {
      * @param jsonStr
      */
     @Override
-    public void addVisitor(String jsonStr,  File file) {
+    public void addVisitor(String jsonStr, File file) {
 
         commonView.showProgress();
         /**
@@ -102,5 +102,31 @@ public class VisitorPresenterImpl implements IVisitorPresenter {
                     }
                 });
     }
+
+    /**
+     * 修改已接待未接待状态
+     */
+
+    @Override
+    public void pIsReceived(String visitorID, String storeID) {
+        commonView.showProgress();
+        visitorModel.mIsArreived(visitorID
+                , storeID
+                , new OnCommonListener() {
+                    @Override
+                    public void onSuccess(String str) {
+                        commonView.hideProgress();
+                        commonView.postSuccessShow(str);
+                    }
+
+                    @Override
+                    public void onFailed(String msg, Exception e) {
+                        commonView.hideProgress();
+                        commonView.postFaild(msg, e);
+                    }
+                });
+
+    }
+
 
 }

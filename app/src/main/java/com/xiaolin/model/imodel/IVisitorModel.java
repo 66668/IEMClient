@@ -26,4 +26,6 @@ public interface IVisitorModel {
      *
      */
     void maddVisitor(String jsonstr, File file, OnCommonListener listener);
+
+    void mIsArreived(String visitorID, String storeID, OnCommonListener listener);
 }

@@ -130,4 +130,41 @@ public class VisitorModelImpl implements IVisitorModel {
                 });
 
     }
+
+
+    @Override
+    public void mIsArreived(String visitorID, String storeID, final OnCommonListener listener) {
+
+        MyHttpService.Builder.getHttpServer().isReceived(visitorID, storeID)
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BaseBean>() {
+                    @Override
+                    public void onCompleted() {
+                        DebugUtil.d(TAG, "pIsArreived--onCompleted");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        DebugUtil.e(TAG, "pIsArreived--onError:" + e.toString());
+                        listener.onFailed("修改接待状态数据异常!", (Exception) e);
+                    }
+
+                    @Override
+                    public void onNext(BaseBean baseBean) {
+                        DebugUtil.d(TAG, "pIsArreived--onNext:" + baseBean.toString());
+                        //处理返回结果
+                        if (baseBean.getCode().equals("1")) {
+                            //code = 1
+                            listener.onSuccess(baseBean.getResult());
+                        } else if (baseBean.getCode().equals("0")) {
+                            //code = 0处理
+                            listener.onFailed(baseBean.getMessage(), new Exception("接待状态提交失败！"));
+                        } else {
+
+                        }
+                    }
+                });
+    }
 }

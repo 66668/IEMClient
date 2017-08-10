@@ -24,6 +24,11 @@ public class URLUtils {
      * 添加访客
      */
     public static final String ADD_VISITOR = "Main/AddOneVisitorRecord";
+
+    /**
+     * 添加访客
+     */
+    public static final String CHANGE_VISITOR_STATE = "Main/ConfirmVistorRecordTime";
     /**
      * 地图考勤
      */

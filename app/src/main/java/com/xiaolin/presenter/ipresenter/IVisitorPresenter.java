@@ -10,6 +10,9 @@ public interface IVisitorPresenter {
     /**
      *
      */
-    void pGetData(int pageSize,String isReceived, String maxTime, String minTime);
+    void pGetData(int pageSize, String isReceived, String maxTime, String minTime);
+
     void addVisitor(String str, File file);
+
+    void pIsReceived(String visitorID, String storeID);
 }

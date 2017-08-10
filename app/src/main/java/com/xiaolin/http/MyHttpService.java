@@ -138,6 +138,16 @@ public interface MyHttpService {
             , @Part MultipartBody.Part file);
 
     /**
+     * 修改接待状态
+     * post
+     */
+    @FormUrlEncoded
+    @POST(URLUtils.CHANGE_VISITOR_STATE)
+    Observable<BaseBean> isReceived(
+            @Field("visitorID") String visitorID
+            , @Field("storeID") String storeID);
+
+    /**
      * 获取考勤月状态
      * post
      */

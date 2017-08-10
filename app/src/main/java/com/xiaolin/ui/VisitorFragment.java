@@ -144,10 +144,9 @@ public class VisitorFragment extends Fragment implements IVisitorView, SwipeRefr
 
             //添加动画效果
             View transitionView = view.findViewById(R.id.img);
-            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
-                    .makeSceneTransitionAnimation(getActivity()
-                            , transitionView
-                            , getString(R.string.transition_visitor_img));
+            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity()
+                    , transitionView
+                    , getString(R.string.transition_visitor_img));
 
             //动画效果的跳转
             ActivityCompat.startActivity(getActivity(), intent, optionsCompat.toBundle());
@@ -200,12 +199,12 @@ public class VisitorFragment extends Fragment implements IVisitorView, SwipeRefr
         if (list == null || list.size() <= 0) {
             return;
         }
-        if (isReceived.equals("0")) {//未接待用参数iLastUpdateTime
-            minTime = list.get(list.size() - 1).getiLastUpdateTime();
-            Log.d(TAG, "0--splitTime:minTime= " + minTime);
+        if (isReceived.equals("true")) {//未接待用参数iLastUpdateTime
+            minTime = list.get(list.size() - 1).getActualArrivalTime();
+            Log.d(TAG, "false--splitTime:minTime= " + minTime);
         } else {
-            minTime = list.get(list.size() - 1).getArrivalTimePlan();
-            Log.d(TAG, "1--splitTime:minTime= " + minTime);
+            minTime = list.get(list.size() - 1).getiLastUpdateTime();//未接待参考时间
+            Log.d(TAG, "true--splitTime:minTime= " + minTime);
 
         }
 

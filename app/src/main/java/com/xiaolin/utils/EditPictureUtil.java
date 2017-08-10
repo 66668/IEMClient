@@ -19,8 +19,7 @@ import java.io.IOException;
  * @date 2013年7月29日 上午10:04:09
  */
 public class EditPictureUtil {
-
-    private static String albumPath = "/xiaolin";//
+    private static String albumPath = "/DCIM/camera";
     private static String tempPhotographIamgeName = "/orong_tempImage.jpg";// 拍照的临时存储文件
     private static String tempCutImageName = "/or_tempCutIamge.jpg";
 
@@ -169,17 +168,6 @@ public class EditPictureUtil {
      */
     public static Uri getCropImageTempFileUri(Context context) {
         return Uri.fromFile(createTempCropImageFile(context));
-
-    }
-
-    /**
-     * 返回图片剪切后图片临时保存的File
-     *
-     * @param context
-     * @return
-     */
-    public static File getCropImageTempFile(Context context) {
-        return createTempCropImageFile(context);
 
     }
 

@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -17,8 +16,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.xiaolin.R;
 import com.xiaolin.app.Constants;
 import com.xiaolin.dialog.CameraChooseDialog;
@@ -31,7 +28,6 @@ import com.xiaolin.ui.base.BaseActivity;
 import com.xiaolin.ui.iview.ICommonView;
 import com.xiaolin.utils.DebugUtil;
 import com.xiaolin.utils.EditPictureUtil;
-import com.xiaolin.utils.GlideCircleTransform;
 import com.xiaolin.utils.SPUtils;
 import com.xiaolin.utils.Utils;
 
@@ -60,8 +56,8 @@ public class VisitorAddActivity extends BaseActivity implements ICommonView {
     @BindView(R.id.layout_back)
     RelativeLayout layout_back;
 
-    //参数
-    @BindView(R.id.pic_img)
+    //图片
+    //    @BindView(R.id.pic_img)
     ImageView pic_img;
 
 
@@ -107,7 +103,7 @@ public class VisitorAddActivity extends BaseActivity implements ICommonView {
     CameraChooseDialog dialog;
     Uri uri;
     File file;
-    int width = 0;
+    int width = -1;
     IVisitorPresenter visitorPresenter;
 
     String startTime;
@@ -118,9 +114,6 @@ public class VisitorAddActivity extends BaseActivity implements ICommonView {
     String company;
     String remark;
     String visitorTo;
-    //常量
-    private static final int CAMERA_REQUEST = 1;
-    private static final int CLIP_REQUEST = 2;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -128,10 +121,18 @@ public class VisitorAddActivity extends BaseActivity implements ICommonView {
         setContentView(R.layout.act_add_visitor);
         initMyView();
 
+        //添加图片监听
+        pic_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                takepic_permission();
+            }
+        });
     }
 
     private void initMyView() {
         ButterKnife.bind(this);
+        pic_img = (ImageView) findViewById(R.id.pic_img);
         width = Utils.getWindowWidth(VisitorAddActivity.this);//以手机屏宽截图
         tv_title.setText(R.string.visitor_add_title);
         tv_right.setText("");
@@ -207,7 +208,7 @@ public class VisitorAddActivity extends BaseActivity implements ICommonView {
      *
      * @param view
      */
-    @OnClick({R.id.btn_visitor, R.id.layout_start, R.id.layout_end, R.id.pic_img, R.id.layout_back})
+    @OnClick({R.id.btn_visitor, R.id.layout_start, R.id.layout_end, R.id.layout_back})
     public void multClick(View view) {
         switch (view.getId()) {
             case R.id.btn_visitor://提交
@@ -223,13 +224,10 @@ public class VisitorAddActivity extends BaseActivity implements ICommonView {
             case R.id.layout_end://结束时间
                 endTime();
                 break;
-            case R.id.pic_img://拍照
-                takepic_permission();
-                break;
+
             case R.id.layout_back://退出
                 this.finish();
                 break;
-
         }
 
     }
@@ -300,58 +298,69 @@ public class VisitorAddActivity extends BaseActivity implements ICommonView {
      * 拍照
      */
     private void takepic() {
-
-        if (dialog == null) {
-            dialog = new CameraChooseDialog(VisitorAddActivity.this, new CameraChooseDialog.ClickCallback() {
-                @Override
-                public void PhotoCallback() {
-                    DebugUtil.d(TAG, "相机");
-                    dialog.dismiss();
-                    Intent intent = EditPictureUtil.getCaptureIntent(VisitorAddActivity.this);
-                    startActivityForResult(intent, CAMERA_REQUEST);
-                }
-
-                @Override
-                public void galleryCallback() {
-                    DebugUtil.d(TAG, "相册");
-                    dialog.dismiss();
-                    Intent intent = EditPictureUtil.getGalleryIntent(width, width, EditPictureUtil.createTempCropImageFile(VisitorAddActivity.this));
-                    startActivityForResult(intent, CLIP_REQUEST);
-                }
-            });
-            dialog.show();
+        if (width <= 0) {
+            return;
         }
+        width = Utils.getWindowWidth(VisitorAddActivity.this);//以手机屏宽截图
+        //选择图片方式
+        dialog = new CameraChooseDialog(VisitorAddActivity.this, new CameraChooseDialog.ClickCallback() {
+            @Override
+            public void PhotoCallback() {
+                DebugUtil.d(TAG, "相机");
+                dialog.dismiss();
+                Intent intent = EditPictureUtil.getCaptureIntent(VisitorAddActivity.this);
+                startActivityForResult(intent, 1);
+
+            }
+
+            @Override
+            public void galleryCallback() {
+                DebugUtil.d(TAG, "相册");
+                dialog.dismiss();
+                Intent intent = EditPictureUtil.getGalleryIntent(width, width, EditPictureUtil.createTempCropImageFile(VisitorAddActivity.this));
+                startActivityForResult(intent, 2);
+
+            }
+        });
+        dialog.show();
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        width = Utils.getWindowWidth(VisitorAddActivity.this);//以手机屏宽截图
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == CAMERA_REQUEST) {
+
+            if (requestCode == 1) {
+                DebugUtil.d(TAG, "图片剪裁");
                 // 启动修剪相片功能
                 Intent intent = EditPictureUtil.getCropImageIntent(EditPictureUtil.getCaptureTempFileUri(VisitorAddActivity.this)
                         , width
                         , width
                         , EditPictureUtil.createTempCropImageFile(VisitorAddActivity.this));
-                startActivityForResult(intent, CLIP_REQUEST);
+                startActivityForResult(intent, 2);
             }
-            if (requestCode == CLIP_REQUEST) {// 剪切
-                DebugUtil.d(TAG, "图片剪裁");
+            if (requestCode == 2) {// 剪切
+
                 uri = EditPictureUtil.getCropImageTempFileUri(VisitorAddActivity.this);
-                file = EditPictureUtil.getCropImageTempFile(VisitorAddActivity.this);
+                //                file = EditPictureUtil.getCropImageTempFile(VisitorAddActivity.this);
+
+                //显示图片
                 DebugUtil.d("最终图片路径：" + uri.toString());
                 Bitmap bitmap = EditPictureUtil.getBitmapFromUri(VisitorAddActivity.this, uri);
-                //显示图片
-                Glide.with(VisitorAddActivity.this)
-                        .load(file)
-                        .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                        .placeholder(ContextCompat.getDrawable(VisitorAddActivity.this, R.mipmap.default_photo))
-                        .error(ContextCompat.getDrawable(VisitorAddActivity.this, R.mipmap.default_photo))
-                        .crossFade()//动画效果显示
-                        .transform(new GlideCircleTransform(VisitorAddActivity.this))//自定义圆形图片
-                        .into(pic_img);
-                //                pic_img.setImageBitmap(bitmap);
+                pic_img.setImageBitmap(bitmap);
+                //                if (file != null) {
+                //                    Glide.with(VisitorAddActivity.this)
+                //                            .load(file)
+                //                            .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                //                            .placeholder(ContextCompat.getDrawable(VisitorAddActivity.this, R.mipmap.default_photo))
+                //                            .error(ContextCompat.getDrawable(VisitorAddActivity.this, R.mipmap.default_photo))
+                //                            .transform(new GlideCircleTransform(VisitorAddActivity.this))//自定义圆形图片
+                //                            .into(pic_img);
+                //                }
+
 
             }
         }
