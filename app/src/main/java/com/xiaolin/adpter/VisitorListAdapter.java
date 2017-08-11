@@ -83,6 +83,7 @@ public class VisitorListAdapter extends RecyclerView.Adapter {
             ((ItemViewHolder) holder).tvName.setText(bean.getVisitorName());
             ((ItemViewHolder) holder).tvTime.setText(bean.getArrivalTimePlan());
 
+
             //图片加载
             Glide.with(context)
                     .load(bean.getImagePath())

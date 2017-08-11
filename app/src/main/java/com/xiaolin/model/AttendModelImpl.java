@@ -181,6 +181,7 @@ public class AttendModelImpl implements IAttendModel {
             DebugUtil.e("数据存储异常，没有获取到存储数据！");
             return;
         }
+
         MyHttpService.Builder.getHttpServer().getDayDetail(storeId, employeeID, year, month, day)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
@@ -201,7 +202,6 @@ public class AttendModelImpl implements IAttendModel {
                     @Override
                     public void onNext(CommonBean<AttendDaysOFMonthBean> bean) {
                         DebugUtil.d(TAG, "getAttendDetailDay--onNext");
-
 
                         if (bean.getCode().equals("0")) {
                             listener_2.onAttendDaysFailed(bean.getMessage(), new Exception("没有该日的数据！"));

@@ -1,8 +1,11 @@
 package com.xiaolin.ui.base;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
@@ -46,7 +49,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     //onDestroy调用
-    private void unRegisterExitReceiver(){
+    private void unRegisterExitReceiver() {
         this.unregisterReceiver(exitAppReceiver);//取消注册
     }
 
@@ -75,5 +78,40 @@ public class BaseActivity extends AppCompatActivity {
         super.onDestroy();
         //退出程序的广播
         unRegisterExitReceiver();
+    }
+    /**
+     * sendMessage的重载
+     */
+    // 01
+    protected void sendMessage(Message msg) {
+        handler.sendMessage(msg);
+    }
+
+    // 02
+    protected void sendMessage(int what) {
+        handler.sendEmptyMessage(what);
+    }
+
+    // 03
+    public void sendMessage(int what, Object obj) {
+        handler.sendMessage(handler.obtainMessage(what, obj));
+    }
+
+    /**
+     * handler sendMessage的处理
+     */
+    @SuppressLint("HandlerLeak") // 确保类内部的handler不含有对外部类的隐式引用
+    protected Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            // 调用下边的方法处理信息
+            BaseActivity.this.handleMessage(msg);
+        }
+    };
+
+    protected void handleMessage(Message msg) {
+        switch (msg.what) {
+
+        }
     }
 }

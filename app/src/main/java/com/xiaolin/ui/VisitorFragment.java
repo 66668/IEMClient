@@ -216,11 +216,11 @@ public class VisitorFragment extends Fragment implements IVisitorView, SwipeRefr
         if (list == null || list.size() <= 0) {
             return;
         }
-        if (isReceived.equals("true")) {//未接待用参数iLastUpdateTime
+        if (isReceived.equals("0")) {//已接待用参数ActualArrivalTime
             minTime = list.get(list.size() - 1).getActualArrivalTime();
             Log.d(TAG, "false--splitTime:minTime= " + minTime);
         } else {
-            minTime = list.get(list.size() - 1).getiLastUpdateTime();//未接待参考时间
+            minTime = list.get(list.size() - 1).getiLastUpdateTime();//未接待用参数iLastUpdateTime
             Log.d(TAG, "true--splitTime:minTime= " + minTime);
 
         }

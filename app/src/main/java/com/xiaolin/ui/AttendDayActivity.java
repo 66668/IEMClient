@@ -182,7 +182,6 @@ public class AttendDayActivity extends BaseActivity implements IAttendDayView {
     @Override
     public void postSuccessShow(AttendDaysOFMonthBean bean) {
 
-
         listBean = new ArrayList<>();
         listBean.add(bean);
         adapter = new AttendDayAdapter(AttendDayActivity.this, listBean);

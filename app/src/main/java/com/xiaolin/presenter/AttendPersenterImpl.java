@@ -37,12 +37,7 @@ public class AttendPersenterImpl {
         attendModel = new AttendModelImpl();
     }
 
-    /**
-     * 日历日考勤
-     *
-     * @param context
-     * @param view
-     */
+
     public AttendPersenterImpl(Context context, IAttendDayView view) {
         this.context = context;
         this.attendDayView = view;
