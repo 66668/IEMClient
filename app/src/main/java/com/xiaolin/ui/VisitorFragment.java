@@ -77,7 +77,11 @@ public class VisitorFragment extends Fragment implements IVisitorView, SwipeRefr
         initMyView(view);//初始化控件
 
         //设置progressbar的颜色
-        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.common_topbar_bgcolor));
+        swipeRefreshLayout.setColorSchemeColors(
+                getResources().getColor(R.color.common_topbar_bgcolor)
+                , getResources().getColor(R.color.blue)
+        );
+
         swipeRefreshLayout.setOnRefreshListener(this);
 
         recyclerView.setHasFixedSize(true);
@@ -98,7 +102,11 @@ public class VisitorFragment extends Fragment implements IVisitorView, SwipeRefr
         layoutManager = new LinearLayoutManager(getActivity());
     }
 
-    //swipeRefreshLayout加载
+    /**
+     * RecyclerView加载更多的监听
+     * 官方的recyclerView与SwipeRefreshLayout在加载时候有冲突：
+     * 当数据过少时，需要加过滤
+     */
     private RecyclerView.OnScrollListener mOnscrollListener = new RecyclerView.OnScrollListener() {
         int lastItem = -1;
 
@@ -109,22 +117,30 @@ public class VisitorFragment extends Fragment implements IVisitorView, SwipeRefr
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
-            adapter.isShowFooter(true);
-            if (newState == RecyclerView.SCROLL_STATE_IDLE && lastItem + 1 == adapter.getItemCount() && adapter.isShowFooter()) {
-                DebugUtil.d(TAG, "VisitorFragment---OnScrollListener--加载更多");
-                DebugUtil.d(TAG, "adapter.getItemCount()=" + adapter.getItemCount() + "---adapter.isShowFooter()=" + adapter.isShowFooter());
+            DebugUtil.d(TAG, "加载更多");
 
-                //p层加载方法调用
-                visitorPresenter.pGetData(pageSize, isReceived, "", minTime);//加载 max和minTime不能同时有值
+            //当第一个item可见时(即item不到满屏)，设置SwipeRefreshLayout可用,加载不可用，否则和刷新冲突
+            int topItem = (recyclerView == null || recyclerView.getChildCount() == 0) ? 0 : recyclerView.getChildAt(0).getTop();
+
+            DebugUtil.d(TAG, "topItem=" + topItem);
+            if (topItem >= 0) {//第一个item可见 加载不可用，刷新可用
+                swipeRefreshLayout.setEnabled(true);
+            } else {//第一个item不可见 加载可用，刷新不可用
+                adapter.isShowFooter(true);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && lastItem + 1 == adapter.getItemCount() && adapter.isShowFooter()) {
+                    DebugUtil.d(TAG, "adapter.getItemCount()=" + adapter.getItemCount() + "---adapter.isShowFooter()=" + adapter.isShowFooter());
+                    //p层加载方法调用
+                    visitorPresenter.pGetData(pageSize, isReceived, "", minTime);//加载 max和minTime不能同时有值
+                }
+                //swipeRefreshLayout.setEnabled(false);//可以不写
             }
-
         }
 
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
-            lastItem = layoutManager.findLastVisibleItemPosition();
             DebugUtil.d(TAG, "VisitorFragment---OnScrollListener--lastItem=" + lastItem);
+            lastItem = layoutManager.findLastVisibleItemPosition();
         }
     };
 
