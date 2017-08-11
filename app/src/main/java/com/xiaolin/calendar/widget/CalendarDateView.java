@@ -26,7 +26,7 @@ import static com.xiaolin.calendar.common.CalendarFactory.getMonthOfDayList;
 
 
 /**
- * 绘制日历的滑动视图，并赋值数据
+ * 日历的左右滑动视图，并赋值数据
  */
 
 public class CalendarDateView extends ViewPager implements ICalendarDateView {

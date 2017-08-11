@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by sjy on 2017/8/3.
+ * 主要从该类中获取 一个月的数据，包括月状态数据（提前缓存）
  */
 
 public class CalendarFactory {

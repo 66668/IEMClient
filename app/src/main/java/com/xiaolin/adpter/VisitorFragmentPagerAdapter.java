@@ -8,14 +8,14 @@ import android.view.ViewGroup;
 import java.util.List;
 
 /**
- * Created by sjy on 2017/7/27.
+ * VisitorActivity中fragment适配
  */
 
-public class VisitorFragmentPaperAdapter extends FragmentPagerAdapter {
+public class VisitorFragmentPagerAdapter extends FragmentPagerAdapter {
     List<String> titleList;
     List<Fragment> fragmentList;
 
-    public VisitorFragmentPaperAdapter(FragmentManager fragmentManager, List<String> titleList, List<Fragment> fragmentList) {
+    public VisitorFragmentPagerAdapter(FragmentManager fragmentManager, List<String> titleList, List<Fragment> fragmentList) {
         super(fragmentManager);
         this.titleList = titleList;
         this.fragmentList = fragmentList;

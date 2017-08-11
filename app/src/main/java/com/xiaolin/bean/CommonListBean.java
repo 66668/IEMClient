@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 返回数据是list
+ * 处理{code:"",message:"",result:[{},{}]}
  * Created by sjy on 2017/7/24.
  */
 

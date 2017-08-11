@@ -1,7 +1,8 @@
 package com.xiaolin.model;
 
 import com.xiaolin.bean.BaseBean;
-import com.xiaolin.bean.VisitorListBean;
+import com.xiaolin.bean.CommonListBean;
+import com.xiaolin.bean.VisitorBean;
 import com.xiaolin.http.MyHttpService;
 import com.xiaolin.model.imodel.IVisitorModel;
 import com.xiaolin.model.listener.OnCommonListener;
@@ -49,7 +50,7 @@ public class VisitorModelImpl implements IVisitorModel {
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<VisitorListBean>() {
+                .subscribe(new Observer<CommonListBean<VisitorBean>>() {
                     @Override
                     public void onCompleted() {
                         DebugUtil.d(TAG, "VisitorModelImpl--onCompleted");
@@ -63,7 +64,7 @@ public class VisitorModelImpl implements IVisitorModel {
 
 
                     @Override
-                    public void onNext(VisitorListBean baseBean) {
+                    public void onNext(CommonListBean<VisitorBean> baseBean) {
                         DebugUtil.d(TAG, "VisitorModelImpl--onNext");
                         DebugUtil.d(TAG, baseBean.toString());
 

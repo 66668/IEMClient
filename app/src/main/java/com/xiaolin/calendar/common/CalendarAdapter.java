@@ -4,8 +4,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * CalendarView/CalendarDateView使用
- * 具体调用act中使用
+ * CalendarView/CalendarDateView调用
+ *
+ * 具体调用在act中实现
  */
 
 public interface CalendarAdapter {

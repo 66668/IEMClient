@@ -19,7 +19,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-
+/**
+ * 修改密码
+ */
 public class ChangePassWordActivity extends BaseActivity implements ICommonView {
 
     @BindView(R.id.layout_back)

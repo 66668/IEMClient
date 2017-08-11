@@ -60,7 +60,7 @@ public class VisitorAddActivity extends BaseActivity implements ICommonView {
     RelativeLayout layout_back;
 
     //图片
-    //    @BindView(R.id.pic_img)
+    @BindView(R.id.pic_img)
     ImageView pic_img;
 
 
@@ -124,18 +124,10 @@ public class VisitorAddActivity extends BaseActivity implements ICommonView {
         setContentView(R.layout.act_add_visitor);
         initMyView();
 
-        //添加图片监听
-        pic_img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                takepic_permission();
-            }
-        });
     }
 
     private void initMyView() {
         ButterKnife.bind(this);
-        pic_img = (ImageView) findViewById(R.id.pic_img);
         //        width = Utils.getWindowWidth(VisitorAddActivity.this) / 2;//以手机屏宽截图
         width = 300;//以手机屏宽截图
         tv_title.setText(R.string.visitor_add_title);
@@ -216,7 +208,7 @@ public class VisitorAddActivity extends BaseActivity implements ICommonView {
      *
      * @param view
      */
-    @OnClick({R.id.btn_visitor, R.id.layout_start, R.id.layout_end, R.id.layout_back})
+    @OnClick({R.id.btn_visitor, R.id.layout_start, R.id.layout_end, R.id.pic_img, R.id.layout_back})
     public void multClick(View view) {
         switch (view.getId()) {
             case R.id.btn_visitor://提交
@@ -225,6 +217,9 @@ public class VisitorAddActivity extends BaseActivity implements ICommonView {
                     String str = setJsonStr();
                     visitorPresenter.addVisitor(str, file);
                 }
+                break;
+            case R.id.pic_img://相机
+                takepic_permission();
                 break;
             case R.id.layout_start://开始时间
                 startTime();

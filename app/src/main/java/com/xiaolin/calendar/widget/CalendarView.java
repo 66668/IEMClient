@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- *
+ *日历具体item的视图
  */
 
 public class CalendarView extends ViewGroup {

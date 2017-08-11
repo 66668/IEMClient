@@ -4,8 +4,9 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
+ * AttendMonthActivity中使用的bean
  * 月考勤状态
- *
+ * <p>
  * Created by sjy on 2017/8/4.
  */
 

@@ -35,6 +35,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 主界面
+ */
 public class MainActivity extends BaseActivity implements IMainView {
     private static final String TAG = "MainActivity";
 

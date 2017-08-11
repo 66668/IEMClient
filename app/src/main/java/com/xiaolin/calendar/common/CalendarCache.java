@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by sjy on 2017/8/9.
+ *
+ * 缓存有当天状态的数据
  */
 
 public class CalendarCache {

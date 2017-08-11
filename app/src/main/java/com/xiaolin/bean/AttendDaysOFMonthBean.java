@@ -3,7 +3,7 @@ package com.xiaolin.bean;
 import java.io.Serializable;
 
 /**
- * 月考勤之日详细数据记录
+ * 月考勤之日详细数据记录bean
  * <p>
  * Created by sjy on 2017/8/7.
  */

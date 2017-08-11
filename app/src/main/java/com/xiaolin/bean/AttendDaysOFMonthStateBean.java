@@ -3,7 +3,7 @@ package com.xiaolin.bean;
 import java.io.Serializable;
 
 /**
- * 月记录状态，供月日历详细展示使用
+ * 月记录状态，用于日历颜色控制使用
  * <p>
  * Created by sjy on 2017/8/7.
  */

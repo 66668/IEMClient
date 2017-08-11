@@ -9,7 +9,7 @@ import com.xiaolin.bean.CommonBean;
 import com.xiaolin.bean.CommonListBean;
 import com.xiaolin.bean.LoginBean;
 import com.xiaolin.bean.UpgradeBean;
-import com.xiaolin.bean.VisitorListBean;
+import com.xiaolin.bean.VisitorBean;
 
 import okhttp3.MultipartBody;
 import retrofit2.http.Field;
@@ -74,7 +74,7 @@ public interface MyHttpService {
     @FormUrlEncoded
     @POST(URLUtils.VISITOR)
     //post
-    Observable<VisitorListBean> loadVisitor(
+    Observable<CommonListBean<VisitorBean>> loadVisitor(
             @Field("storeID") String storeID
             , @Field("employeeID") String employeeID
             , @Field("isReceived") String isReceived

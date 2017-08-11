@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by sjy on 2017/8/7.
+ * AttendDayActivity中listView的适配
  */
 
 public class AttendDayAdapter extends BaseAdapter {

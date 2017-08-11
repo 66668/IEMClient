@@ -19,7 +19,7 @@ import com.xiaolin.utils.GlideCircleTransform;
 import java.util.List;
 
 /**
- * fragment显示list适配
+ * VisitorFragment中RecyclerView适配
  */
 
 public class VisitorListAdapter extends RecyclerView.Adapter {

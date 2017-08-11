@@ -1,7 +1,7 @@
 package com.xiaolin.http;
 
 /**
- * Created by sjy on 2017/7/28.
+ *  接口路径类
  */
 
 public class URLUtils {
@@ -13,7 +13,7 @@ public class URLUtils {
     /**
      * 登录
      */
-    public static final String LOGIN = "User/AppDeviceLoginByPassword";
+    public static final String LOGIN = "User/AppPersonDeviceLoginByPassword";
 
     /**
      * 访客
@@ -58,7 +58,7 @@ public class URLUtils {
      * 获取考勤月记录接口
      */
     public static final String MONTH_STATE_ALL = "Employee/GetAttendStatusByMonthC";
-     /**
+    /**
      * 获取考勤月记录接口 以此获取三个月的记录
      */
     public static final String MONTH_STATE_THREE = "Employee/GetAttendStatusByMonthCThree";

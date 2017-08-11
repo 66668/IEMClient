@@ -1,7 +1,10 @@
 package com.xiaolin.app;
 
 /**
- * 固定参数
+ * 固定常量
+ *
+ * 登录使用保存及获取使用
+ *
  */
 
 public class Constants {

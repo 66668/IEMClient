@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.xiaolin.R;
-import com.xiaolin.adpter.VisitorFragmentPaperAdapter;
+import com.xiaolin.adpter.VisitorFragmentPagerAdapter;
 import com.xiaolin.ui.base.BaseActivity;
 
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ public class VisitorActivity extends BaseActivity {
     Fragment doneVisitorFragment;
     List<Fragment> fragemntList;
     List<String> titleList;
-    private VisitorFragmentPaperAdapter adapter;
+    private VisitorFragmentPagerAdapter adapter;
     int currentTab = 0;//默认显示第一个
 
 
@@ -77,7 +77,7 @@ public class VisitorActivity extends BaseActivity {
         viewPager.setOffscreenPageLimit(2);
 
         //初始化apater
-        adapter = new VisitorFragmentPaperAdapter(getSupportFragmentManager(), titleList, fragemntList);
+        adapter = new VisitorFragmentPagerAdapter(getSupportFragmentManager(), titleList, fragemntList);
 
         //tablayout设置
         tabLayout.setTabMode(TabLayout.MODE_FIXED);//充满屏幕显示

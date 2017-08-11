@@ -3,7 +3,7 @@ package com.xiaolin.bean;
 import java.io.Serializable;
 
 /**
- * 登录返回 数据存储
+ * 处理{code:"",message:"",result:{}}
  * Created by sjy on 2017/7/24.
  */
 
