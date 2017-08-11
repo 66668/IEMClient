@@ -1,7 +1,6 @@
 package com.xiaolin.ui;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -28,8 +27,8 @@ import com.xiaolin.presenter.VisitorPresenterImpl;
 import com.xiaolin.presenter.ipresenter.IVisitorPresenter;
 import com.xiaolin.ui.base.BaseActivity;
 import com.xiaolin.ui.iview.ICommonView;
+import com.xiaolin.utils.CameraGalleryUtils;
 import com.xiaolin.utils.DebugUtil;
-import com.xiaolin.utils.EditPictureUtil;
 import com.xiaolin.utils.GlideCircleTransform;
 import com.xiaolin.utils.SPUtils;
 
@@ -37,6 +36,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -280,7 +281,8 @@ public class VisitorAddActivity extends BaseActivity implements ICommonView {
     private void takepic_permission() {
         //相机+读写权限组 提示
         if (PermissionsUtil.hasPermission(this, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)) {//ACCESS_FINE_LOCATION ACCESS_COARSE_LOCATION这两个是一组，用一个判断就够了
-            takepic();
+            //            takepic();//方式1
+            CameraGalleryUtils.showImagePickDialog(VisitorAddActivity.this);//方式2
         } else {
             //第一次使用该权限调用
             PermissionsUtil.requestPermission(this
@@ -288,7 +290,8 @@ public class VisitorAddActivity extends BaseActivity implements ICommonView {
                         @Override
                         public void permissionGranted(@NonNull String[] permissions) {
                             //允许使用就跳转界面
-                            takepic();
+                            //                            takepic();//方式1
+                            CameraGalleryUtils.showImagePickDialog(VisitorAddActivity.this);//方式2
                         }
 
                         @Override
@@ -302,61 +305,47 @@ public class VisitorAddActivity extends BaseActivity implements ICommonView {
     }
 
     /**
-     * 拍照
+     * 使用CameraGalleryUtils相机 方法2
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
      */
-    private void takepic() {
-        if (width <= 0) {
-            return;
-        }
-        //选择图片方式
-        dialog = new CameraChooseDialog(VisitorAddActivity.this, new CameraChooseDialog.ClickCallback() {
-            @Override
-            public void PhotoCallback() {
-                DebugUtil.d(TAG, "相机");
-                dialog.dismiss();
-                Intent intent = EditPictureUtil.getCaptureIntent(VisitorAddActivity.this);
-                startActivityForResult(intent, 1);
-
-            }
-
-            @Override
-            public void galleryCallback() {
-                DebugUtil.d(TAG, "相册");
-                dialog.dismiss();
-                Intent intent = EditPictureUtil.getGalleryIntent(width, width, EditPictureUtil.createTempCropImageFile(VisitorAddActivity.this));
-                startActivityForResult(intent, 2);
-
-            }
-        });
-        dialog.show();
-
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == Activity.RESULT_OK) {
+        switch (requestCode) {
+            case CameraGalleryUtils.REQUEST_CODE_FROM_ALBUM: {
 
-            if (requestCode == 1) {
-                DebugUtil.d(TAG, "图片剪裁");
-                // 启动修剪相片功能
-                Intent intent = EditPictureUtil.getCropImageIntent(EditPictureUtil.getCaptureTempFileUri(VisitorAddActivity.this)
-                        , width
-                        , width
-                        , EditPictureUtil.createTempCropImageFile(VisitorAddActivity.this));
-                startActivityForResult(intent, 2);
+                if (resultCode == RESULT_CANCELED) {   //取消操作
+                    return;
+                }
+
+                Uri imageUri = data.getData();
+                CameraGalleryUtils.copyImageUri(this, imageUri);
+                CameraGalleryUtils.cropImageUri(this, CameraGalleryUtils.getCurrentUri(), 200, 200);
+                break;
             }
-            if (requestCode == 2) {// 剪切
+            case CameraGalleryUtils.REQUEST_CODE_FROM_CAMERA: {
 
-                uri = EditPictureUtil.getCropImageTempFileUri(VisitorAddActivity.this);
-                file = EditPictureUtil.getCropImageTempFile(VisitorAddActivity.this);
+                if (resultCode == RESULT_CANCELED) {     //取消操作
+                    CameraGalleryUtils.deleteImageUri(this, CameraGalleryUtils.getCurrentUri());   //删除Uri
+                }
 
-                //显示图片
-                DebugUtil.d("最终图片路径：" + uri.toString());
-                //                Bitmap bitmap = EditPictureUtil.getBitmapFromUri(VisitorAddActivity.this, uri);
-                //                pic_img.setImageBitmap(bitmap);
-                if (file != null) {
+                CameraGalleryUtils.cropImageUri(this, CameraGalleryUtils.getCurrentUri(), 200, 200);
+                break;
+            }
+            case CameraGalleryUtils.REQUEST_CODE_CROP: {
+
+                if (resultCode == RESULT_CANCELED) {     //取消操作
+                    return;
+                }
+
+                Uri imageUri = CameraGalleryUtils.getCurrentUri();
+                if (imageUri != null) {
+                    //                    pic_img.setImageURI(imageUri);
+                    file = uri2File(imageUri);
                     Glide.with(VisitorAddActivity.this)
                             .load(file)
                             .diskCacheStrategy(DiskCacheStrategy.RESULT)
@@ -365,14 +354,138 @@ public class VisitorAddActivity extends BaseActivity implements ICommonView {
                             .transform(new GlideCircleTransform(VisitorAddActivity.this))//自定义圆形图片
                             .into(pic_img);
                 }
-
-
+                break;
             }
+            default:
+                break;
         }
-
     }
 
+    private File uri2File(Uri uri) {
+        try {
+            file = new File(new URI(uri.toString()));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
 
+    /**
+     * 拍照 方式1
+     */
+    //    private void takepic() {
+    //        if (width <= 0) {
+    //            return;
+    //        }
+    //
+    //        //选择图片方式
+    //        dialog = new CameraChooseDialog(VisitorAddActivity.this, new CameraChooseDialog.ClickCallback() {
+    //            @Override
+    //            public void PhotoCallback() {
+    //                DebugUtil.d(TAG, "相机");
+    //                dialog.dismiss();
+    //                Intent intent = EditPictureUtil.getCameraIntent(VisitorAddActivity.this);
+    //                startActivityForResult(intent, CAMERA_REQUEST_CODE);
+    //            }
+    //
+    //            @Override
+    //            public void galleryCallback() {
+    //                DebugUtil.d(TAG, "相册");
+    //                dialog.dismiss();
+    //
+    //                Intent intent = EditPictureUtil.getGalleryIntent(width, width, VisitorAddActivity.this);
+    //                startActivityForResult(intent, GALLERY_REQUEST_CODE);
+    //            }
+    //        });
+    //        dialog.show();
+    //
+    //    }
+
+    private static final int CAMERA_REQUEST_CODE = 1;
+    private static final int GALLERY_REQUEST_CODE = 3;
+    private static final int CAMERA_SHOW = 2;
+    private static final int GALLERY_SHOW = 4;
+
+    /**
+     * 使用EditPictureUtil 方法1
+     */
+
+    //    @Override
+    //    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    //        super.onActivityResult(requestCode, resultCode, data);
+    //
+    //        if (resultCode == Activity.RESULT_OK) {
+    //            switch (requestCode) {
+    //
+    //                case CAMERA_REQUEST_CODE:
+    //
+    //                    DebugUtil.d("GGG", " camera剪裁");
+    //
+    //                    Uri uri = data.getData();
+    //                    // 启动修剪相片功能
+    //                    Intent intent = EditPictureUtil.getCameraCropIntent(uri//EditPictureUtil.getCamreraOrgFileUri(VisitorAddActivity.this)
+    //                            , width
+    //                            , width
+    //                            , EditPictureUtil.createCameraCropImageFile(VisitorAddActivity.this));
+    //                    startActivityForResult(intent, CAMERA_SHOW);//剪裁完成
+    //                    break;
+    //
+    //                case GALLERY_REQUEST_CODE:
+    //
+    //                    DebugUtil.d("GGG", " gallery剪裁");
+    //                    // 启动修剪相片功能
+    //                    Intent intent2 = EditPictureUtil.getGalleryCropIntent(EditPictureUtil.getGalleryOrgFileUri(VisitorAddActivity.this)
+    //                            , width
+    //                            , width
+    //                            , EditPictureUtil.getGalleryCropImageFile(VisitorAddActivity.this));
+    //                    startActivityForResult(intent2, GALLERY_SHOW);//剪裁完成
+    //                    break;
+    //
+    //                case CAMERA_SHOW:
+    //
+    //                    DebugUtil.d("GGG", " camera显示");
+    //                    uri = EditPictureUtil.getCameraCropImageFileUri(VisitorAddActivity.this);
+    //                    file = EditPictureUtil.getCameraCropImageFile(VisitorAddActivity.this);
+    //                    DebugUtil.d("GGG", "显示camera路径：" + uri.toString());
+    //
+    //                    //显示图片
+    //                    //                Bitmap bitmap = EditPictureUtil.getBitmapFromUri(VisitorAddActivity.this, uri);
+    //                    //                pic_img.setImageBitmap(bitmap);
+    //                    if (file != null) {
+    //                        Glide.with(VisitorAddActivity.this)
+    //                                .load(file)
+    //                                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+    //                                .placeholder(ContextCompat.getDrawable(VisitorAddActivity.this, R.mipmap.default_photo))
+    //                                .error(ContextCompat.getDrawable(VisitorAddActivity.this, R.mipmap.default_photo))
+    //                                .transform(new GlideCircleTransform(VisitorAddActivity.this))//自定义圆形图片
+    //                                .into(pic_img);
+    //                    }
+    //                    break;
+    //
+    //                case GALLERY_SHOW:
+    //
+    //                    DebugUtil.d("GGG", " gallery显示");
+    //                    uri = EditPictureUtil.getGalleryCropImageFileUri(VisitorAddActivity.this);
+    //                    file = EditPictureUtil.getGalleryCropImageFile(VisitorAddActivity.this);
+    //                    DebugUtil.d("GGG", "显示gallery路径：" + uri.toString());
+    //
+    //                    //显示图片
+    //                    //                Bitmap bitmap = EditPictureUtil.getBitmapFromUri(VisitorAddActivity.this, uri);
+    //                    //                pic_img.setImageBitmap(bitmap);
+    //                    if (file != null) {
+    //                        Glide.with(VisitorAddActivity.this)
+    //                                .load(file)
+    //                                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+    //                                .placeholder(ContextCompat.getDrawable(VisitorAddActivity.this, R.mipmap.default_photo))
+    //                                .error(ContextCompat.getDrawable(VisitorAddActivity.this, R.mipmap.default_photo))
+    //                                .transform(new GlideCircleTransform(VisitorAddActivity.this))//自定义圆形图片
+    //                                .into(pic_img);
+    //                    }
+    //                    break;
+    //            }
+    //        }
+    //
+    //    }
     @Override
     public void showProgress() {
         loadingDialog.show();
