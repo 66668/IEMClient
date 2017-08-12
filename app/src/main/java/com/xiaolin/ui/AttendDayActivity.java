@@ -34,7 +34,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 考勤记录的 日历日期具体显示
+ * 考勤记录的 日期具体显示
+ *
  */
 
 public class AttendDayActivity extends BaseActivity implements IAttendDayView {
