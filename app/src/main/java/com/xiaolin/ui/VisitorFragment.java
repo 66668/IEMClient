@@ -207,6 +207,7 @@ public class VisitorFragment extends Fragment implements IVisitorView, SwipeRefr
             }
             adapter.notifyDataSetChanged();//刷新adapter
         }
+
         adapter.isShowFooter(false);
         pageSize += list.size();//如果获取的数据不足20条
         DebugUtil.d(TAG, "addList:pageSize=" + pageSize);
@@ -217,7 +218,7 @@ public class VisitorFragment extends Fragment implements IVisitorView, SwipeRefr
             return;
         }
         if (isReceived.equals("1")) {//已接待用参数ActualArrivalTime
-            minTime = list.get(list.size() - 1).getActualArrivalTime();
+            minTime = list.get(list.size() - 1).getCapArrivalTime();
             Log.d(TAG, "false--splitTime:minTime= " + minTime);
         } else if (isReceived.equals("0")) {
             minTime = list.get(list.size() - 1).getiLastUpdateTime();//未接待用参数iLastUpdateTime

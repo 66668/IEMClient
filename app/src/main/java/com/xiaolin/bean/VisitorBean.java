@@ -28,7 +28,16 @@ public class VisitorBean implements Serializable {
     private String ImagePath;//访客预约图像
     private String ActualImagePath;//访客实际到达图像
     private String StoreID;//到访公司ID
+    private String CapArrivalTime ;//
     private String iLastUpdateTime;//
+
+    public String getCapArrivalTime() {
+        return CapArrivalTime;
+    }
+
+    public void setCapArrivalTime(String capArrivalTime) {
+        CapArrivalTime = capArrivalTime;
+    }
 
     public String getRecordID() {
         return RecordID;

@@ -5,12 +5,13 @@ import android.app.Application;
 import com.xiaolin.http.HttpUtils;
 import com.xiaolin.utils.DebugUtil;
 
+import cn.jpush.android.api.JPushInterface;
+
 /**
  * Created by sjy on 2017/4/18.
  */
 
 public class MyApplication extends Application {
-    private final static String sdcardDirName = "ISS";//内存根目录名
     private static MyApplication MyApplication;
     private boolean isLogin = false;
 
@@ -22,8 +23,13 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         MyApplication = this;
+
         //正式打包，将DebugUtil.DEBUG值设为 false
         HttpUtils.getInstance().init(this, DebugUtil.DEBUG);
+
+        // 极光推送 SDK初始化
+        JPushInterface.setDebugMode(true);//设置打印日志，测试用
+        JPushInterface.init(this);
     }
 
     public boolean isLogin() {
