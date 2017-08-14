@@ -194,13 +194,18 @@ public class CalendarView extends ViewGroup {
                         //处理selectPosition的状态
                         if (stateMap.get(selectPostion) != null) {
                             LogUtil.d(TAG, "监听item=迟到--stateMap.get(selectPostion)非空--select处理");
-                            if (stateMap.get(selectPostion).contains("迟到") || stateMap.get(selectPostion).contains("早退")) {
-                                view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_late_bg));//
-                                getChildAt(selectPostion).setSelected(true);
-                            } else if (stateMap.get(selectPostion).contains("缺勤")) {
-                                view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_gone_bg));//
-                                getChildAt(selectPostion).setSelected(true);
-                            }
+                            handleSelect(view);
+//                            if (stateMap.get(selectPostion).contains("迟到") || stateMap.get(selectPostion).contains("早退")) {
+//                                view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_late_bg));//
+//                                getChildAt(selectPostion).setSelected(true);
+//                            } else if (stateMap.get(selectPostion).contains("缺勤")) {
+//                                view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_gone_bg));//
+//                                getChildAt(selectPostion).setSelected(true);
+//                            } else if (stateMap.get(selectPostion).contains("正常") || stateMap.get(selectPostion).contains("")) {
+//                                getChildAt(selectPostion).setSelected(false);
+//                            } else {
+//
+//                            }
                         } else {
                             LogUtil.d(TAG, "监听item=迟到--stateMap.get(selectPostion)空--select处理");
                             getChildAt(selectPostion).setSelected(false);
@@ -214,13 +219,18 @@ public class CalendarView extends ViewGroup {
                         //处理selectPosition的状态
                         if (stateMap.get(selectPostion) != null) {
                             LogUtil.d(TAG, "监听item=缺勤--stateMap.get(selectPostion)非空--select处理");
-                            if (stateMap.get(selectPostion).contains("迟到") || stateMap.get(selectPostion).contains("早退")) {
-                                view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_late_bg));//
-                                getChildAt(selectPostion).setSelected(true);
-                            } else if (stateMap.get(selectPostion).contains("缺勤")) {
-                                view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_gone_bg));//
-                                getChildAt(selectPostion).setSelected(true);
-                            }
+                            handleSelect(view);
+//                            if (stateMap.get(selectPostion).contains("迟到") || stateMap.get(selectPostion).contains("早退")) {
+//                                view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_late_bg));//
+//                                getChildAt(selectPostion).setSelected(true);
+//                            } else if (stateMap.get(selectPostion).contains("缺勤")) {
+//                                view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_gone_bg));//
+//                                getChildAt(selectPostion).setSelected(true);
+//                            } else if (stateMap.get(selectPostion).contains("正常") || stateMap.get(selectPostion).contains("")) {
+//                                getChildAt(selectPostion).setSelected(false);
+//                            } else {
+//
+//                            }
                         } else {
                             LogUtil.d(TAG, "监听item=缺勤--stateMap.get(selectPostion)空--select处理");
                             getChildAt(selectPostion).setSelected(false);
@@ -234,17 +244,18 @@ public class CalendarView extends ViewGroup {
                         //处理selectPosition的状态
                         if (stateMap.get(selectPostion) != null) {
                             LogUtil.d(TAG, "监听item=正常--stateMap.get(selectPostion)非空--select处理");
-                            if (stateMap.get(selectPostion).contains("迟到") || stateMap.get(selectPostion).contains("早退")) {
-                                view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_late_bg));//
-                                getChildAt(selectPostion).setSelected(true);
-                            } else if (stateMap.get(selectPostion).contains("缺勤")) {
-                                view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_gone_bg));//
-                                getChildAt(selectPostion).setSelected(true);
-                            } else if (stateMap.get(selectPostion).contains("正常") || stateMap.get(selectPostion).contains("")) {
-                                getChildAt(selectPostion).setSelected(false);
-                            } else {
-
-                            }
+                            handleSelect(view);
+//                            if (stateMap.get(selectPostion).contains("迟到") || stateMap.get(selectPostion).contains("早退")) {
+//                                view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_late_bg));//
+//                                getChildAt(selectPostion).setSelected(true);
+//                            } else if (stateMap.get(selectPostion).contains("缺勤")) {
+//                                view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_gone_bg));//
+//                                getChildAt(selectPostion).setSelected(true);
+//                            } else if (stateMap.get(selectPostion).contains("正常") || stateMap.get(selectPostion).contains("")) {
+//                                getChildAt(selectPostion).setSelected(false);
+//                            } else {
+//
+//                            }
                         } else {
                             LogUtil.d(TAG, "监听item=正常--stateMap.get(selectPostion)空--select处理");
                             getChildAt(selectPostion).setSelected(false);
@@ -258,20 +269,21 @@ public class CalendarView extends ViewGroup {
                 } else {//处理状态： ""/null
                     LogUtil.d(TAG, "bean.DayState空=");
 
+                    LogUtil.d(TAG, "监听item空--stateMap.get(selectPostion)非空--select处理");
                     //处理selectPosition的状态
                     if (stateMap.get(selectPostion) != null) {
-                        LogUtil.d(TAG, "监听item空--stateMap.get(selectPostion)非空--select处理");
-                        if (stateMap.get(selectPostion).contains("迟到") || stateMap.get(selectPostion).contains("早退")) {
-                            view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_late_bg));//
-                            getChildAt(selectPostion).setSelected(true);
-                        } else if (stateMap.get(selectPostion).contains("缺勤")) {
-                            view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_gone_bg));//
-                            getChildAt(selectPostion).setSelected(true);
-                        } else if (stateMap.get(selectPostion).contains("正常") || stateMap.get(selectPostion).contains("")) {
-                            getChildAt(selectPostion).setSelected(false);
-                        } else {
-
-                        }
+                        handleSelect(view);
+//                        if (stateMap.get(selectPostion).contains("迟到") || stateMap.get(selectPostion).contains("早退")) {
+//                            view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_late_bg));//
+//                            getChildAt(selectPostion).setSelected(true);
+//                        } else if (stateMap.get(selectPostion).contains("缺勤")) {
+//                            view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_gone_bg));//
+//                            getChildAt(selectPostion).setSelected(true);
+//                        } else if (stateMap.get(selectPostion).contains("正常") || stateMap.get(selectPostion).contains("")) {
+//                            getChildAt(selectPostion).setSelected(false);
+//                        } else {
+//
+//                        }
                     } else {
                         LogUtil.d(TAG, "监听item=空--stateMap.get(selectPostion)空--select处理");
                         getChildAt(selectPostion).setSelected(false);
@@ -291,6 +303,19 @@ public class CalendarView extends ViewGroup {
         });
     }
 
+    private void handleSelect(View view) {
+        if (stateMap.get(selectPostion).contains("迟到") || stateMap.get(selectPostion).contains("早退")) {
+            view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_late_bg));//
+            getChildAt(selectPostion).setSelected(true);
+        } else if (stateMap.get(selectPostion).contains("缺勤")) {
+            view.setBackground(ContextCompat.getDrawable(view.getContext(), R.drawable.item_calendar_gone_bg));//
+            getChildAt(selectPostion).setSelected(true);
+        } else if (stateMap.get(selectPostion).contains("正常") || stateMap.get(selectPostion).contains("")) {
+            getChildAt(selectPostion).setSelected(false);
+        } else {
+
+        }
+    }
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);

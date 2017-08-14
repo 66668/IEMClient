@@ -12,6 +12,7 @@ import com.xiaolin.R;
 
 /**
  * 横滑 点击居中
+ * 月份日历使用
  */
 
 public class CenterShowHorizontalScrollView extends HorizontalScrollView {
