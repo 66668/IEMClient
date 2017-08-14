@@ -30,20 +30,20 @@ IEM员工版 介绍：
 
 ##登陆：
 
-<img width="450" height="600" src="https://github.com/66668/IEMClient/blob/master/readme_pic/login.gif"></img>
+<img width="450" height="700" src="https://github.com/66668/IEMClient/blob/master/readme_pic/login.gif"></img>
 
 ##访客（已接待/未接待）：
 
-<img width="450" height="600" src="https://github.com/66668/IEMClient/blob/master/readme_pic/visitor.gif"></img>
+<img width="450" height="700" src="https://github.com/66668/IEMClient/blob/master/readme_pic/visitor.gif"></img>
 
 ##访客（新添加）：
 
-<img width="450" height="600" src="https://github.com/66668/IEMClient/blob/master/readme_pic/addvisitor.gif"></img>
+<img width="450" height="700" src="https://github.com/66668/IEMClient/blob/master/readme_pic/addvisitor.gif"></img>
 
 ##考勤：
 
-<img width="450" height="600" src="https://github.com/66668/IEMClient/blob/master/readme_pic/attend_month.gif"></img>
+<img width="450" height="700" src="https://github.com/66668/IEMClient/blob/master/readme_pic/attend_month.gif"></img>
 
 ##添加地图考勤：
 
-<img width="450" height="600" src="https://github.com/66668/IEMClient/blob/master/readme_pic/map.gif">
+<img width="450" height="700" src="https://github.com/66668/IEMClient/blob/master/readme_pic/map.gif">
