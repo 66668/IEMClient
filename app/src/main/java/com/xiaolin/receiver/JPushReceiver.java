@@ -64,7 +64,7 @@ public class JPushReceiver extends BroadcastReceiver {
             return;
         }
 
-        if (content.contains("新的申请需要审批")) {
+        if (content.contains("访客")||content.contains("到访")) {
             Intent intent = new Intent();
             intent.setClass(context, VisitorActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

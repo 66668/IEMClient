@@ -381,6 +381,9 @@ public class MainActivity extends BaseActivity implements IMainView {
                     case 6002:
                         DebugUtil.d("JPush", "极光推送别名设置失败，Code = 6002");
                         break;
+                    case 6003:
+                        DebugUtil.d("JPush", "极光推送别名设置失败，Code = 6003：非法字符串拼接！");
+                        break;
                     default:
                         DebugUtil.d("JPush", "极光推送设置失败，Code = " + code);
                         break;
