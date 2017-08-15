@@ -268,8 +268,8 @@ public class CalendarView extends ViewGroup {
             getChildAt(selectPostion).setSelected(true);
         } else if (stateMap.get(selectPostion).contains("正常") || stateMap.get(selectPostion).contains("")) {
             getChildAt(selectPostion).setSelected(false);
-        } else {
-
+        } else {//
+            getChildAt(selectPostion).setSelected(false);
         }
     }
 

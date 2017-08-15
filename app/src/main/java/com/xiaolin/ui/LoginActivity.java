@@ -16,6 +16,7 @@ import com.xiaolin.presenter.LoginPresenterImpl;
 import com.xiaolin.presenter.ipresenter.ILoginPresenter;
 import com.xiaolin.ui.base.BaseActivity;
 import com.xiaolin.ui.iview.ILoginView;
+import com.xiaolin.utils.CheckNetwork;
 import com.xiaolin.utils.DebugUtil;
 import com.xiaolin.utils.SPUtils;
 import com.xiaolin.utils.Utils;
@@ -92,6 +93,10 @@ public class LoginActivity extends BaseActivity implements ILoginView {
      */
     @OnClick(R.id.btn_login)
     void login(View view) {
+        if(!CheckNetwork.isNetworkConnected(this)&&!CheckNetwork.isWifiConnected(this)){
+            DebugUtil.ToastShort(this,"请检查网络连接！");
+            return;
+        }
         getInfo();
         if (!isEmpty()) { //非空判断
             //交给p层处理，接口回调处理

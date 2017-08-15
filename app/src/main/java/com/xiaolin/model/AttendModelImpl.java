@@ -35,6 +35,7 @@ public class AttendModelImpl implements IAttendModel {
 
     @Override
     public void getAttendStatusByMonth(String year, String month, final OnAttendMonthStateListener listener) {
+
         String employeeID = SPUtils.getString(Constants.EMPLOYEE_ID);
         String storeId = SPUtils.getString(Constants.STORE_ID);
         if (TextUtils.isEmpty(employeeID) || TextUtils.isEmpty(storeId)) {

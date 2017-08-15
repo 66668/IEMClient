@@ -367,8 +367,8 @@ public class MainActivity extends BaseActivity implements IMainView {
      * jpush 绑定别名
      */
     private void setAlias(String alias) {
-        DebugUtil.d("JPush", "极光推送别名设置-->" + alias);
         final String newAlias = alias.replace(":", "_");
+        DebugUtil.d("JPush", "极光推送别名设置-->" + newAlias);
         JPushInterface.setAliasAndTags(getApplicationContext(), newAlias, null, new TagAliasCallback() {
 
             @Override

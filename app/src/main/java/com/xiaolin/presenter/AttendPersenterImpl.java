@@ -72,15 +72,18 @@ public class AttendPersenterImpl {
      */
 
     public synchronized void getAttendMonthOfThreeState(String year, String month) {
+        iAttendMonthStateView.showProgress();
         attendModel.getAttendSateOFThree(year, month, new OnAttendDayOfMonthStateListener() {
 
             @Override
             public void onAttendDaysSuccess(ArrayList<AttendDaysOFMonthStateBean> list) {
+                iAttendMonthStateView.hideProgress();
                 iAttendMonthStateView.cacheDateSuccess(list);
             }
 
             @Override
             public void onAttendDaysFailed(String msg, Exception e) {
+                iAttendMonthStateView.hideProgress();
                 iAttendMonthStateView.postFaild(msg, e);
             }
         });
