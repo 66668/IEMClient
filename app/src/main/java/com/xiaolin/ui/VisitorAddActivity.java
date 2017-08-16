@@ -276,6 +276,7 @@ public class VisitorAddActivity extends BaseActivity implements ICommonView {
     private void takepic_permission() {
         //相机+读写权限组 提示
         if (PermissionsUtil.hasPermission(this, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)) {//ACCESS_FINE_LOCATION ACCESS_COARSE_LOCATION这两个是一组，用一个判断就够了
+            // TODO: 2017/8/16 相机功能方式1需要改bug，方式2需要优化 
             //            takepic();//方式1
             CameraGalleryUtils.showImagePickDialog(VisitorAddActivity.this);//方式2
         } else {
