@@ -4,6 +4,7 @@ IEM员工版 介绍：
 测试账号：若修改密码请用123456修改，方便测试
 (1)yueshi/xiaomeng.jia/xiaomeng.jia
 (2)yueshi/yh.cheng/yh.cheng
+app只能在安卓5.0以上使用（5.0以下日历容易出问题）
 
 ##知识点说明
 

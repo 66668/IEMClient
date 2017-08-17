@@ -34,7 +34,7 @@ android {
     buildToolsVersion "26.0.0"
     defaultConfig {
         applicationId "com.xiaolin"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
