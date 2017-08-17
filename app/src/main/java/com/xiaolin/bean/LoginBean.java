@@ -13,10 +13,18 @@ public class LoginBean implements Serializable {
     private String TodayDate;
     private String DeviceId;
     private String EmployeeName;
+    private String StoreName;
     private String FirstAttend;
     private String LastAttend;
     private String YesterdayState;
 
+    public String getStoreName() {
+        return StoreName;
+    }
+
+    public void setStoreName(String StoreName) {
+        StoreName = StoreName;
+    }
 
     public String getStoreId() {
         return StoreId;

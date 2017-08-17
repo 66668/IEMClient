@@ -67,6 +67,10 @@ public class MainActivity extends BaseActivity implements IMainView {
     @BindView(R.id.tv_attendToday)
     TextView tv_attendToday;
 
+    //公司名称
+    @BindView(R.id.storeName)
+    TextView storeName;
+
     //nav_head
     TextView nav_tv_name;
 
@@ -162,6 +166,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         iMainPresenter = new MainPresenterImpl(MainActivity.this, this);
         //navigation点击事件
         setDrawerContent(navigationView);
+        storeName.setText(SPUtils.getString(Constants.COMPANYNAME));
     }
 
     private void showText() {

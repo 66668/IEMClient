@@ -14,11 +14,11 @@ public class Constants {
     public static final String ACACHE_DATA_SIGN = "date_acache_sign";
 
 
-    public static final String STORENAME = "storeName";
+    public static final String STORENAME = "storeName";// 登录时公司名称
     public static final String USRENAME = "username";
     public static final String PASSWORD = "password";
     public static final String EMPLOYEENAME = "EmployeeName";
-    public static final String DEPARTMENT_ID = "departmentid";
+    public static final String COMPANYNAME = "companyName";//登录返回的参数 公司名称
 
     public static final String TODAY_DATE = "TodayDate";    // 缓存 yyyy-MM-dd
     public static final String YESTODY_DATE = "YesterdayState";    // 缓存 yyyy-MM-dd

@@ -157,6 +157,7 @@ public class LoginActivity extends BaseActivity implements ILoginView {
         SPUtils.putString(Constants.TODAY_DATE, bean.getTodayDate());
         SPUtils.putString(Constants.DEVICEID, bean.getDeviceId());
         SPUtils.putString(Constants.EMPLOYEENAME, bean.getEmployeeName());
+        SPUtils.putString(Constants.COMPANYNAME, bean.getStoreName());
 
         SPUtils.putString(Constants.FIRSTATTEND, bean.getFirstAttend());
         SPUtils.putString(Constants.LASTATTEND, bean.getLastAttend());
