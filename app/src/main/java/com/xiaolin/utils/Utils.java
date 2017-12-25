@@ -349,7 +349,7 @@ public class Utils {
     }
 
     /**
-     * 把时间戳转成日期字符串
+     * 把时间戳(毫秒)转成日期字符串
      *
      * @param timeStamp
      * @return yyyy-MM-dd HH:mm:ss
@@ -559,6 +559,7 @@ public class Utils {
                         for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
                             InetAddress inetAddress = enumIpAddr.nextElement();
                             if (!inetAddress.isLoopbackAddress() && inetAddress instanceof Inet4Address) {
+                                Log.d("SJY", "2G/3G/4G网络ip=" + inetAddress.getHostAddress());
                                 return inetAddress.getHostAddress();
                             }
                         }
@@ -571,7 +572,7 @@ public class Utils {
                 WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
                 WifiInfo wifiInfo = wifiManager.getConnectionInfo();
                 String ipAddress = intIP2StringIP(wifiInfo.getIpAddress());//得到IPV4地址
-                Log.d("SJY", "ip=" + ipAddress);
+                Log.d("SJY", "无线网络ip=" + ipAddress);
                 return ipAddress;
             }
         } else {
@@ -579,7 +580,6 @@ public class Utils {
         }
         return null;
     }
-
     /**
      * 将得到的int类型的IP转换为String类型
      *
@@ -941,7 +941,7 @@ public class Utils {
 
 
     /**
-     * 生成全球唯一识别码uuid
+     * 生成uuid
      *
      * @return
      */
@@ -1042,6 +1042,9 @@ public class Utils {
         }
 
     }
+
+
+
 
 }
 

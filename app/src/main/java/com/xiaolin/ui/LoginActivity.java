@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -93,8 +94,8 @@ public class LoginActivity extends BaseActivity implements ILoginView {
      */
     @OnClick(R.id.btn_login)
     void login(View view) {
-        if(!CheckNetwork.isNetworkConnected(this)&&!CheckNetwork.isWifiConnected(this)){
-            DebugUtil.ToastShort(this,"请检查网络连接！");
+        if (!CheckNetwork.isNetworkConnected(this) && !CheckNetwork.isWifiConnected(this)) {
+            DebugUtil.ToastShort(this, "请检查网络连接！");
             return;
         }
         getInfo();
@@ -112,6 +113,7 @@ public class LoginActivity extends BaseActivity implements ILoginView {
         userName = et_user.getText().toString();
         password = et_ps.getText().toString();
         IP = Utils.getIPAddress(getApplicationContext());
+        Log.d("SJY", Utils.getIPAddress(this));
     }
 
 
@@ -165,7 +167,7 @@ public class LoginActivity extends BaseActivity implements ILoginView {
         DebugUtil.d(TAG, "LoginPresenterImpl--缓存数据");
 
         //推送设置别名
-//        setAlias(Utils.getMacByWifi());
+        //        setAlias(Utils.getMacByWifi());
 
         //添加自动登录
         MyApplication.getInstance().setLogin(true);
@@ -184,27 +186,27 @@ public class LoginActivity extends BaseActivity implements ILoginView {
     /**
      * jpush 绑定别名
      */
-//    private void setAlias(String alias) {
-//        //设置别名，替换非法字符
-//        final String newAlias = alias.replace(":", "_");
-//        DebugUtil.d("JPush", "newAlias=" + newAlias);
-//        JPushInterface.setAliasAndTags(getApplicationContext(), newAlias, null, new TagAliasCallback() {
-//
-//            @Override
-//            public void gotResult(int code, String s, Set<String> set) {
-//                DebugUtil.d("JPush", "极光推送别名设置-->");
-//                switch (code) {
-//                    case 0:
-//                        DebugUtil.d("JPush", "newAlias=" + newAlias + "Set tag and alias success极光推送别名设置成功");
-//                        break;
-//                    case 6002:
-//                        DebugUtil.d("JPush", "newAlias=" + newAlias + "极光推送别名设置失败，Code = 6002");
-//                        break;
-//                    default:
-//                        DebugUtil.d("JPush", "newAlias=" + newAlias + "极光推送设置失败，Code = " + code);
-//                        break;
-//                }
-//            }
-//        });
-//    }
+    //    private void setAlias(String alias) {
+    //        //设置别名，替换非法字符
+    //        final String newAlias = alias.replace(":", "_");
+    //        DebugUtil.d("JPush", "newAlias=" + newAlias);
+    //        JPushInterface.setAliasAndTags(getApplicationContext(), newAlias, null, new TagAliasCallback() {
+    //
+    //            @Override
+    //            public void gotResult(int code, String s, Set<String> set) {
+    //                DebugUtil.d("JPush", "极光推送别名设置-->");
+    //                switch (code) {
+    //                    case 0:
+    //                        DebugUtil.d("JPush", "newAlias=" + newAlias + "Set tag and alias success极光推送别名设置成功");
+    //                        break;
+    //                    case 6002:
+    //                        DebugUtil.d("JPush", "newAlias=" + newAlias + "极光推送别名设置失败，Code = 6002");
+    //                        break;
+    //                    default:
+    //                        DebugUtil.d("JPush", "newAlias=" + newAlias + "极光推送设置失败，Code = " + code);
+    //                        break;
+    //                }
+    //            }
+    //        });
+    //    }
 }
